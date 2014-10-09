@@ -10,11 +10,11 @@ var y = 300;
 
 var onDeviceMotion = function(e) {
     var a = e.accelerationIncludingGravity;
-    dx = a.x;
-    dy = a.y;
+    dx = -a.x;
+    dy = -a.y;
     dz = a.z;
     
-    if(iOS) {
+    if(!iOS) {
         dx = dx * -1;
         dy = dy * -1;
     }
