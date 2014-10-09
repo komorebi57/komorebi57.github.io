@@ -3,10 +3,12 @@
 <head>
 <script src="p5.min.js"></script>
 <script>
-var iOS = navigator.userAgent.match(/iPad|iPhone|iPod/g);
+var w = 600;
+var h = 600;
+var x = w / 2;
+var y = h / 2;
 var dx = 0, dy = 0, dz = 0;
-var x = 300;
-var y = 300;
+var iOS = navigator.userAgent.match(/iPad|iPhone|iPod/g);
 
 var onDeviceMotion = function(e) {
     var a = e.accelerationIncludingGravity;
@@ -21,13 +23,18 @@ var onDeviceMotion = function(e) {
 };
 
 var setup = function() {
-    createCanvas(600, 600);
+    createCanvas(w, h);
     window.addEventListener('devicemotion', onDeviceMotion, false);
+    fill(0, 0, 0);
 };
 
 var draw = function() {
     x = x - dx;
     y = y + dy;
+    if(x < 0) x = 0;
+    if(x > w) x = w;
+    if(y < 0) y = 0;
+    if(y > h) y = h;
     ellipse(x, y, 10, 10);
 };
 </script>
