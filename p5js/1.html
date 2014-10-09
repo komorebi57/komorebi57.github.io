@@ -22,21 +22,32 @@ var onDeviceMotion = function(e) {
     }
 };
 
+var onMouseMove = function(e) {
+    
+};
+
 var setup = function() {
     createCanvas(w, h);
     window.addEventListener('devicemotion', onDeviceMotion, false);
+    window.addEventListener('mousemove', onMouseMove, false);
     fill(0, 0, 0);
 };
 
 var draw = function() {
+    var speed = Math.sqrt(dx * dx + dy * dy);
+    var weight = 15 - speed * 2;
+    var oldx = x;
+    var oldy = y;
     x = x - dx;
     y = y + dy;
-    speed = Math.sqrt(dx * dx + dy * dy);
     if(x < 0) x = 0;
     if(x > w) x = w;
     if(y < 0) y = 0;
     if(y > h) y = h;
-    ellipse(x, y, 15 - speed * 2, 15 - speed * 2);
+
+    strokeWeight(weight);
+    line(oldx, oldy, x, y);
+    ellipse(x, y, weight, weight);
 };
 </script>
 <style>
