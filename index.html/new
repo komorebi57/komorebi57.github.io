@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="p5.min.js"></script>
+<script>
+
+</script>
+<style>
+* {font-family:"Helvetica", "Arial", "lucida grande", "tahoma", 
+      "verdana", "arial", "sans-serif";
+    }
+div.page{margin:20px 20px 20px 50px;}
+</style>
+</head>
+<body>
+<div class="page">
+<p><strong>김선정</strong></p>
+  <p>플랫폼: 임시적 프로젝트 <strong>4</strong><br>
+“I have nothing to say and I am saying it” <strong>14</strong></p>
+
+  <p>존케이지/김순기 <strong>26</strong><br>
+     길버트 &amp; 조지 <strong>28</strong></p><br>
+  
+  
+<p><strong>바르또 마리</strong></p>
+  <p>≪무대 없는 연극≫과 ≪세상이라는 거대한 연극≫ : 20세기 미술 안에서의 연극성에 대한 두 가지 실험 <strong>30</strong><br>
+
+  <p>살바도르 달리 <strong>40</strong><br>
+     다비드 라멜라스 <strong>42</strong><br>
+     브루스 나우만 <strong>55</strong><br> 
+     로버트 모리스 <strong>46</strong></p><br>
+  
+  
+<p><strong>박소현</strong></p>
+  <p>엥포르멜의 지정학과 ‘행동하는 화가’ : 그 개념적 재배치의 계보 <strong>48</strong><br></p>
+
+  <p>앨런 캐프로 <strong>72</strong><br>
+   비토 아콘치 <strong>74</strong><br>
+   트리샤 브라운 <strong>76</strong><br>
+   이본느 라이너 <strong>78</strong></p><br>
+  
+  
+<p><strong>수미토모 후미히코</strong></p>
+  <p>전후 일본 예술의 민족지적 전환 <strong>80</strong><br></p>
+
+  <p>무라카미 사부로 <strong>88</strong><br>
+     플레이 <strong>90</strong></p><br>
+  
+  
+  <p><strong>슈양</strong></p>
+  <p>중국의 퍼포먼스와 라이브 아트 <strong>92</strong><br></p>
+
+  <p>액션 인 차이나 <strong>98</strong><br>
+     다다오 라이브 아트 페스티벌 <strong>100</strong></p><br>
+
+  
+
+</body>
+
+</html>
