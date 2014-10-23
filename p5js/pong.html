@@ -2,35 +2,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src="p5.min.js"></script>
-<script>
-var w = 600;
-var h = 600;
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script src="p5.min.js"></script>
+    <script>
 
-var setup = function() {
-    createCanvas(w, h);
+    var setup = function() {
+        var w = windowWidth;
+        var h = windowHeight;
+        createCanvas(w, h);
+    };
 
-};
+    var draw = function() {
+    };
 
-var draw = function() {
-};
-    
-var drawCircle = function(x, y){
-    var l = random()*100;
-    fill(random()*500+200, random()*250+50, random()*300);
-    ellipse(x, y, l, l);
-};
+    var drawCircle = function(x, y){
+        var l = random()*100;
+        fill(random()*500+200, random()*250+50, random()*300);
+        ellipse(x, y, l, l);
+    };
 
-var mousePressed = function() {
-    drawCircle(mouseX, mouseY);
-};
-</script>
-<style>
-  body {
-    padding: 0;
-    margin: 0;
-  }
-</style>
+    var mousePressed = function() {
+        drawCircle(mouseX, mouseY);
+    };
+    </script>
+    <style>
+      html, body, canvas {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+      }
+    </style>
 </head>
 <body>
 
