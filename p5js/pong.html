@@ -21,8 +21,15 @@
         ellipse(x, y, l, l);
     };
 
-    var mousePressed = function() {
-        drawCircle(mouseX, mouseY);
+//    var mousePressed = function() {
+//        drawCircle(mouseX, mouseY);
+//    };
+    var touchMoved = function(e) {
+        for (var i = 0; i < e.touches.length; i++) {
+            var x = e.touches[i].clientX;
+            var y = e.touches[i].clientY;
+            drawCircle(x, y);
+        }
     };
     </script>
     <style>
