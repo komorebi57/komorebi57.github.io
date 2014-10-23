@@ -15,10 +15,15 @@
     var draw = function() {
     };
 
-    var drawCircle = function(x, y){
+    var drawCircle = function(x, y) {
         var l = random()*100;
         stroke(0,0,0,0);
-        fill(random()*500+200, random()*250+50, random()*300, 60);
+        fill(255,255,255,30);
+        ellipse(x, y, l, l);
+        var gradientY = y / windowHeight;
+        var gradientX = x / windowWidth;
+        fill((1-gradientX) * 200 + 55 * random(), random() * 100, gradientX * 100 + 90 + 65 * random(), gradientY * 50+5);
+        // fill(random()*500+200, random()*250+50, random()*300, 60);
         ellipse(x, y, l, l);
     };
 
