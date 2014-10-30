@@ -39,20 +39,17 @@
   //      e.preventDefault();
 //    };
         
-  var onmousedown = function(e) {
-        for (var i = 0; i < e.mousePressed.length; i++) {
-            var x = e.mousePressed[i].clientX;
-            var y = e.mousePressed[i].clientY;
-            drawCircle(x, y);
-        }
-        e.preventDefault();
-    };
-              
+        
+        
+  var mousePressed = function(e) {
+drawCircle(e.x, e.y);
+e.preventDefault();
+};      
+  
         
         
         
-        
-        
+            
     </script>
     <style>
       html, body, canvas {
