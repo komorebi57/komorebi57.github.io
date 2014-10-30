@@ -28,14 +28,31 @@
 //    var mousePressed = function() {
 //        drawCircle(mouseX, mouseY);
 //    };
-    var touchMoved = function(e) {
-        for (var i = 0; i < e.touches.length; i++) {
-            var x = e.touches[i].clientX;
-            var y = e.touches[i].clientY;
+   
+        
+//    var touchMoved = function(e) {
+//        for (var i = 0; i < e.touches.length; i++) {
+//            var x = e.touches[i].clientX;
+ //           var y = e.touches[i].clientY;
+  //          drawCircle(x, y);
+ //       }
+  //      e.preventDefault();
+//    };
+        
+  var mouseDragged = function(e) {
+        for (var i = 0; i < e.mousePressed.length; i++) {
+            var x = e.mousePressed[i].clientX;
+            var y = e.mousePressed[i].clientY;
             drawCircle(x, y);
         }
         e.preventDefault();
     };
+              
+        
+        
+        
+        
+        
     </script>
     <style>
       html, body, canvas {
