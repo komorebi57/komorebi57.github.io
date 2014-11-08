@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>이슬 다영</title>
+  <style>
+    * {font-family:"Helvetica", "Arial", "lucida grande", "tahoma", "sans-serif";
+    }
+    body{background-color : #292a2c;
+         background-image: url(hero.png), url(women.png), , url(women.png), url(hero.png);
+         background-size: 15%;
+         background-repeat: no-repeat, no-repeat, no-repeat, no-repeat;
+         background-position:top left, top left,bottom left, bottom right;}
+  .title{width: 15%; position: absolute;
+        margin: 60% 40% 30% 40%;}
+    </style 
+    </head>
+    
+    <body>
+        <img class="title" src="title.png" alt="title">
+    </body>
+</html>
