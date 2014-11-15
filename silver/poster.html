@@ -17,6 +17,7 @@
          color: white;
          text-align: center;}
 
+    
    h1{margin:30px 10px 30px 10px;font-size: 20px;}
     .color{color: rgb(123, 179, 198); max-width: auto;}  
     .color3{color: white; max-width: auto;}  
@@ -28,15 +29,22 @@
     table{margin: 0 auto; }
     .explanation{padding:0 0 10px 0; list-style-type:none;} 
       
-    .arrang{font-size: 25px; margin:5% 5% 6% 5%; max-width: auto; font-size:15px;}
+    .arrang{font-size: 15px; margin:5% 5% 6% 5%; max-width: auto;}
       
    
     
     .picture{margin: 0 auto; width:65%; }
     .picture1{width:100%;}
+      
+    .picture2{display: none; margin: 0 auto; width:100%; float: left;}
+    .picture3{display: none; width:100%;}
+    
+      
     .synopsys{padding:0px 0px 0px 0px; font-size: 13px; line-height: 160%; margin: 6% 0 7% 0;}  
     .synopsys2{padding:0px 0px 0px 0px; margin:0 0 5% 0; font-size: 20px; line-height: 160%;}  
-      
+    .synopsys3{display: none; padding:0px 0px 0px 0px; margin:0 0 5% 0; font-size: 20px; line-height: 160%;}  
+    .synopsys4{display: none; font-size: 14px; line-height: 160%; margin: 20px 0 20px 0;}  
+     
     .academy{list-style-type: none;  text-align: center; font-size:16px; margin: 0 0 6% 0; padding-left:0;}
       
     .directer{text-align: center; max-width: auto; font-size:16px; margin: 0 0 5% 0;}
@@ -44,8 +52,68 @@
       
     .work{list-style-type: none; text-align: left; margin:0px; padding-left: 0;}
     .LEADING{text-align: center; font-size: 12px;}
+      .LEADING2{text-align: center; font-size: 12px;}
     .ACTOR{border:2% soild #292a2c; text-align: center;}
     .lovefighting{color: white; max-width: auto; font-size:20px; text-align: center; margin: 5% 0 5% 0;}
+      
+      
+      
+      
+    @media print{
+        body {
+            background-image: none;
+            width: 1200px;
+            background-color: white;
+            color: black;
+            text-align: left;
+            margin: 10px 10px 10px 10px;
+             
+        }
+   h1{font-size: 25px; text-align: center;}
+    .color{color: #1e1e1e;}  
+   
+    .color2{color: #1e1e1e; font-size: 18px;}  
+  .hot{font-size: 18px;}
+    
+    .love{list-style-type: none; font-size:20px; line-height: 160%;}
+      
+    table{margin: 0; }
+        
+    .explanation{list-style-type:none; font-size: 18px;} 
+      
+    .arrang{font-size: 16px; text-align: left; padding-left:0; margin:0;}
+      
+   
+    .picture{display: none; margin: 0 auto; width:65%; }
+    .picture1{display: none; width:100%;}
+      
+    .picture2{display: block; margin:5px 20px 30px 0; width:100%;}
+    .picture3{display: block;}
+        
+    .synopsys{display: none; font-size: 14px; line-height: 160%;}  
+    .synopsys2{display: none; font-size: 14px; line-height: 160%; margin: 20px 0 20px 0;}  
+    .synopsys3{display: block; padding:0px 0px 0px 0px; margin:50px 0 30px 0; font-size: 16px; line-height: 160%;}  
+    .synopsys4{display: block; font-size: 18px; line-height: 160%; margin: 40px 0 30px 0; text-align: center;}  
+        
+        
+    .academy{list-style-type: none; text-align: left; font-size:16px; padding-left:0; line-height: 180%}
+      
+    .directer{text-align: left; font-size:14px; margin: 10px 0 45px 0;}
+    .awd{padding:0px 0px 0px 0px; margin:0px 0px 0px 0px;}
+      
+    .work{list-style-type: none; text-align: left; margin:0px; padding-left:0;}
+    .LEADING{text-align: left; font-size: 14px;}
+    .LEADING2{text-align: center; font-size: 12px;}
+    .ACTOR{text-align: left; border: 1px solid #bcbcbc;}
+    .ACTOR td,th{border : thin dotted gray;
+                   padding : 10px;
+       }
+  
+    .lovefighting{text-align:center; font-size:18px; padding: 20px 0 20px 0; color: black;}
+        
+    }  
+      
+      
     </style> 
     </head>
     
@@ -82,6 +150,10 @@
                             자신과 함께 댄스 대회에 참가하자는 달콤한 제안을 하는데...<br>
                             과연 그들은 사랑 때문에 고장(?)난 러브멘탈을 복구하고<br>
                             그들만의 '실버라이닝'을 찾을 수 있을까?</p>
+     
+     <p class="synopsys3">쉽게 자신에게 넘어오지 않는 팻을 위해 티파니는 헤어진 아내와의 재결합을 도와주는 대신,<br>
+                            자신과 함께 댄스 대회에 참가하자는 달콤한 제안을 하는데...<br>
+                            과연 그들은 사랑 때문에 고장(?)난 러브멘탈을 복구하고 그들만의 '실버라이닝'을 찾을 수 있을까?</p>
 
     
         
@@ -89,12 +161,14 @@
   
      
       <p class="synopsys2">당신의<br>
-                            러브멘탈은<br>
-                            안녕하십니까?</p>
+                           러브멘탈은<br>
+                           안녕하십니까?</p>
+     
+     <p class="synopsys4">당신의 러브멘탈은 안녕하십니까?</p>
   
         
   <h1>
-    <span class="color">실버라이닝</span><span class="color3">플레이북</span>
+    <span class="color">실버라이닝 플레이북</span>
   </h1>
        
         
@@ -113,9 +187,25 @@
   </table>
         </div>
     
+     
+     
+     <div class="picture2">        
+  <table>
+    <tbody>
+      <tr>
+        <td><img class="picture3" src="pic7.jpg" alt="movie picture"></td>
+        <td><img class="picture3" src="pic3.jpg" alt="movie picture"></td>
+        <td><img class="picture3" src="pic8.jpg" alt="movie picture"></td>
+      </tr>
+    </tbody>
+  </table>
+        </div>
+    
+     
+     
         
   <div>
-    HOT ISSUE
+      <p class = "hot">HOT ISSUE</p>
     <ul class="academy">
       <li class="color2">아카데미 8개 부문 노미네이트!</li>
       <li class="color2">골든글로브 여우주연상 수상!</li>
@@ -140,7 +230,7 @@
         
    <div class="LEADING">
      <table class="ACTOR">
-       <caption class="LEADING">LEADING ACTOR</caption>
+       <caption class="LEADING1">LEADING ACTOR</caption>
        <thead>
          <tr>
            <th class="color">제니퍼 로렌스</th>
@@ -167,14 +257,13 @@
                </ul>
            </td>
          </tr>
-           
-        
-       </tbody>
+     </tbody>
      </table>
-         
+      </div>   
+     
      <p class="lovefighting">고장난 심장이 다시 뛴다. 러브 파이팅!</p>
        
-           </div>
+     
            </div>
         
     </body>
