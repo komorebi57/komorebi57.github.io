@@ -191,6 +191,15 @@ li{
             
       }
       
+      .sep2{
+          
+            float:right;
+            display: inline-block;
+            padding: 10px 10px 0 0;
+            margin: 0;
+            font-size: 70%;
+            color: gray;}
+      
       
       .social{
           display:inline-block;
@@ -252,14 +261,18 @@ li{
       }
       
       
-      .f1{
+      .f1, .f2{
           border-bottom: 1px solid #eee;
           height: 65px;
-          background-color: yellow;
           padding: 0;
           margin: 0;
       }
 
+      .f2{
+        background-color: skyblue;
+        border-left: 2px solid blue;
+      }
+      
       .f1 img{
           float: left;
           padding: 19px 10px 19px 10px;
@@ -272,7 +285,7 @@ li{
           display: inline;
           font-size: 80%;
       }
-      .l1, .l2{
+      .l1, .l2, .l3{
           color : white;
           float: right;
           padding: 0;
@@ -292,6 +305,10 @@ li{
       .l2{
           background-color: green;
 
+      }
+      
+      .l3{
+            background-color: yellow;
       }
       
       .si2{
@@ -319,7 +336,27 @@ li{
             float: right;
       }
       
-   
+   .back{
+       background-color: skyblue;
+       
+   }
+      
+      .fix{
+          position: fixed;
+          right: 60%;
+          bottom: 14%;
+          box-shadow: 1px 2px 2px;
+           border-radius:10px 10px;
+          background-color: orange;
+      }
+      
+    .background{
+            background-color: #bbb;
+            border-radius: 2px 2px;
+
+    }
+      
+      
     </style>
     
     </head>
@@ -347,12 +384,15 @@ li{
     <section class="side">
         <ul class="ex2">
             <li><img class="pic" src="man.png" alt="man"></li>
-            <li><img src="icon%EC%82%AC%EC%A7%84.svg"  alt="picture"></li>
+            <li><img class="background" src="icon%EC%82%AC%EC%A7%84.svg"  alt="picture"></li>
             <li><img src="icon%EC%82%AC%EB%9E%8C.svg" alt="peple"></li>
             <li><img src="icon%EC%97%B0%ED%95%84.svg" alt="icon"></li>
             <li><img src="iconinfor.svg" alt="infomation"></li>
         
         </ul>
+        
+        
+        
         
         
          <ul class="ex3">
@@ -405,7 +445,7 @@ li{
                 <br>
                 <p>infotlfjaj</p>
                 </div>
-                <div class="l1">
+                <div class="l3">
                 1 new
                 </div>
                 </div>
@@ -419,7 +459,7 @@ li{
                 <br>
                 <p>infotlfjaj</p>
                 </div>
-                <div class="l1">
+                <div class="sep2">
                 1 new
                 </div>
                 </div>
@@ -434,7 +474,7 @@ li{
                 <br>
                 <p>infotlfjaj</p>
                 </div>
-                <div class="l1">
+                 <div class="sep2">
                 1 new
                 </div>
                 </div>
@@ -442,14 +482,14 @@ li{
                 
                 
                 <li>
-                <div class="f1">
+                <div class="f2">
                 <img class="pic" src="man.png" alt="man pciture">
                 <div class="t1">
                 <h2>google</h2>
                 <br>
                 <p>infotlfjaj</p>
                 </div>
-                <div class="l1">
+                 <div class="sep2">
                 1 new
                 </div>
                 </div>
@@ -465,7 +505,7 @@ li{
                 <br>
                 <p>infotlfjajakdlakdfjkasdjlasdkfjlaj</p>
                 </div>
-                <div class="l1">
+                 <div class="sep2">
                 1 new
                 </div>
                 </div>
@@ -480,7 +520,7 @@ li{
                 <br>
                 <p>infotlfjaj</p>
                 </div>
-                <div class="l1">
+                 <div class="sep2">
                 1 new
                 </div>
                 </div>
@@ -496,21 +536,42 @@ li{
                 <br>
                 <p>infotlfjaj</p>
                 </div>
-                <div class="l1">
+                 <div class="sep2">
                 1 new
                 </div>
                 </div>
                 </li>
                 
+            
+                
+                <li>
+                <div class="f1">
+                <img class="pic" src="man2.png" alt="man pciture">
+                <div class="t1">
+                <h2>google</h2>
+                <br>
+                <p>infotlfjaj</p>
+                </div>
+                 <div class="sep2">
+                1 new
+                </div>
+                </div>
+                </li>
             </ul>
+            
+            <img class="fix" src="iconsma.svg" alt="fixedicon">
+
         </section>
+        
         
         
      <section class="manin2">
 
     <div class="border">
          <ul class="line">
-            <li><div class="first"><h2>Board game night?</h2><span class="sky">fun</span><span class="gray">inbox</span></div></li>
+            <li><div class="first"><h2>Board game night?</h2><span class="sky">fun</span><span class="gray">inbox</span>
+                <img class="righticon" src="iconstar.svg" alt="star">
+                </div></li>
         
            
     
