@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <title>이슬</title>
   <style>
-<<<<<<< HEAD
-   body{font-family: "Dotum", "돋움", "Helvetica", "AppleSDGothicNeo", sans-serif;}
+      
+   body{font-family: "Dotum", "돋움", "Nanum Gothic", "Helvetica", "AppleSDGothicNeo", sans-serif;}
 
 
       
  header{
-     background-color: red;
+     background-color: #FF4536;
      top: 0; 
      left:0;
      right:0;
@@ -20,6 +20,7 @@
      position: absolute;
 
  }
+      
    .ri{
     float: right;
     padding: 0;
@@ -123,8 +124,15 @@ li{
           margin: auto 0;
       }
     
-      .chang{
-         
+      .chang > li{
+      position: relative;
+      
+      }
+      
+
+
+   .chang{
+
           heghit: 100px;
           margin: 0;
           padding: 10px;
@@ -205,13 +213,12 @@ li{
       }
       
       .sep2{
-          
-            float:right;
-            display: inline-block;
-            padding: 10px 10px 0 0;
-            margin: 0;
-            font-size: 70%;
-            color: gray;}
+          position: absolute;
+         right:0;
+         top:2px;
+         font-size: 80%;
+         color: gray;
+           }
       
       
       .social{
@@ -281,6 +288,10 @@ li{
       
       
       .f1, .f2{
+     
+         overflow: hidden;
+         white-space: nowrap; 
+         text-overflow: ellipsis;
           border-bottom: 1px solid #eee;
           height: 65px;
           padding: 0;
@@ -319,14 +330,11 @@ li{
       
       
       .l1, .l2, .l3{
-          color : white;
-          float: right;
-          padding: 0;
-          display: inline-block;
-          margin-top: 18px;
-          margin-right: 10px;
-          font-size: 90%
-      
+     color: white;
+     padding: 2px;
+      position: absolute;
+      right: 5px;
+      top:10px;
 
       }
       
@@ -404,7 +412,20 @@ li{
                  display: inline-block;
                 padding: 20px 60px 20px 50px;
       }
-      
+     
+     
+      @media screen and(max-width: 800px;){ 
+     
+ section.list1{
+            width: 100%;
+            left: 0;
+            z-index: 1;
+         }
+ 
+ section.manin2{
+         display: none;
+         }
+}
     </style>
     
     </head>
@@ -683,8 +704,7 @@ li{
          </div>
 
         </section>
-    </section>
-    
+        
     
     </body>
 
