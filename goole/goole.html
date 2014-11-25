@@ -148,13 +148,13 @@ li{
       }
       
        .sky2{
-          
-            background-color: skyblue;
+           background-color: skyblue;
            color: blue;
             font-size: 70%;
-            padding: 2;
-           margin-top: 10px;
-           margin-left: 50%;
+           position: absolute;
+         right:0;
+         top:38px;
+          
       }
       
       
@@ -218,6 +218,7 @@ li{
          top:2px;
          font-size: 80%;
          color: gray;
+          padding: 3px;
            }
       
       
@@ -227,6 +228,13 @@ li{
           margin:0;
       }
   
+      
+      .social2{
+        display: inline-block;
+      text-align: center;
+      position: absolute;   
+      bottom: 30;
+      }
       
       p{
       display: inline-block;
@@ -241,6 +249,7 @@ li{
       
        .text2{
            padding-top: 15px;
+           padding-left: 5px;
                 display: inline-block;
                font-size: 80%;
       }
@@ -331,7 +340,8 @@ li{
       
       .l1, .l2, .l3{
      color: white;
-     padding: 2px;
+     padding: 3px;
+          margin: 0 3px 0 0;
       position: absolute;
       right: 5px;
       top:10px;
@@ -413,10 +423,29 @@ li{
                 padding: 20px 60px 20px 50px;
       }
      
-     
-      @media screen and(max-width: 800px;){ 
-     
- section.list1{
+    
+     .play li{
+      display: inline-block;
+      text-align: center;
+      position: absolute;   
+      bottom: 30;
+      
+    }
+
+      
+      .q1{
+            left: 30%;
+      }
+      .q2{
+            left: 50%;
+      }
+      .q3{
+                right: 22%;
+      }
+      
+      
+      @media screen and (max-width:800px){
+section.list1 {
             width: 100%;
             left: 0;
             z-index: 1;
@@ -425,7 +454,14 @@ li{
  section.manin2{
          display: none;
          }
+
+   .fix{
+             right: 20%;
+
+   
+   }
 }
+      
     </style>
     
     </head>
@@ -680,25 +716,21 @@ li{
               </div>  </li>
              
              
-             <li><div class="first">
-                <div class="social">
-                <h3>Sunday works!!! assigment....ㅠㅠㅠ</h3>
-                    <br>
-             <a class="text2" href="#">▶ Show quoted text</a> 
-                </div>
-                 </div>   
-              </li>
-             
-             
-              <li><div class="first">
-                <div class="social">
-                <img class="center1" src="icon%EC%98%A4%EB%A5%B8.svg" alt="right button">
-                <img class="center2" src="icon%EC%99%BC%EC%AA%BD%EA%B2%B9.svg" alt="left button">
-                <img class="center3" src="icon%EC%99%BC%EC%AA%BD.svg" alt="left">
-                </div>
-                 </div>   
-              </li>
-             
+          
+         
+         </ul>
+            <div class="social">
+            <h2>time wait for no one and salsa.</h2><br>
+                <p class="text2"><a href="#">▶ Show quoted text</a></p>
+            </div>
+            
+         <ul class="play">
+             <li class="q1"><img src="http://google.github.io/material-design-icons/content/svg/ic_reply_24px.svg" alt="iconimg or face img"><br><p class="text2">Reply</p></li>
+             <li class="q2"><img src="http://google.github.io/material-design-icons/content/svg/ic_reply_all_24px.svg" alt="iconimg or face img"><br><p class="text2">Reply all</p></li>
+             <li class="q3"><img src="http://google.github.io/material-design-icons/content/svg/ic_forward_24px.svg" alt="iconimg or face img"><br><p class="text2">Forward</p></li>
+         </ul>   
+      
+                
                 
            </ul>
          </div>
@@ -709,4 +741,3 @@ li{
     </body>
 
 </html>
-
