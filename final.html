@@ -8,15 +8,20 @@
       body{font-family: "Dotum", "돋움", "Nanum Gothic", "Helvetica", "AppleSDGothicNeo", sans-serif;
             background-color: #51ffba;
       font-size: 10pt;}
-     
+      
+      
+h1{font-size: 30px;
+    margin: 0;}
+      
+      
 .header{
         position: absolute;
-        margin: auto;
+        margin: 0;
 }      
       
 .center{ width: 60%;
     background-color: white;
-    padding: 0;
+    margin: 10% 20% 10% 20%;
         
 }
       
@@ -31,21 +36,22 @@
 }
 
 .centerbar{
-        padding: 5% 10% 5% 30%;
+        padding: 5% 5% 5% 5%;
 }      
       
 
 .big{
-    text-align: center;
     font-size: 30px;
-    padding: 1% 5% 1% 5%;
+    padding: 0;
+    margin: 0;
 }
       
 .centericon{
         list-style: none;
-        width: 100%;
-        margin: 0;
-    padding: 0;
+        padding-left: 0;
+        display: inline-block;
+        
+  
         
 }      
 .underbar{
@@ -59,18 +65,58 @@
             list-style: none;
             padding-left: 0;
             background-color: #5c5e5d;
-    padding: 12px;
+            padding: 12px;
 
 }   
       
 .lefticon{
-        
         float: left;
         padding: 2% 10% 2% 2%;
 }      
       
+.righticon{
+        position: relative;
+        float: right;
+        padding: 2% 2% 10% 2%;
+}
+ 
+.bell{
+       position: relative;
+        top:40px;
+        left: 10px;
+        list-style: none;
+  }         
+      
+.time{
+        list-style: none;
+        padding-left: 0;
+    font-size: 40px;
+    padding: 5px 30px 10px 50px;
+
+
+}
+      
+.day{
+        list-style: none;
+        padding-left: 0;
+        padding: 5px 30px 10px 50px;
+        border-bottom: 1px solid #bbb;
+    
+}
+      
+.buletext{color: #198de4;
+    } 
+      
+.graytext{color: #a4acae;   }   
+      
+.main{padding:0 10px 10px 10px;}      
       
       
+.undermain{
+            padding-left: 0;
+            margin: 5px 45px 20px 45px;
+
+}      
 @media screen and (max-width:500px){          
     
           }
@@ -84,17 +130,19 @@
     <body>
         <div class="center">
     <header>
+        
  <ul class="topbar">
      <li class="topright"><i class="fa fa-minus"></i></li>
      <li class="topright"><i class="fa fa-square-o"></i></li>
      <li class="topright"><i class="fa fa-times"></i></li>
         
-        </ul>
+            </ul>
         
         
         <ul class="centerbar">
-            <li class="centericon"><span class="lefticon"><i class="fa fa-arrow-left"></i></span> <span class="big">18</span> <i class="fa fa-arrow-right"></i></li>
-
+            <li class="centericon"><i class="fa fa-arrow-left"></i></li>
+           <li class="centericon"><span class="big">18</span></li>
+            <li class="centericon"><i class="fa fa-arrow-right"></i></li>
         </ul>
         
         
@@ -108,8 +156,30 @@
         
         
     <section class="main">
-       
-  
+       <ul class="undermain">
+           <li class="bell"><span class="buletext"><i class="fa fa-bell"></i></span></li>
+           <li class="time"><h1>06:30</h1></li>
+           <li class="day"><span class="buletext">SU</span> MO <span class="buletext">TY</span> <span class="buletext">WE</span> TH <span class="buletext">FR</span> <span class="buletext">SA</span></li>
+        
+        <li class="bell"><span class="graytext"><i class="fa fa-bell"></i></span></li>
+           <li class="time"><span class="graytext"><h1>09:30</h1></span></li>
+           <li class="day"><span class="graytext">SU</span> <span class="graytext">MO</span> <span class="graytext">TY</span> <span class="buletext">WE</span><span class="graytext"> TH </span><span class="graytext">FR</span> <span class="graytext">SA</span></li>
+            
+            
+               <li class="bell"><span class="buletext"><i class="fa fa-bell"></i></span></li>
+           <li class="time"><h1>15:30</h1></li>
+           <li class="day"><span class="buletext">SU</span><span class="graytext"> MO</span><span class="graytext">TY</span> <span class="graytext">WE</span><span class="graytext"> TH</span><span class="graytext">FR</span> <span class="graytext">SA</span></li>
+    
+    
+    
+           
+            <li class="bell"><span class="buletext"><i class="fa fa-bell"></i></span></li>
+           <li class="time"><h1>18:30</h1></li>
+           <li class="day"><span class="buletext">SU</span> MO <span class="graytext">TY</span> <span class="buletext">WE</span> TH <span class="buletext">FR</span> <span class="graytext">SA</span></li></ul>
+        
+        
+    
+
        
   
 </section>
