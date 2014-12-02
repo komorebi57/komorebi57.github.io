@@ -6,7 +6,8 @@
   <title>이슬</title>
   <style>
       body{font-family: "Dotum", "돋움", "Nanum Gothic", "Helvetica", "AppleSDGothicNeo", sans-serif;
-            overflow:hidden;}
+            overflow:hidden;
+      font-size: 10pt;}
       
       
 h1{font-size: 13px;}
@@ -101,6 +102,7 @@ header{
             background-color: #ffa3dc;
             padding: 15px 20px;
             box-shadow: 0 2px 1px #bbb;
+     width: 100%;
  }     
       
 .undericon{ 
@@ -108,30 +110,32 @@ header{
         list-style: none;
         padding-left: 40px;
         margin: 0;
+    overflow: hidden;
+    white-space: nowrap; 
         
 }    
       
       
 .undericon1{
-    
-        padding: 0 0 0 25px;
+        width: 5%;
+        padding: 0;
         display: inline-block;
     }
       
 .undericon2{
         float: right;
-        padding: 0 7% 0 0;
+        padding: 0 35px 0 0;
         display: inline-block;
     }
       
 
       
 .lineunder{
-    padding: 10px 10px 14px 10px;
+    padding: 10px 10px 5px 10px;
     border-bottom: 1px solid white;}      
       
 .line{
-        padding: 10px 10px 10px 10px;
+        padding: 5px 10px 10px 10px;
 } 
       
 .line2{    
@@ -139,7 +143,7 @@ header{
         display: block;
         float: right;
         border: 4px solid #ffd9f3;
-        padding: 42px 0px 10px 0px;
+        padding: 38px 0px 10px 0px;
 }       
       
   
@@ -167,19 +171,19 @@ header{
 .main{padding: 0 10% 0 5%;
         position: absolute;
         top: 220px;
-        width: 80%;}    
+        width: 100%;}    
       
  .center{
-          padding-right:30%;
-            position: absolute;
+          padding-right:10%;
             list-style: none;
-            left: 5%;
+            left: 1%;
             right: 5%;
-            border-bottom: 1px solid #bbb;
+     position: relative;
+     margin:0;
    }      
       
    .bus{
-       position: absolute;
+       position: relative;
         top:20px;
         left: 12px;
   }    
@@ -201,10 +205,13 @@ header{
 
   .imformation1{
   letter-spacing: 1px;
-  width: 80%;
+      overflow: hidden;
+      white-space: nowrap; 
+  width: 94%;
   float: left;
   display: inline-block;
-  padding:20px 0 20px 67px;
+  padding:0px 10px 5px 50px;
+      border-bottom: 1px solid #bbb;
    }
 
 
@@ -221,13 +228,29 @@ header{
   }
 
   .time{
-  font-size: 15px;
-   position: absolute;
-   top:23px;
-   right:0;
-   color: #111111;
+font-size: 15px;
+position: absolute;
+right: 150px;
+display: inline-block;
+color: #111111;
    }
    
+   .max{
+  width: 28px;
+  }    
+      
+      
+      
+      
+@media screen and (max-width:600px){          
+          .time{
+           font-size:2.5vw;   
+              right: 10vw;
+
+          }
+          
+          }
+      
       
       
       </style>
@@ -285,14 +308,64 @@ header{
     <span class="bluetext">51</span></div>
     4:25PM from 계원예술대학교 <br>
     <div class="space1"><i class="fa fa-github-alt"></i> 10min  <span class="space">Every 12min</span></div>
-  <div class="time"><span class="boldtext">1</span> hr <span class="boldtext">38</span> min </div>
 
- </li>
+      </li>
+        <div class="time"><span class="boldtext">1</span> hr <span class="boldtext">38</span> min </div>
 
-</ul>
+      
+      
+<li class="bus"><span class="max"><i class="fa fa-bus"></i></span></li>
+<li class="imformation1">
+    <h2>4:09 - 5:47PM</h2><br>
+<div class="grayicon"><i class="fa fa-github-alt"></i> > 
+                    <i class="fa fa-bus"></i>
+    <span class="bluetext">51</span> > 
+                <i class="fa fa-bus"></i>
+    <span class="bluetext">51</span></div>
+    4:25PM from 계원예술대학교 <br>
+    <div class="space1"><i class="fa fa-github-alt"></i> 10min  <span class="space">Every 12min</span></div>
 
+      </li>
+          <div class="time"><span class="boldtext">1</span> hr <span class="boldtext">40</span> min </div>
 
+      
+      
+      <li class="bus"><span class="max"><i class="fa fa-bus"></i></span></li>
+<li class="imformation1">
+    <h2>4:09 - 5:47PM</h2><br>
+<div class="grayicon"><i class="fa fa-github-alt"></i> > 
+                    <i class="fa fa-bus"></i>
+    <span class="bluetext">51</span> > 
+                <i class="fa fa-bus"></i>
+    <span class="bluetext">51</span></div>
+    4:25PM from 계원예술대학교 <br>
+    <div class="space1"><i class="fa fa-github-alt"></i> 10min  <span class="space">Every 12min</span></div>
 
+      </li>
+          <div class="time"><span class="boldtext">1</span> hr <span class="boldtext">40</span> min </div>
+      
+      
+      
+      
+      <li class="bus"><span class="max"><i class="fa fa-bus"></i></span></li>
+<li class="imformation1">
+    <h2>4:09 - 5:47PM</h2><br>
+<div class="grayicon"><i class="fa fa-github-alt"></i> > 
+                    <i class="fa fa-bus"></i>
+    <span class="bluetext">51</span> > 
+                <i class="fa fa-bus"></i>
+    <span class="bluetext">51</span></div>
+    4:25PM from 계원예술대학교 <br>
+    <div class="space1"><i class="fa fa-github-alt"></i> 10min  <span class="space">Every 12min</span></div>
+
+      </li>
+          <div class="time"><span class="boldtext">1</span> hr <span class="boldtext">40</span> min </div>
+      
+      
+      
+        </ul>
+       
+  
 </section>
 
     </body>
