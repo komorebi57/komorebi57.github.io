@@ -17,11 +17,11 @@
 
     var drawCircle = function(x, y) {
         var l = random()*100;
-        stroke(0,0,0,0);
+        stroke(255, 255, 255, 200);
         var gradientY = y / windowHeight;
         var gradientX = x / windowWidth;
         //fill((1-gradientX) * 200 + 55 * random(), random() * 100, gradientX * 100 + 90 + 65 * random(), gradientY * 50+5);
-        fill(random()*500+200, random()*200+50, random()*200+30);
+        fill(random()*200+50, random()*520+50, random()*250+50);
         ellipse(x, y, l, l);
     };
 
@@ -41,7 +41,7 @@
         
         
         
-  var mousePressed = function(e) {
+  var mouseMoved = function(e) {
 drawCircle(e.x, e.y);
 e.preventDefault();
 };      
