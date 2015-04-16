@@ -14,14 +14,6 @@ var setup = function() {
     drawLines();
 };
 
-var mouseClicked = function() {
-    drawLines();
-};
-    
-var touchStarted = function() {
-    drawLines();
-};
-    
 var drawLines = function() {
     background(255);
     
@@ -47,6 +39,9 @@ var drawLines = function() {
         }
     }
 };
+    
+window.addEventListener("click", drawLines);    
+
 </script>
 <style>
 html, body, canvas {
