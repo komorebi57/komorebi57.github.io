@@ -14,6 +14,14 @@ var setup = function() {
 };
 
 var mouseClicked = function() {
+    drawLines();
+};
+    
+var touchStarted = function() {
+    drawLines();
+};
+    
+var drawLines = function() {
     background(255);
     
     var cr = 50;
