@@ -1,16 +1,52 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <style>
-      html, body, canvas {
-        padding: 0;
-        margin: 0;
-        overflow: hidden;
-      }
-        p{font-size: 3; color: pink;}
-    </style>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script src="p5.min.js"></script>
+<script>
+var width;
+var height;
+
+var setup = function() {
+    width = windowWidth;
+    height = windowHeight;
+    createCanvas(width, height);
+};
+
+var mouseClicked = function() {
+    background(255);
+    
+    var cr = 50;
+    for(var cx = 10; cx < width; cx += cr + 10) {
+        for(var cy = 10; cy < height; cy += cr + 10) {
+            var npoints = random(5, 10);
+            var coords = [];
+            for(var i = 0; i < npoints; i++) {
+                var px = random() * cr + cx;
+                var py = random() * cr + cy;
+                coords.push([px, py]);
+            }
+            var nlines = random(5, 10);
+            var p1 = coords[floor(random(0, npoints))];
+            stroke(100, 100, 100);
+            for(var i = 0; i < nlines; i++) {
+                var p2 = coords[floor(random(0, npoints))];
+                stroke(150 - i * 15, 150 - i * 15, 150 - i * 15);
+                line(p1[0], p1[1], p2[0], p2[1]);
+                p1 = p2;
+            }
+        }
+    }
+};
+</script>
+<style>
+html, body, canvas {
+padding: 0;
+margin: 0;
+overflow: hidden;
+}
+</style>
 </head>
 <body>
-<p>DEW DEW DEW DEW</p>
 </body>
 </html>
