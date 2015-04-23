@@ -10,15 +10,12 @@ var height;
 var setup = function() {
     width = windowWidth;
     height = windowHeight;
-    alert(1);
     createCanvas(width, height);
-    alert(2);
     drawLines();
-    alert(3);
 };
 
 var drawLines = function() {
-    alert('line');
+    alert(1);
     background(255);
     
     var cr = 50;
@@ -43,9 +40,10 @@ var drawLines = function() {
         }
     }
 };
-    
-window.addEventListener("click", drawLines);    
 
+var mouseClicked = function() {
+    drawLines();
+}
 </script>
 <style>
 html, body {
