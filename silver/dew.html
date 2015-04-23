@@ -16,7 +16,9 @@ var setup = function() {
 
 var drawLines = function() {
     try {
+        alert(1);
         background(200);
+        alert(2);
 
         var cr = 50;
         for(var cx = 10; cx < width; cx += cr + 10) {
@@ -40,6 +42,7 @@ var drawLines = function() {
             }
         }
     } catch(e) {
+        alert(3);
         alert([e, width, height, random]);
     }
 };
