@@ -7,18 +7,18 @@
 var width;
 var height;
 
-alert(1);
-
 var setup = function() {
-    alert(2);
-    alert([0, windowHeight]);
     width = windowWidth;
     height = windowHeight;
+    alert(1);
     createCanvas(width, height);
+    alert(2);
     drawLines();
+    alert(3);
 };
 
 var drawLines = function() {
+    alert('line');
     background(255);
     
     var cr = 50;
