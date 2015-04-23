@@ -15,7 +15,7 @@ var setup = function() {
 };
 
 var drawLines = function() {
-    alert(1);
+    try {
     background(255);
     
     var cr = 50;
@@ -38,6 +38,9 @@ var drawLines = function() {
                 p1 = p2;
             }
         }
+    }
+    catch(e) {
+        alert([e, width, height, random]);
     }
 };
 
