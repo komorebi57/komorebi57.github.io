@@ -23,6 +23,7 @@ function resize() {
     height = window.innerHeight;
     var canvas = document.querySelector('canvas');
     ctx = canvas.getContext('2d');
+    ctx.translate(0.5, 0.5);
     canvas.width = width;
     canvas.height = height;
 }
