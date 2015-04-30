@@ -17,6 +17,9 @@ window.addEventListener('resize', function() {
     drawLines();
 });
 
+window.addEventListener('click', function() {
+    drawLines();
+});
 
 function resize() {
     width = window.innerWidth;
@@ -28,7 +31,7 @@ function resize() {
     canvas.height = height;
 }
 
-    function drawLines() {
+function drawLines() {
     ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, width, height);
 
