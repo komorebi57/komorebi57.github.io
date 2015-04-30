@@ -8,37 +8,48 @@ var height;
 var ctx;
 
 window.addEventListener('load', function() {
+    resize();
+    drawLines();
+});
+
+window.addEventListener('resize', function() {
+    resize();
+    drawLines();
+});
+
+
+function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
     var canvas = document.querySelector('canvas');
     ctx = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
+}
 
-    drawLines();
-});
-
-function drawLines() {
-    ctx.fillStyle = '#CCC';
+    function drawLines() {
+    ctx.fillStyle = '#FFF';
     ctx.fillRect(0, 0, width, height);
 
     var cr = 50;
     for(var cx = 10; cx < width; cx += cr + 10) {
         for(var cy = 10; cy < height; cy += cr + 10) {
-            var npoints = random(5, 10);
+            var npoints = Math.random() * 5 + 5;
             var coords = [];
             for(var i = 0; i < npoints; i++) {
-                var px = random() * cr + cx;
-                var py = random() * cr + cy;
+                var px = Math.random() * cr + cx;
+                var py = Math.random() * cr + cy;
                 coords.push([px, py]);
             }
-            var nlines = random(5, 10);
-            var p1 = coords[floor(random(0, npoints))];
-            stroke(100, 100, 100);
+            var nlines = Math.random() * 5 + 5;
+            var p1 = coords[Math.floor(Math.random() * npoints)];
             for(var i = 0; i < nlines; i++) {
-                var p2 = coords[floor(random(0, npoints))];
-                stroke(150 - i * 15, 150 - i * 15, 150 - i * 15);
-                line(p1[0], p1[1], p2[0], p2[1]);
+                var p2 = coords[Math.floor(Math.random() * npoints)];
+                ctx.beginPath();
+                ctx.strokeStyle = 'rgb(' + (150 - i * 15) + ',' + (150 - i * 15) + ',' + (150 - i * 15) + ')';
+                ctx.moveTo(p1[0], p1[1]);
+                ctx.lineTo(p2[0], p2[1]);
+                ctx.stroke();
                 p1 = p2;
             }
         }
@@ -51,11 +62,9 @@ html, body {
     padding: 0;
     margin: 0;
     overflow: hidden;
-    background-color: yellow;
 }
     
 canvas {
-    background-color: red;
 }
 </style>
 </head>
