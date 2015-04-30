@@ -2,57 +2,48 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, user-scalable=no">
-<script src="p5.min.js"></script>
 <script>
 var width;
 var height;
+var ctx;
 
-var setup = function() {
-    width = windowWidth;
-    height = windowHeight;
-    createCanvas(width, height);
+window.addEventListener('load', function() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    var canvas = document.querySelector('canvas');
+    ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+
     drawLines();
-};
+});
 
-var drawLines = function() {
-    try {
-        alert(1);
-        background(200);
-        alert(2);
+function drawLines() {
+    ctx.fillStyle = '#CCC';
+    ctx.fillRect(0, 0, width, height);
 
-        var cr = 50;
-        for(var cx = 10; cx < width; cx += cr + 10) {
-            for(var cy = 10; cy < height; cy += cr + 10) {
-                var npoints = random(5, 10);
-                var coords = [];
-                for(var i = 0; i < npoints; i++) {
-                    var px = random() * cr + cx;
-                    var py = random() * cr + cy;
-                    coords.push([px, py]);
-                }
-                var nlines = random(5, 10);
-                var p1 = coords[floor(random(0, npoints))];
-                stroke(100, 100, 100);
-                for(var i = 0; i < nlines; i++) {
-                    var p2 = coords[floor(random(0, npoints))];
-                    stroke(150 - i * 15, 150 - i * 15, 150 - i * 15);
-                    line(p1[0], p1[1], p2[0], p2[1]);
-                    p1 = p2;
-                }
+    var cr = 50;
+    for(var cx = 10; cx < width; cx += cr + 10) {
+        for(var cy = 10; cy < height; cy += cr + 10) {
+            var npoints = random(5, 10);
+            var coords = [];
+            for(var i = 0; i < npoints; i++) {
+                var px = random() * cr + cx;
+                var py = random() * cr + cy;
+                coords.push([px, py]);
+            }
+            var nlines = random(5, 10);
+            var p1 = coords[floor(random(0, npoints))];
+            stroke(100, 100, 100);
+            for(var i = 0; i < nlines; i++) {
+                var p2 = coords[floor(random(0, npoints))];
+                stroke(150 - i * 15, 150 - i * 15, 150 - i * 15);
+                line(p1[0], p1[1], p2[0], p2[1]);
+                p1 = p2;
             }
         }
-    } catch(e) {
-        alert(3);
-        alert([e, width, height, random]);
     }
 };
-
-var mouseClicked = function() {
-    drawLines();
-}
-var touchEnded = function() {
-    drawLines();
-}
 </script>
 <style>
 html, body {
@@ -69,5 +60,7 @@ canvas {
 </style>
 </head>
 <body>
+    <canvas>
+    </canvas>
 </body>
 </html>
