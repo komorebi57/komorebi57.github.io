@@ -3,13 +3,17 @@
 <head>
 <meta name="viewport" content="width=device-width, user-scalable=no">
 <script>
+var canvas;
 var width;
 var height;
 var ctx;
 
 window.addEventListener('load', function() {
+    canvas = document.querySelector('canvas');
     resize();
     drawLines();
+    
+    canvas.addEventListener('touchStart', drawLines);
 });
 
 window.addEventListener('resize', function() {
@@ -21,15 +25,11 @@ window.addEventListener('click', function() {
     drawLines();
 });
 
-window.addEventListener('touchStart', function() {
-    drawLines();
-});
-
 function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
-    var canvas = document.querySelector('canvas');
     ctx = canvas.getContext('2d');
+    ctx.translate(0.5, 0.5);
     canvas.width = width;
     canvas.height = height;
 }
@@ -53,7 +53,6 @@ function drawLines() {
             for(var i = 0; i < nlines; i++) {
                 var p2 = coords[Math.floor(Math.random() * npoints)];
                 ctx.beginPath();
-                ctx.translate(0.5, 0.5);
                 ctx.strokeStyle = 'rgb(' + (150 - i * 15) + ',' + (150 - i * 15) + ',' + (150 - i * 15) + ')';
                 ctx.moveTo(p1[0], p1[1]);
                 ctx.lineTo(p2[0], p2[1]);
