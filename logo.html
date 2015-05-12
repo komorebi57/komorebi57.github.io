@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script>
+var canvas;
+var width;
+var height;
+var ctx;
+
+    window.addEventListener('load', function() {
+    canvas = document.querySelector('canvas');
+    resize();
+    drawLines();
+    
+    canvas.addEventListener('touchStart', drawLines);
+});
+
+window.addEventListener('resize', function() {
+    resize();
+    drawLines();
+});
+
+window.addEventListener('click', function() {
+    drawLines();
+});
+
+function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    ctx = canvas.getContext('2d');
+    ctx.translate(0.5, 0.5);
+    canvas.width = width;
+    canvas.height = height;
+}
+
+function drawLines() {
+    ctx.fillStyle = '#FFF';
+    ctx.fillRect(0, 0, width, height);
+
+    var cr = 100;
+    for(var cx = 22; cx < width; cx += cr + 22) {
+        for(var cy = 22; cy < height; cy += cr + 22) {
+            var npoints =Math.floor(Math.random()*3+6);
+            var coords = [];
+            for(var i = 0; i < npoints; i++) {
+                var px = Math.random() * cr + cx;
+                var py = Math.random() * cr + cy;
+                coords.push([px, py]);
+            }
+            var nlines = Math.floor(Math.random()*3+6);
+            var p1 = coords[Math.floor(Math.random() * npoints)];
+            for(var i = 0; i < nlines; i++) {
+                var p2 = coords[Math.floor(Math.random() * npoints)];
+                ctx.beginPath();
+                //ctx.strokeStyle ="#" +  Math.floor(Math.random()*0xFFFFFF)
+              //  ctx.strokeStyle = 'rgb(' + (150 - i * 15) + ',' + (150 - i * 15) + ',' + (150 - i * 15) + ')';
+ ctx.strokeStyle = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+                ctx.lineWidth = 4;
+                ctx.moveTo(p1[0], p1[1]);
+                ctx.lineTo(p2[0], p2[1]);
+                ctx.stroke();
+
+                p1 = p2;
+            }
+        }
+    }
+};
+</script>
+<style>
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+    
+canvas {
+}
+</style>
+</head>
+<body>
+    <canvas>
+    </canvas>
+</body>
+</html>
