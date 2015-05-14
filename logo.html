@@ -39,14 +39,20 @@ function drawLines() {
     ctx.fillRect(0, 0, width, height);
 
     var cr = 100;
-    for(var cx = 22; cx < width; cx += cr + 22) {
-        for(var cy = 22; cy < height; cy += cr + 22) {
-            var npoints =Math.floor(Math.random()*3+6);
+    for(var cx = 22; cx < width; cx += cr + 45) {
+        for(var cy = 22; cy < height; cy += cr + 45) {
+            var npoints = Math.floor(Math.random()*3+6);
             var coords = [];
             for(var i = 0; i < npoints; i++) {
                 var px = Math.random() * cr + cx;
                 var py = Math.random() * cr + cy;
                 coords.push([px, py]);
+                
+                ctx.beginPath();
+                ctx.fillStyle = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";;
+                ctx.arc(px, py, 3, 0, 2 * Math.PI);
+                ctx.fill();
+                ctx.closePath();
             }
             var nlines = Math.floor(Math.random()*3+6);
             var p1 = coords[Math.floor(Math.random() * npoints)];
