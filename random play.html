@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script>
+var canvas;
+var width;
+var height;
+var ctx;
+var ran = Math.random() * 0.09 + 0.01;
+var rand = Math.random()* 180 + 100;
+    
+window.addEventListener('load', function() {
+    canvas = document.querySelector('canvas');
+    resize();
+    canvas.addEventListener('touchmove', update);
+    canvas.addEventListener('mousemove', update);
+});
+
+window.addEventListener('resize', function() {
+    resize();
+    update();
+});
+
+function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+}
+    
+    
+    
+function update(e) {
+    var overwrap = ran;
+    for(var y = 0; y < 1; y += 0.1) {
+        for(var x = 0; x < 1; x += 0.1) {
+            
+            ctx.beginPath();
+            ctx.arc(e.x * (0.1 + overwrap) + x * width, e.y * (0.1 + overwrap) + y * height, 0.5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgb(' + Math.floor(e.x / width * rand) + ',' + Math.floor(e.y / width * rand) + ',180)';
+
+            ctx.fill();
+            ctx.fil8lRect = rand;
+            ctx.closePath();
+        }
+    }
+};
+</script>
+<style>
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+    
+canvas {
+}
+</style>
+</head>
+<body>
+    <canvas>
+    </canvas>
+</body>
+</html>
+
+
+
