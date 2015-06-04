@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script>
+var canvas;
+var width;
+var height;
+var ctx;
+
+//var randr = Math.random() * 0.6 + 0.7;
+//var randg = Math.random() * 0.6 + 0.7;
+//var randb = Math.random() * 0.4 + 0.2;
+
+var randr = Math.random() * 0.6 + 0.7;
+var randg = Math.random() * 0.6 + 0.4;
+var randb = Math.random() * 0.6 + 0.3;
+
+var sizes = [];
+var translates = [];
+
+window.addEventListener('load', function() {
+    canvas = document.querySelector('canvas');
+    resize();
+    canvas.addEventListener('touchmove', update);
+    canvas.addEventListener('mousemove', update);
+    
+    for(var y = 0; y < 10; y += 1) {
+        for(var x = 0; x < 10; x += 1) {
+            sizes.push(Math.random() * 1 + 0.5);
+            translates.push(Math.random() * 0.2 + 0.9);
+        }
+    }
+});
+
+window.addEventListener('resize', function() {
+    resize();
+});
+
+function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+}
+
+function update(e) {
+    for(var y = 0; y < 10; y += 1) {
+        for(var x = 0; x < 10; x += 1) {
+            var size = sizes[y * 10 + x];
+            var translate = translates[y * 10 + x];
+            
+            ctx.fillStyle = 'rgb(' + Math.floor((e.x / width * 0.5 + 0.5) * randr * 256) + ', ' + Math.floor((e.y / height * 0.5 + 0.5) * randg * 256) + ', ' + Math.floor(randb * 128 + 50) + ')';
+            
+//            ctx.fillStyle = 'rgb(' + Math.floor(e.x / width * 0.5 + 0.5 * randr * 255) + ',' + Math.floor(e.y / width * randg * 255) + ',' + Math.floor(randb * 255) + ')';
+            ctx.fillRect(
+                e.x * (0.1) * size + (x * 0.1 * translate) * width,
+                e.y * (0.1) * size + (y * 0.1 * translate) * height,
+                1,
+                1
+            );
+        }
+    }
+};
+</script>
+<style>
+    
+.comment{position: absolute; display: inline-block; text-align: right; right:0;}    
+    
+    
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+    
+canvas {
+}
+    
+    
+</style>
+</head>
+<body>
+    <iframe class="comment" src="file:///C:/Users/%EC%8A%AC/Documents/GitHub/komorebi57.github.io/yours/comment.html" width="300px" align="right" frameborder="0"> </iframe>
+
+    <canvas>
+    </canvas>
+    
+
+</body>
+</html>
+
+
+
