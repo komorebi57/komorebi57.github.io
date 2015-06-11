@@ -2,11 +2,38 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta charset="utf-8">
-<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+<!--<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>-->
 
 <title>yours</title>
 <script>
-    </script>
+window.addEventListener('load', function() {
+    var blinks = document.querySelectorAll('.blink');
+    for(var i = 0; i < blinks.length; i++) {
+        tearApart(blinks[i]);
+    }
+    
+    var blinklets = document.querySelectorAll('.blinklet');
+    window.setInterval(function() {
+        for(var i = 0; i < blinklets.length; i++) {
+            var r = Math.floor(Math.random() * 255);
+            var g = Math.floor(Math.random() * 255);
+            var b = Math.floor(Math.random() * 255);
+            blinklets[i].setAttribute('style', 'color: rgb(' + r + ',' + g + ',' + b + ')');
+        }
+    }, 500);
+});
+
+function tearApart(element) {
+    // 각 글자 단위로 나누기
+    var text = element.innerHTML;
+    var sb = [];
+    for(var i = 0; i < text.length; i++) {
+        sb.push('<span class="blinklet">' + text.charAt(i) + '</span>');
+    }
+    element.innerHTML = sb.join('');
+}
+    
+</script>
     
 <style>
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
@@ -14,33 +41,41 @@
     body{width: auto; overflow: hidden;}
     
     .logo{padding-left: 16%; margin-top: 4%;}
-    .logo img{width:500px;}
+    .logo img{width:45%;}
     
     .main{font-family: 'Hanna', sans-serif; text-align: center; letter-spacing :0.04em; font-size: 2em; margin: 0; color: rbb;}
     .eng{font-family: 'Oswald', sans-serif;}
     
-    .lefttag{list-style-type:none; position: absolute; top:530px; left:330px;}
-    .centertag{list-style-type:none; position: absolute; top: 60px; left : 420px;}
-    .righttag{list-style-type:none; position: absolute; top:190px; left:910px;}
+    .lefttag{list-style-type:none; position: absolute; top:75%; left:23%;}
+    .centertag{list-style-type:none; position: absolute; top: 8%; left : 30%;}
+    .righttag{list-style-type:none; position: absolute; top:30%; left:68%;}
      
     
 
     .brandstory{font-family: 'Nanum Gothic Coding', monospace; letter-spacing :0.04em; font-size: 0.75em; position: absolute; margin-left: 820px;}
     .text{font-family: 'Nanum Gothic Coding', monospace; text-align: center;  line-height:1.7em; letter-spacing: 0.04em; font-size: 1em; 
             margin-top: 5%;}
-    a{text-decoration: none; color:#F75D59;}
-    a:hover{text-decoration: underline;}
+    a{text-decoration: none;}
+  
 
+    .blinklet {
+        color: black;
+        transition: color 0.5s;
+    }
+    .blink:hover {
+        text-decoration: none;
+        padding-bottom: 2px;
+        border-bottom: 1px solid skyblue;}
 </style>
 </head>
 
 <body>
 
-    <div class = "lefttag"><a href ="http://komorebi57.github.io/LOGOTYPE" target="_blank"><b>logo type</b></a></div>
+    <div class = "lefttag"><a href ="http://komorebi57.github.io/LOGOTYPE" target="_blank"><b class="blink">logo type</b></a></div>
     
-    <div class = "centertag"><a href = "http://komorebi57.github.io/random play" target="_blank"><b>create your own pattern</b></a></div>
+    <div class = "centertag"><a href = "http://komorebi57.github.io/random play" target="_blank"><b class="blink">create your own pattern</b></a></div>
     
-     <div class = "righttag"><a href = "http://komorebi57.github.io/random play" target="_blank"><b>play sound</b></a></div>
+     <div class = "righttag"><a href = "http://komorebi57.github.io/random play" target="_blank"><b class="blink">download book</b></a></div>
 
     
     
