@@ -12,24 +12,31 @@ var ctx;
 //var randg = Math.random() * 0.6 + 0.7;
 //var randb = Math.random() * 0.4 + 0.2;
 
-var randr = Math.random() * 0.6 + 0.7;
-var randg = Math.random() * 0.6 + 0.4;
-var randb = Math.random() * 0.6 + 0.3;
+var randr;
+var randg;
+var randb;
 
-var sizes = [];
-var translates = [];
+var points;
+var sizes;
+var translates;
 
 window.addEventListener('load', function() {
-    canvas = document.querySelector('canvas');
+    document.querySelector('#comment-form').addEventListener('submit', saveComment);
+    document.querySelector('#popup').addEventListener('click', function() {
+        this.setAttribute('class', '');
+    });
+    canvas = document.querySelector('#main');
     resize();
     canvas.addEventListener('touchmove', update);
     canvas.addEventListener('mousemove', update);
     
-    for(var y = 0; y < 10; y += 1) {
-        for(var x = 0; x < 10; x += 1) {
-            sizes.push(Math.random() * 1 + 0.5);
-            translates.push(Math.random() * 0.2 + 0.9);
-        }
+    init();
+
+    var storage = window.localStorage;
+    if(!storage.comments) {
+        storage.comments = '[]';
+    } else {
+        loadComments();
     }
 });
 
@@ -37,60 +44,204 @@ window.addEventListener('resize', function() {
     resize();
 });
 
+function init() {
+    points = [];
+    sizes = [];
+    translates = [];
+
+    randr = Math.random() * 0.6 + 0.7;
+    randg = Math.random() * 0.6 + 0.4;
+    randb = Math.random() * 0.6 + 0.3;
+
+    document.querySelector('#comment-form textarea').value = '';
+    ctx.clearRect(0, 0, width, height);
+
+    for(var y = 0; y < 10; y += 1) {
+        for(var x = 0; x < 10; x += 1) {
+            sizes.push(Math.random() * 1 + 0.5);
+            translates.push(Math.random() * 0.2 + 0.9);
+        }
+    }
+}
+
 function resize() {
     width = window.innerWidth;
     height = window.innerHeight;
     ctx = canvas.getContext('2d');
     canvas.width = width;
     canvas.height = height;
+    
+    var popupCanvas = document.querySelector('#popup');
+    popupCanvas.width = width;
+    popupCanvas.height = height;
 }
 
 function update(e) {
+    points.push({x: e.x, y: e.y});
+    drawPoint(ctx, randr, randg, randb, {x: e.x, y: e.y}, sizes, translates);
+}
+
+function drawAtOnce(ctx, randr, randg, randb, points, sizes, translates) {
+    for(var i = 0; i < points.length; i++) {
+        drawPoint(ctx, randr, randg, randb, points[i], sizes, translates);
+    }
+}
+
+function drawPoint(ctx, randr, randg, randb, p, sizes, translates) {
     for(var y = 0; y < 10; y += 1) {
         for(var x = 0; x < 10; x += 1) {
             var size = sizes[y * 10 + x];
             var translate = translates[y * 10 + x];
             
-            ctx.fillStyle = 'rgb(' + Math.floor((e.x / width * 0.5 + 0.5) * randr * 256) + ', ' + Math.floor((e.y / height * 0.5 + 0.5) * randg * 256) + ', ' + Math.floor(randb * 128 + 50) + ')';
-            
-//            ctx.fillStyle = 'rgb(' + Math.floor(e.x / width * 0.5 + 0.5 * randr * 255) + ',' + Math.floor(e.y / width * randg * 255) + ',' + Math.floor(randb * 255) + ')';
+            ctx.fillStyle = 'rgb(' + Math.floor((p.x / width * 0.5 + 0.5) * randr * 256) + ', ' + Math.floor((p.y / height * 0.5 + 0.5) * randg * 256) + ', ' + Math.floor(randb * 128 + 50) + ')';
             ctx.fillRect(
-                e.x * (0.1) * size + (x * 0.1 * translate) * width,
-                e.y * (0.1) * size + (y * 0.1 * translate) * height,
+                p.x * (0.1) * size + (x * 0.1 * translate) * width,
+                p.y * (0.1) * size + (y * 0.1 * translate) * height,
                 1,
                 1
             );
         }
     }
-};
+}
+    
+function saveComment(e) {
+    e.preventDefault();
+    
+    // 패턴이랑 댓글을 localStorage에 저장
+    var state = {
+        comment: document.querySelector('#comment-form textarea').value,
+        points: points,
+        randr: randr,
+        randg: randg,
+        randb: randb,
+        sizes: sizes,
+        translates: translates
+    };
+    var storage = window.localStorage;
+    var comments = JSON.parse(storage.comments);
+    comments.push(state);
+    storage.comments = JSON.stringify(comments);
+    
+    // 댓글 li 추가
+    drawComment(state);
+    
+    // 초기화
+    init();
+}
+
+function loadComments() {
+    var storage = window.localStorage;
+    var comments = JSON.parse(storage.comments);
+    for(var i = 0; i < comments.length; i++) {
+        drawComment(comments[i]);
+    }
+}
+
+function drawComment(state) {
+    var newLi = document.createElement('li');
+    newLi.innerHTML = '<p>' + state.comment + '</p><canvas></canvas>';
+    var commentsUl = document.querySelector('.comments');
+    var firstLi = commentsUl.firstChild;
+    if(!firstLi) {
+        commentsUl.appendChild(newLi);
+    } else {
+        commentsUl.insertBefore(newLi, firstLi);
+    }
+    var commentCanvas = newLi.querySelector('canvas');
+    var commentCtx = commentCanvas.getContext('2d');
+    drawAtOnce(commentCtx, state.randr, state.randg, state.randb, state.points, state.sizes, state.translates);
+    commentCanvas._state = state;
+    
+    commentCanvas.addEventListener('click', enlargeComment);
+}
+
+function enlargeComment(e) {
+    var canvas = e.target;
+    var state = canvas._state;
+    
+    var popupCanvas = document.querySelector('#popup');
+    popupCanvas.setAttribute('class', 'show');
+    var popupCtx = popupCanvas.getContext('2d');
+    popupCtx.clearRect(0, 0, width, height);
+    drawAtOnce(popupCtx, state.randr, state.randg, state.randb, state.points, state.sizes, state.translates);
+}
 </script>
 <style>
-    
-.comment{position: absolute; display: inline-block; text-align: right; right:0;}    
-    
-    
+
 html, body {
     height: 100%;
     padding: 0;
     margin: 0;
     overflow: hidden;
+    font-size: 16px;
 }
     
 canvas {
+    background-color: white;
 }
-    
-    
+
+.comment-panel {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 16rem;
+}
+
+.comment-panel h2,
+.comment-panel form {
+    padding: 0 1rem;
+}
+
+.comments{
+    position: absolute;
+    top: 130px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    overflow: auto;
+    list-style: none;
+    padding: 1rem;
+    margin: 0;
+}
+
+.comments canvas {
+    width: 13rem;
+}
+.comments canvas {
+    cursor: pointer;
+}
+.comments canvas:hover {
+    outline: 1px solid rgba(214, 214, 214, 0.8);
+}
+
+#popup {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+}
+#popup.show {
+    display: block;
+}
 </style>
 </head>
 <body>
-    <iframe class="comment" src="http://komorebi57.github.io/yours/comment" width="300px" align="right" frameborder="0"> </iframe>
-
-    <canvas>
+    <canvas id="main">
     </canvas>
     
-
+    <div class="comment-panel">
+        <h2>Comments</h2>
+        <form id="comment-form">
+            <textarea></textarea>
+            <input type="submit" value="등록">
+        </form>
+        <ul class="comments">
+        </ul>
+    </div>
+    
+    <canvas id="popup"></canvas>
 </body>
 </html>
-
-
-
