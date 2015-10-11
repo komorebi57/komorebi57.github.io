@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script src="howler.js"></script>
+<script>
+var ctx;
+var points = [
+    {
+        x: 0.15,
+        y: 0.5,
+        color: "rgb(0, 255, 230)",
+        sound: new Howl({
+            urls: ['wind.mp3'],
+            loop: true
+        })
+    },
+    {
+        x: 0.8,
+        y: 0.8,
+        color: "rgb(0, 200, 155)",
+        sound: new Howl({
+            urls:['babbling.mp3'],
+            loop: true
+
+        })  
+    },
+    {
+        x: 0.4,
+        y: 0.2,
+        color: "rgb(200, 20, 155)",
+        sound: new Howl({
+            urls:['tinkle.mp3'],
+            loop: true
+        })
+    },
+    {   
+        x: 0.85,
+        y: 0.5,
+        color: "rgb(200, 0, 255)",
+        sound: new Howl({
+            urls:['keyboard.mp3'],
+            loop: true
+        })
+    },
+    {
+        x: 0.3,
+        y: 0.8,
+        color: "rgba(255, 255, 255, 0)",
+        sound: new Howl({
+            urls:[],
+            loop: false
+        })     
+    }    
+];
+
+var lines = [
+    { //하늘보라
+        start: 0,
+        end: 3,
+        initGradient0: 'rgb(0, 255, 230)',
+        initGradient1: 'rgb(200, 0, 255)',
+        moveGradient0: 'rgb(col1, 255, col1)',
+        moveGradient1: 'rgb(col1, 0, 255)'
+    },
+    { //하늘자주       
+        start: 0,
+        end: 2,
+        initGradient0: 'rgb(250, 225, 230)',
+        initGradient1: 'rgb(190, 100, 255)',
+        moveGradient0: 'rgb(255, 100, col2)',
+        moveGradient1: 'rgb(255, col3, 0)'
+    },
+    { //자주투명
+        start: 2,
+        end: 4,
+        initGradient0: 'rgb(100, 225, 230)',
+        initGradient1: 'rgb(50, 250, 55)',
+        moveGradient0: 'rgb(col1, 250, col3)',
+        moveGradient1: 'rgb(180, 0, col3)'
+    },
+    { 
+        //민트자주
+        start: 2,
+        end: 1,
+        initGradient0: 'rgb(200, 100, 200)',
+        initGradient1: 'rgb(250, 10, 55)',
+        moveGradient0: 'rgb(col3, 100, col1)',
+        moveGradient1: 'rgb(80, 0, col3)'
+    },
+    {
+        //하늘민트
+        start: 1,
+        end: 0,
+        initGradient0: 'rgb(250, 100, 150)',
+        initGradient1: 'rgb(200, 50, 250)',
+        moveGradient0: 'rgb(col3, 0, col2)',
+        moveGradient1: 'rgb(120, col3, 100)'    
+    }
+];
+
+var sfx = [
+    {
+        sound: new Howl({urls: ['bee.mp3']}),
+        x: 0.5,
+        y: 0.5,
+        size: 30,
+        color: "red",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['cat.mp3']}),
+        x: 0.8,
+        y: 0.2,
+        size: 30,
+        color: "yellow",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['cats.mp3']}),
+        x: 0.8,
+        y: 0.5,
+        size: 30,
+        color: "black",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['cow.mp3']}),
+        x: 0.8,
+        y: 0.2,
+        size: 30,
+        color: "yellow",
+        duration: 3.5
+    },
+    {  sound: new Howl({urls: ['dogs.mp3']}),
+        x: 0.2,
+        y: 0.3,
+        size: 30,
+        color: "#ffae00",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['duck.mp3']}),
+        x: 0.8,
+        y: 0.2,
+        size: 30,
+        color: "#fff5a0",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['elephant.mp3']}),
+        x: 0.7,
+        y: 0.55,
+        size: 30,
+        color: "#94bde7",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['gg.mp3']}),
+        x: 0.75,
+        y: 0.7,
+        size: 30,
+        color: "#00ff96",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['horse.mp3']}),
+        x: 0.75,
+        y: 0.7,
+        size: 30,
+        color: "#00ff96",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['lion.mp3']}),
+        x: 0.9,
+        y: 0.6,
+        size: 30,
+        color: "#ff5400",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['lion2.mp3']}),
+        x: 0.9,
+        y: 0.4,
+        size: 30,
+        color: "#a95830",
+        duration: 3.5
+    },
+    {   sound: new Howl({urls: ['owl.mp3']}),
+        x: 0.5,
+        y: 0.4,
+        size: 30,
+        color: "#a98830",
+        duration: 3.5
+    }
+];
+
+var main = function() {
+    for(var i = 0; i < points.length; i++) {
+        points[i].sound.play();
+    }
+    
+    var c_canvas = document.getElementById("c");
+    c_canvas.width = window.innerWidth;
+    c_canvas.height = window.innerHeight;
+    
+    ctx = c.getContext("2d");
+    
+    // 선
+    for(var i = 0; i < lines.length; i++){
+        ctx.beginPath();
+        gradient = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+        gradient.addColorStop(0, lines[i].initGradient0);
+        gradient.addColorStop(1, lines[i].initGradient1);  
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth=9;
+        ctx.moveTo(window.innerWidth * points[lines[i].start].x, window.innerHeight * points[lines[i].start].y);
+        ctx.lineTo(window.innerWidth * points[lines[i].end].x, window.innerHeight * points[lines[i].end].y);
+        ctx.stroke();
+    }
+    
+    // 원
+    for(var i = 0; i < points.length; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = points[i].color;
+        ctx.arc(window.innerWidth * points[i].x, window.innerHeight * points[i].y, 16, 0, 2.0 * Math.PI); 
+        ctx.fill();
+
+    }
+};
+
+var key = function() {
+    var fx = sfx[Math.floor(Math.random() * sfx.length)];
+    fx.sound.play();
+};
+
+var replaceColors = function(source, col1, col2, col3) {
+    return source.replace(/col1/g, col1).replace(/col2/g, col2).replace(/col3/g, col3);
+}
+
+var move = function(e) {
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    
+    for(var i = 0; i < points.length; i++) {
+        var x = window.innerWidth * points[i].x - e.x;
+        var y = window.innerHeight * points[i].y - e.y; 
+        var v = Math.sqrt(x*x + y*y) / window.innerWidth;
+        points[i].sound.volume(1 - Math.pow(v, 0.3));
+    }
+    
+    //선 그라데이션
+    var col1 = Math.floor(e.x * 0.4);
+    var col2 = Math.floor(e.x * 0.9);
+    var col3 = Math.floor(e.y * 0.8);
+    
+    for(var i = 0; i < lines.length; i++){
+        ctx.beginPath();
+        gradient = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
+        gradient.addColorStop(0, replaceColors(lines[i].moveGradient0, col1, col2, col3));
+        gradient.addColorStop(1, replaceColors(lines[i].moveGradient1, col1, col2, col3));  
+        ctx.strokeStyle = gradient;
+        ctx.lineWidth=9;
+        ctx.moveTo(window.innerWidth * points[lines[i].start].x, window.innerHeight * points[lines[i].start].y);
+        ctx.lineTo(window.innerWidth * points[lines[i].end].x, window.innerHeight * points[lines[i].end].y);
+        ctx.stroke();
+
+    }
+
+    //원
+    for(var i = 0; i < points.length; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = points[i].color;
+        ctx.arc(window.innerWidth * points[i].x, window.innerHeight * points[i].y, 16, 0, 2.0 * Math.PI); 
+        ctx.fill();
+    }
+};
+    
+window.addEventListener('load', main);
+window.addEventListener('mousemove', move);
+window.addEventListener('keydown', key);
+window.addEventListener('resize', main);
+</script>
+
+<style>
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+</style>
+</head>
+<body>
+    <canvas id="c">
+    </canvas>
+</body>
+</html>

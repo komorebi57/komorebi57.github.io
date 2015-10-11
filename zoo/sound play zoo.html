@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script src="howler.js"></script>
+<script>
+var bg = new Howl({
+    urls: ['wind.mp3'],
+    loop: true
+});
+    
+var sfx = [
+    new Howl({urls: ['bee.mp3']}),
+    new Howl({urls: ['cat.mp3']}),
+    new Howl({urls: ['dogs.mp3']}),
+    new Howl({urls: ['duck.mp3']}),
+    new Howl({urls: ['elephant.mp3']}),
+    new Howl({urls: ['gg.mp3']}),
+    new Howl({urls: ['lion.mp3']}),
+    new Howl({urls: ['lion2.mp3']}),
+    new Howl({urls: ['monkeys.mp3']}),
+    new Howl({urls: ['pig.mp3']}),
+    new Howl({urls: ['cow.mp3']}),
+    new Howl({urls: ['horse.mp3']}),
+    new Howl({urls: ['sheep.mp3']}),
+    new Howl({urls: ['owl.mp3']}),
+    new Howl({urls: ['warbling.mp3']}),
+    new Howl({urls: ['cats.mp3']})
+];
+
+var main = function() {
+    bg.play();
+};
+var move = function(e) {
+    var vol = e.x / 1000;
+    bg.volume(vol);
+};
+
+    var key = function() {
+    sfx[Math.floor(Math.random() * sfx.length)].play();
+    
+};
+    
+
+window.addEventListener('load', main);
+window.addEventListener('mousemove', move);
+window.addEventListener('keydown', key);
+    
+</script>
+<style>
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+    background-image: url(sea.jpg);
+    background-size: 100%;
+}
+    
+canvas {
+}
+</style>
+</head>
+<body>
+    <canvas>
+    </canvas>
+</body>
+</html>
+
+
+
