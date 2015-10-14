@@ -58,24 +58,18 @@ var lines = [
     { //하늘보라
         start: 0,
         end: 3,
-        initGradient0: 'rgb(0, 255, 230)',
-        initGradient1: 'rgb(200, 0, 255)',
         moveGradient0: 'rgb(col1, 255, col1)',
         moveGradient1: 'rgb(col1, 0, 255)'
     },
     { //하늘자주       
         start: 0,
         end: 2,
-        initGradient0: 'rgb(250, 225, 230)',
-        initGradient1: 'rgb(190, 100, 255)',
         moveGradient0: 'rgb(255, 100, col2)',
         moveGradient1: 'rgb(255, col3, 0)'
     },
     { //자주투명
         start: 2,
         end: 4,
-        initGradient0: 'rgb(100, 225, 230)',
-        initGradient1: 'rgb(50, 250, 55)',
         moveGradient0: 'rgb(col1, 250, col3)',
         moveGradient1: 'rgb(180, 0, col3)'
     },
@@ -83,8 +77,6 @@ var lines = [
         //민트자주
         start: 2,
         end: 1,
-        initGradient0: 'rgb(200, 100, 200)',
-        initGradient1: 'rgb(250, 10, 55)',
         moveGradient0: 'rgb(col3, 100, col1)',
         moveGradient1: 'rgb(80, 0, col3)'
     },
@@ -92,8 +84,6 @@ var lines = [
         //하늘민트
         start: 1,
         end: 0,
-        initGradient0: 'rgb(250, 100, 150)',
-        initGradient1: 'rgb(200, 50, 250)',
         moveGradient0: 'rgb(col3, 0, col2)',
         moveGradient1: 'rgb(120, col3, 100)'    
     }
@@ -105,88 +95,94 @@ var sfx = [
         x: 0.5,
         y: 0.5,
         size: 30,
-        color: "red",
+        color:'rgb(250, 55, 10)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['cat.mp3']}),
-        x: 0.8,
+        x: 0.1,
         y: 0.2,
         size: 30,
-        color: "yellow",
+        color: 'rgb(20, 5, 150)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['cats.mp3']}),
-        x: 0.8,
-        y: 0.5,
+        x: 0.6,
+        y: 0.85,
         size: 30,
-        color: "black",
+        color: 'rgb(250, 255, 10)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['cow.mp3']}),
         x: 0.8,
         y: 0.2,
         size: 30,
-        color: "yellow",
+        color: 'rgb(250, 100, 150)',
         duration: 3.5
     },
     {  sound: new Howl({urls: ['dogs.mp3']}),
         x: 0.2,
-        y: 0.3,
+        y: 0.8,
         size: 30,
-        color: "#ffae00",
+        color: 'rgb(5, 150, 250)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['duck.mp3']}),
-        x: 0.8,
+        x: 0.2,
         y: 0.2,
         size: 30,
-        color: "#fff5a0",
+        color: 'rgb(90, 205, 100)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['elephant.mp3']}),
         x: 0.7,
         y: 0.55,
         size: 30,
-        color: "#94bde7",
+        color: 'rgb(50, 155, 10)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['gg.mp3']}),
-        x: 0.75,
+        x: 0.35,
         y: 0.7,
         size: 30,
-        color: "#00ff96",
+        color: 'rgb(50, 55, 200)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['horse.mp3']}),
         x: 0.75,
         y: 0.7,
         size: 30,
-        color: "#00ff96",
+        color: 'rgb(120, 20, 120)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['lion.mp3']}),
         x: 0.9,
         y: 0.6,
         size: 30,
-        color: "#ff5400",
+        color: 'rgb(90, 55, 150)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['lion2.mp3']}),
         x: 0.9,
         y: 0.4,
         size: 30,
-        color: "#a95830",
+        color: 'rgb(130, 150, 190)',
         duration: 3.5
     },
     {   sound: new Howl({urls: ['owl.mp3']}),
-        x: 0.5,
+        x: 0.2,
         y: 0.4,
         size: 30,
-        color: "#a98830",
+        color: 'rgb(80, 5, 20)',
         duration: 3.5
     }
 ];
+    
+var mouse = {
+    x: Math.floor(window.innerWidth / 2),
+    y: Math.floor(window.innerHeight / 2)
+};
 
+    
 var main = function() {
     for(var i = 0; i < points.length; i++) {
         points[i].sound.play();
@@ -195,55 +191,53 @@ var main = function() {
     var c_canvas = document.getElementById("c");
     c_canvas.width = window.innerWidth;
     c_canvas.height = window.innerHeight;
-    
     ctx = c.getContext("2d");
     
-    // 선
-    for(var i = 0; i < lines.length; i++){
-        ctx.beginPath();
-        gradient = ctx.createLinearGradient(0, 0, window.innerWidth, window.innerHeight);
-        gradient.addColorStop(0, lines[i].initGradient0);
-        gradient.addColorStop(1, lines[i].initGradient1);  
-        ctx.strokeStyle = gradient;
-        ctx.lineWidth=9;
-        ctx.moveTo(window.innerWidth * points[lines[i].start].x, window.innerHeight * points[lines[i].start].y);
-        ctx.lineTo(window.innerWidth * points[lines[i].end].x, window.innerHeight * points[lines[i].end].y);
-        ctx.stroke();
-    }
-    
-    // 원
-    for(var i = 0; i < points.length; i++) {
-        ctx.beginPath();
-        ctx.fillStyle = points[i].color;
-        ctx.arc(window.innerWidth * points[i].x, window.innerHeight * points[i].y, 16, 0, 2.0 * Math.PI); 
-        ctx.fill();
-
-    }
+    redraw();
 };
 
 var key = function() {
     var fx = sfx[Math.floor(Math.random() * sfx.length)];
     fx.sound.play();
+    
+    for(var i = 0; i < sfx.length; i++){
+        ctx.beginPath();
+        ctx.fillStyle = sfx[i].color;  
+        ctx.arc(window.innerWidth * sfx[i].x, window.innerHeight * sfx[i].y, 16, 0, 2.0 * Math.PI);
+        ctx.fill();
+
+    }        
 };
+    
 
 var replaceColors = function(source, col1, col2, col3) {
     return source.replace(/col1/g, col1).replace(/col2/g, col2).replace(/col3/g, col3);
 }
 
+
+
 var move = function(e) {
+    mouse.x = e.x;
+    mouse.y = e.y;
+    redraw();
+    
+ }     
+
+
+var redraw = function() {
     ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
     
     for(var i = 0; i < points.length; i++) {
-        var x = window.innerWidth * points[i].x - e.x;
-        var y = window.innerHeight * points[i].y - e.y; 
+        var x = window.innerWidth * points[i].x - mouse.x;
+        var y = window.innerHeight * points[i].y - mouse.y; 
         var v = Math.sqrt(x*x + y*y) / window.innerWidth;
         points[i].sound.volume(1 - Math.pow(v, 0.3));
     }
     
     //선 그라데이션
-    var col1 = Math.floor(e.x * 0.4);
-    var col2 = Math.floor(e.x * 0.9);
-    var col3 = Math.floor(e.y * 0.8);
+    var col1 = Math.floor(mouse.x * 0.4);
+    var col2 = Math.floor(mouse.x * 0.9);
+    var col3 = Math.floor(mouse.y * 0.8);
     
     for(var i = 0; i < lines.length; i++){
         ctx.beginPath();
@@ -264,13 +258,15 @@ var move = function(e) {
         ctx.fillStyle = points[i].color;
         ctx.arc(window.innerWidth * points[i].x, window.innerHeight * points[i].y, 16, 0, 2.0 * Math.PI); 
         ctx.fill();
+        
     }
 };
-    
+
 window.addEventListener('load', main);
 window.addEventListener('mousemove', move);
 window.addEventListener('keydown', key);
 window.addEventListener('resize', main);
+
 </script>
 
 <style>
