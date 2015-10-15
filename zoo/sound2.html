@@ -195,25 +195,24 @@ var main = function() {
     
     redraw();
 };
+    
 
 var key = function() {
-    var fx = sfx[Math.floor(Math.random() * sfx.length)];
-    fx.sound.play();
-    
-    for(var i = 0; i < sfx.length; i++){
-        ctx.beginPath();
-        ctx.fillStyle = sfx[i].color;  
-        ctx.arc(window.innerWidth * sfx[i].x, window.innerHeight * sfx[i].y, 16, 0, 2.0 * Math.PI);
-        ctx.fill();
+    var fx = Math.floor(Math.random() * sfx.length);
+    sfx[fx].sound.play();
 
-    }        
-};
+     for(var i = 0; i < sfx.length; i++){
+            ctx.beginPath();
+            ctx.fillStyle = sfx[fx].color;  
+            ctx.arc(window.innerWidth * sfx[fx].x, window.innerHeight * sfx[fx].y, 16, 0, 2.0 * Math.PI);
+            ctx.fill();
+}         
+};    
     
-
+    
 var replaceColors = function(source, col1, col2, col3) {
     return source.replace(/col1/g, col1).replace(/col2/g, col2).replace(/col3/g, col3);
 }
-
 
 
 var move = function(e) {
