@@ -94,86 +94,98 @@ var sfx = [
         sound: new Howl({urls: ['bee.mp3']}),
         x: 0.5,
         y: 0.5,
-        size: 30,
+        size: 16,
         color:'rgb(250, 55, 10)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['cat.mp3']}),
         x: 0.1,
         y: 0.2,
-        size: 30,
+        size: 16,
         color: 'rgb(20, 5, 150)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['cats.mp3']}),
         x: 0.6,
         y: 0.85,
-        size: 30,
+        size: 16,
         color: 'rgb(250, 255, 10)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['cow.mp3']}),
         x: 0.8,
         y: 0.2,
-        size: 30,
+        size: 20,
         color: 'rgb(250, 100, 150)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {  sound: new Howl({urls: ['dogs.mp3']}),
         x: 0.2,
         y: 0.8,
-        size: 30,
+        size: 16,
         color: 'rgb(150, 240, 250)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['duck.mp3']}),
         x: 0.2,
         y: 0.2,
-        size: 30,
+        size: 16,
         color: 'rgb(90, 205, 100)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['elephant.mp3']}),
         x: 0.7,
         y: 0.55,
-        size: 30,
+        size: 16,
         color: 'rgb(130, 80, 10)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['gg.mp3']}),
         x: 0.35,
         y: 0.7,
-        size: 30,
+        size: 16,
         color: 'rgb(200, 100, 120)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['horse.mp3']}),
         x: 0.75,
         y: 0.7,
-        size: 30,
+        size: 16,
         color: 'rgb(120, 20, 120)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['lion.mp3']}),
         x: 0.9,
         y: 0.6,
-        size: 30,
+        size: 16,
         color: 'rgb(200, 255, 80)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['lion2.mp3']}),
         x: 0.9,
         y: 0.4,
-        size: 30,
+        size: 16,
         color: 'rgb(130, 150, 190)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     },
     {   sound: new Howl({urls: ['owl.mp3']}),
         x: 0.2,
         y: 0.4,
-        size: 30,
+        size: 16,
         color: 'rgb(80, 5, 20)',
-        duration: 3.5
+        duration: 3.5,
+        time: null
     }
 ];
     
@@ -193,20 +205,14 @@ var main = function() {
     c_canvas.height = window.innerHeight;
     ctx = c.getContext("2d");
     
-    redraw();
+    window.requestAnimationFrame(redraw);
 };
     
 
 var key = function() {
     var fx = Math.floor(Math.random() * sfx.length);
     sfx[fx].sound.play();
-
-     for(var i = 0; i < sfx.length; i++){
-            ctx.beginPath();
-            ctx.fillStyle = sfx[fx].color;  
-            ctx.arc(window.innerWidth * sfx[fx].x, window.innerHeight * sfx[fx].y, 16, 0, 2.0 * Math.PI);
-            ctx.fill();
-}         
+    sfx[fx].time = new Date();
 };    
     
     
@@ -224,8 +230,10 @@ var move = function(e) {
 
 
 var redraw = function() {
-    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    window.requestAnimationFrame(redraw);
     
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        
     for(var i = 0; i < points.length; i++) {
         var x = window.innerWidth * points[i].x - mouse.x;
         var y = window.innerHeight * points[i].y - mouse.y; 
@@ -257,9 +265,21 @@ var redraw = function() {
         ctx.fillStyle = points[i].color;
         ctx.arc(window.innerWidth * points[i].x, window.innerHeight * points[i].y, 16, 0, 2.0 * Math.PI); 
         ctx.fill();
-        
     }
+    
+    var now = new Date();
+    for (var i = 0; i < sfx.length; i++) {
+        if(sfx[i].time === null) continue;
+        if(now - sfx[i].time > sfx[i].duration * 1000) continue;
+        var small = 1.4 - (now - sfx[i].time)/3500; 
+        
+        ctx.beginPath();
+        ctx.fillStyle = sfx[i].color;  
+        ctx.arc(window.innerWidth * sfx[i].x, window.innerHeight * sfx[i].y, sfx[i].size * small, 0, 2.0 * Math.PI);
+        ctx.fill();
+    }    
 };
+    
 
 window.addEventListener('load', main);
 window.addEventListener('mousemove', move);
