@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Meaningless Numbers</title>
+<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+<script>
+$(function() {
+    function applyAll(f) {
+        $('.num').each(function() {
+            var $this = $(this);
+            if(f(+$this.text())) {
+                $this.css('display', 'block');
+            } else {
+                $this.css('display', 'none');
+            }
+        });
+    }
+
+    for(var i = 1; i <= 100; i++) {
+        $num = $('<div class="num">' + i + '</div>');
+        $('body').append($num);
+        $num.css('top', (Math.random() * 85) + '%');
+        $num.css('left', (Math.random() * 90) + '%');
+    }
+    
+    var criteria = function(n) {
+        return n <= 10;
+    };
+    
+    applyAll(function(n) {return n <= 10;});
+    
+    var turn = 0;
+    $('.num').on('click', function(e) {
+        var $num = $(e.target);
+        var num = +$num.text();
+        if(num === 100) {
+            applyAll(function(n) {return n <= 10;});
+        } else if(turn % 2 === 0) {
+            var digit = num % 10;
+            applyAll(function(n) {return n % 10 === digit;});
+        } else {
+            var digit = +$num.text().substr(0, 1);
+            applyAll(function(n) {return n >= 10 && Math.floor(n / 10) === digit;});
+        }
+
+        turn++;
+    });
+});
+    
+    
+</script>
+<style>
+html {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+body {
+    font-family: "Helvetica";
+    font-size: 40px;
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+.num {
+    position: absolute;
+    padding: 25px;
+  
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+    
+</body>
+</html>
