@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script>
+var canvas;
+var width;
+var height;
+var ctx;
+
+window.addEventListener('load', function() {
+    canvas = document.querySelector('canvas');
+    resize();
+    update();
+    
+    canvas.addEventListener('touchStart', update);
+});
+
+window.addEventListener('resize', function() {
+    resize();
+    update();
+});
+
+window.addEventListener('click', function() {
+});
+
+function resize() {
+    width = window.innerWidth;
+    height = window.innerHeight;
+    ctx = canvas.getContext('2d');
+    canvas.width = width;
+    canvas.height = height;
+}
+    
+function random(low, high) {
+    var r = Math.random();
+    r = r * (high - low) + low;
+    return r;
+}
+
+function line(x1, y1, x2, y2) {
+    offctx.beginPath();
+    offctx.moveTo(x1, y1);
+    offctx.lineTo(x2, y2);
+    offctx.stroke();
+}
+function point(x, y) {
+    offctx.strokeRect(x, y, 1, 1);
+}
+    
+function update() {
+    // offline canvas에 무늬 그리기
+    var offcanvas = document.createElement('canvas');
+    offcanvas.width = width;
+    offcanvas.height = height;
+    offctx = offcanvas.getContext('2d');
+    offctx.strokeStyle = 'rgb(238, 255, 3)';
+    offctx.strokeWeight = 2;
+
+    var gridw = 40;
+    var gridh = 40;
+    
+    
+    var drawSymbol1 = function(x, y) {
+        
+        
+        // 십자가
+        line(x + gridw * 0.5, y, x + gridw * 0.5, y + gridh);
+        line(x, y + gridh * 0.5, x + gridw, y + gridh * 0.5);
+
+        // 45도 돌아간 십자가
+        line(x + gridw * 0.25, y + gridh * 0.25, x + gridw * 0.75, y + gridh * 0.75);
+        line(x + gridw * 0.75, y + gridh * 0.25, x + gridw * 0.25, y + gridh * 0.75);
+
+        // 다이아몬드
+        line(x + gridw * 0.5, y, x + gridw, y + gridh * 0.5);
+        line(x + gridw, y + gridh * 0.5, x + gridw * 0.5, y + gridh);
+        line(x + gridw * 0.5, y + gridh, x, y + gridh * 0.5);
+        line(x, y + gridh * 0.5, x + gridw * 0.5, y);
+
+
+    };
+
+    var drawSymbol2 = function(x, y) {
+
+        // 점없는 다이아몬드
+         line(x + gridw * 0.5, y, x + gridw, y + gridh * 0.5);
+        line(x + gridw, y + gridh * 0.5, x + gridw * 0.5, y + gridh);
+        line(x + gridw * 0.5, y + gridh, x, y + gridh * 0.5);
+        line(x, y + gridh * 0.5, x + gridw * 0.5, y);
+
+        // 점
+        point(x + gridw * 0.5, y + gridw * 0.5);
+
+            //네모
+         line(x + gridw, y, x + gridw, y + gridh);
+        line(x + gridw, y + gridh, x, y + gridh);
+        line(x + gridw * 0, y + gridh, x, y + gridh * 0);
+        line(x, y + gridh * 0, x + gridw, y);
+    };
+
+    for(var x = 0; x < width; x += gridw) {
+        for(var y = 0; y < height; y += gridh) {
+            var yoffset = 0;
+            if(x % (gridw * 2) === 0) {
+                yoffset = gridh * 0.5;
+            }
+
+            if(random(0, width) < x) {
+                continue;
+            }
+
+            if(y % (gridh * 2) === 0) {
+                drawSymbol1(x, y + yoffset);
+            } else {
+                drawSymbol2(x, y + yoffset);
+            }
+        }
+    }
+    // 화면에 gradient 넣고 무늬랑 겹치기
+    var grd = ctx.createLinearGradient(0, 0, width, 0);
+    grd.addColorStop(0, 'rgb(255, 170, 170)');
+    grd.addColorStop(1, 'rgb(255, 0, 102)');
+    ctx.fillStyle = grd;
+    ctx.fillRect(0, 0, width, height);
+    
+    ctx.globalCompositeOperation = 'destination-in';
+    ctx.drawImage(offcanvas, 0, 0, width, height);
+
+    // 배경에 바탕색 깔기
+    ctx.globalCompositeOperation = 'destination-over';
+    ctx.fillStyle = 'rgb(62, 0, 103)';
+    ctx.fillRect(0, 0, width, height);
+}
+</script>
+<style>
+html, body {
+    height: 100%;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+    
+canvas {
+}
+</style>
+</head>
+<body>
+    <canvas>
+    </canvas>
+</body>
+</html>
+
+
+
