@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script>
+    var c;
+    var ctx;
+    var w;
+    var h;
+    var active = true;
+
+    window.addEventListener('load', function() {
+        c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        w = window.innerWidth;
+        h = window.innerHeight;
+        ctx.canvas.width  = w;
+        ctx.canvas.height = h;
+        window.requestAnimationFrame(update);
+    });
+        
+    window.addEventListener('click', function() {
+        active = !active;
+    });
+
+    var f = 0;
+
+    var update = function() {
+        if(active) {
+            ctx.fillStyle = 'rgba(240,240,255,0.005)';
+            ctx.fillRect(0, 0, w, h);
+
+            var x = Math.cos(Math.random() * Math.PI * 0.5) * w;
+            var y = h + 20;
+            var angle = (80 + Math.random() * 20) / 360 * Math.PI * 2;
+            var length = 40 + Math.random() * 40;
+            var thick = 3 + Math.random() * 3;
+            var trans = 1;
+            tree(x, y, angle, length, thick, trans);
+        }
+
+        window.requestAnimationFrame(update);
+        f++;
+    }
+    
+    var tree = function(x, y, a, l, thick, t) {
+        if(thick < 0.1 || l < 3) {
+            return;
+        }
+        if(x < 0 || x > w || y < 0) {
+            return;
+        }
+
+        var x2 = x+Math.cos(a) * l;
+        var y2 = y-Math.sin(a) * l;
+
+        ctx.strokeStyle = '#FFF';
+        ctx.beginPath();
+        ctx.moveTo(x, y-2);
+        ctx.lineTo(x2, y2-2);
+        ctx.lineWidth = Math.min(2, thick * 1.5);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(77, 8, 8, ' + (t * (1 - (Math.random() - 0.5) * 0.4) * 255) + ')';
+        ctx.moveTo(x, y);
+        ctx.lineTo(x2, y2);
+        ctx.lineWidth = thick;
+        ctx.stroke();
+
+        if(Math.random() < Math.min(0.5, 1 - l * 0.02)) {
+            tree(x2, y2, a + 0.25, l * (Math.random() * 0.3 + 0.7), thick * 0.6, t);
+            tree(x2, y2, a - 0.25, l * (Math.random() * 0.3 + 0.7), thick * 0.6, t);
+        } else {
+            if(a > Math.PI * 0.5) {
+                tree(x2, y2, a + Math.random() * 0.2 - 0.11, l * (Math.random() * 0.2 + 0.8), thick, t);
+            } else {
+                tree(x2, y2, a + Math.random() * 0.2 - 0.09, l * (Math.random() * 0.2 + 0.8), thick, t);
+            }
+        }
+    };
+    </script>
+    <style>
+    html, body, canvas {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    </body>
+</html>
