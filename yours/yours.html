@@ -39,18 +39,26 @@ function tearApart(element) {
 @import url(http://fonts.googleapis.com/css?family=Oswald:300);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
 
-    body{width: auto; overflow: hidden;}
+    body{
+    overflow: hidden;
+    margin:0 auto;
+    }
     
-    .logo{padding-left: 16%; margin-top: 4%;}
-    .logo img{width:45%;}
+ .main{
+     width: 100vh;
+     position: relative;
+}
+  
+    .logoimg{
+        width: 100vh;
+    }
     
-    .main{font-family: 'Hanna', sans-serif; text-align: center; letter-spacing :0.04em; font-size: 2em; margin: 0; color: rbb;}
     .eng{font-family: 'Oswald', sans-serif;}
     
-    .lefttag{list-style-type:none; position: absolute; top:80%; left:23%;}
-    .centertag{list-style-type:none; position: absolute; top: 8%; left : 30%;}
-    .righttag{list-style-type:none; position: absolute; top:30%; left:68%;}
-    .undertag{list-style-type:none; position: absolute; top:60%; left:66%;}
+    .lefttag{list-style-type:none; position: absolute; top:85vh; left:10vh;}
+    .centertag{list-style-type:none; position: absolute; top:2vh; left:40vh;}
+    .righttag{list-style-type:none; position: absolute; top:20vh; left:100vh;}
+    .undertag{list-style-type:none; position: absolute; top:60vh; left:95vh;}
      
      
     a{text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 1.2em; letter-spacing:1px;}
@@ -68,7 +76,7 @@ function tearApart(element) {
 </head>
 
 <body>
-
+<div class="main">
     <div class = "lefttag">
         <a href ="http://komorebi57.github.io/LOGOTYPE" target="_blank"><b class="blink">logo type</b></a></div>
     
@@ -82,9 +90,9 @@ function tearApart(element) {
         <a href = "http://komorebi57.github.io/zoo/sound2" target="_blank"><b class="blink">zoo</b></a></div>
     
     <div class = "logo">
-        <a href = "http://komorebi57.github.io/yours/yours"><img class="logo img" src="main.png" alt="logo type" align="absmiddle"></a></div>
+        <a href = "http://komorebi57.github.io/yours/yours"><img class="logoimg" src="main.png" alt="logo type" align="absmiddle"></a></div>
         
-
+    </div>
 </body>
 
 </html>
