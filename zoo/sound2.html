@@ -301,27 +301,45 @@ html, body {
     overflow: hidden;
 }
     
-    p{
-        text-align: right;
-        padding: 10px 20px 0 0;
-        margin: 0;
-        font-family: 'Oswald', sans-serif;
-        letter-spacing :0.04em; 
-        font-size: 1.2em;
+p {
+    text-align: right;
+    padding: 10px 20px 0 0;
+    margin: 0;
+    font-family: 'Oswald', sans-serif;
+    letter-spacing :0.04em; 
+    font-size: 1.2em;
 
-    };
+}
+
+.pic + div {
+    transform: translate(200px, 0);
+    transition: transform 1s;
+}
+.pic:hover + div {
+    transform: translate(0, 0);
+}
+.animal{
+    width: 180px;
     
+}
     
-    a{
-        color: black;
-    };
+.rightexplain{
+    position: absolute;
+    width: 200px;
+    top : 0px;
+    bottom: 0px;
+    right: 0px;
+}
     
 </style>
 </head>
-<body>    
-    <p><a href="animal.png" title="explanation" target="_blank" style="text-decoration:none">explanation</a></p>
+<body>        
     <canvas id="c">
     </canvas>
-
+    
+    <div class="rightexplain">
+        <p class="pic">explanation</p>
+        <div><img class="animal" src="animal.png" alt="explanation"></div>
+    </div>
 </body>
 </html>
