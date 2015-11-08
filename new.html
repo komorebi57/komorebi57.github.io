@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script>
+    var ctx;
+    var c;
+    window.addEventListener('load', function() {
+        c = document.getElementById('c');
+        ctx = c.getContext("2d");
+
+        update();
+ 
+    });
+        
+    function update(){
+        ctx.beginPath();
+        ctx.fillStyle = 'pink';
+        ctx.arc(100, 100, 3, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.closePath();
+
+    };
+        
+        
+    </script>
+    <style>
+    html, body, canvas {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    </body>
+</html>

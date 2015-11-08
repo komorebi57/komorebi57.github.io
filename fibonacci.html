@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <script>
+    var c;
+    var ctx;
+
+    window.addEventListener('load', function() {
+        c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        window.requestAnimationFrame(update);
+    });
+
+    var f = 0;
+    var a = 2;
+    var b = 0.009;
+
+    var update = function() {
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        ctx.canvas.width  = w;
+        ctx.canvas.height = h;
+        ctx.fillStyle = '#000';
+        ctx.fillRect(0, 0, w, h);
+
+        for(var theta = 0; theta < 240 * Math.PI; theta = theta + Math.PI * 0.11511) {
+            var x = a * Math.cos(theta + f) * Math.pow(Math.E, theta * b);
+            var y = a * Math.sin(theta + f) * Math.pow(Math.E, theta * b);
+            var size = Math.max(1, Math.pow(Math.E, theta * 0.004) - 3);
+            var col = Math.floor(55 + (Math.sin(theta * 0.11511 + f * 19) + 1) * 200);
+            ctx.fillStyle = 'rgb(' + col + ', ' + col + ', 255)';
+            ctx.fillRect(
+                w / 2 + x,
+                h / 2 - y,
+                size, size
+            );
+        }
+
+        window.requestAnimationFrame(update);
+        f += 0.008;
+    }
+    </script>
+    <style>
+    html, body, canvas {
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
+    </style>
+</head>
+<body>
+    <canvas id="c"></canvas>
+    </body>
+</html>
