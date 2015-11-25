@@ -40,9 +40,9 @@
             var ix = Math.floor(x / w * 100);
             var iy = Math.floor(y / h * 100);
             var cols = offctx.getImageData(ix, iy, 1, 1).data;
-            var cr = Math.min(255, Math.floor(cols[0] * 1.2));
+            var cr = Math.min(255, Math.floor(cols[0] * 1.3));
             var cg = Math.min(255, Math.floor(cols[1] * 1.1));
-            var cb = Math.min(255, Math.floor(cols[2] * 1.1));
+            var cb = Math.min(255, Math.floor(cols[2] * 1.2));
 
             ctx.beginPath();
             ctx.fillStyle = 'rgb(' + cr + ', ' + cg + ', ' + cb + ')';
