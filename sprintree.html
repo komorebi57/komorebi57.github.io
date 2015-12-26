@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    function main() {
+        var c = document.getElementById('c');
+        var ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        
+        var grd = ctx.createLinearGradient(0, 0, 0, innerHeight);
+        grd.addColorStop(0, '#e7feff');
+        grd.addColorStop(0.5, '#ffe7fb');
+        grd.addColorStop(1, '#d9c2d5');
+
+        ctx.fillStyle = grd;
+
+        //ctx.fillStyle = '#bbdfe0';
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        update(ctx);
+    }
+
+    var frame = 0;
+    function update(ctx) {
+        frame = frame + 1;
+        ctx.fillStyle = "rgba(255,255,255,0.015)";
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        
+        for(var i = 0; i < 5; i++) {
+            var x = Math.random() * window.innerWidth;
+            var y = window.innerHeight;
+            var angle = Math.random() * 20 - 10 + 90;
+            var len = Math.random() * 100 + 150;
+            tree(ctx, x, y, angle, len)
+        }
+
+        if(frame < 35) {
+            window.requestAnimationFrame(function() {
+                update(ctx);
+            });
+        }
+    }
+
+    function tree(ctx, x, y, angle, len) {
+        if(len < 5) return;
+
+        var x2 = x + Math.cos(angle / 360 * 2 * Math.PI) * len
+        var y2 = y - Math.sin(angle / 360 * 2 * Math.PI) * len
+
+        if(len < 100) {
+            ctx.beginPath();
+            ctx.lineWidth = len * 0.02;
+            ctx.strokeStyle = 'rgba(255, 182, 227, 0.8)';
+            ctx.moveTo(x, y - 2);
+            ctx.lineTo(x2, y2 - 2);
+            ctx.stroke();
+        }
+
+        ctx.beginPath();
+        ctx.lineWidth = len * 0.015;
+        ctx.strokeStyle = '#985f31';
+        ctx.moveTo(x, y);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+
+        var x3 = x + Math.cos(angle / 360 * 2 * Math.PI) * len * 0.95
+        var y3 = y - Math.sin(angle / 360 * 2 * Math.PI) * len * 0.95
+        var x4 = x + Math.cos(angle / 360 * 2 * Math.PI) * len * 0.7
+        var y4 = y - Math.sin(angle / 360 * 2 * Math.PI) * len * 0.7
+        
+        if(Math.random() > 0.3) {
+            tree(ctx, x3, y3, (Math.random() * 30 - 15) + angle + 15, len * (Math.random() * 0.2 + 0.5));
+            tree(ctx, x4, y4, (Math.random() * 30 - 15) + angle - 15, len * (Math.random() * 0.2 + 0.5));
+        } else {
+            tree(ctx, x3, y3, (Math.random() * 20 - 10) + angle, len * (Math.random() * 0.2 + 0.6));
+        }
+    }
+    window.addEventListener('load', main);
+    
+    
+    
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
