@@ -5,39 +5,70 @@
     var ctx;
     function main() {
         var c = document.getElementById('c');
-        var ctx = c.getContext('2d');
+        ctx = c.getContext('2d');
         c.width = window.innerWidth;
         c.height = window.innerHeight;
         
-        ctx.beginPath();
-        ctx.lineWidth = 3;
-        ctx.strokeStyle = 'blue';
+        for(var i = 0; i < 10; i++){
+            var rand = Math.random() * 1000 + 100;
+            var rand2 = Math.random() * 500 + 100;
+            flower(rand, rand2);            
+        }
+    }
+        
+    function flower(rand, rand2){
+            for(var i = 0; i < 19; i++){
+                var w = rand;
+                var h = rand2;
+                var ang = 20 * i
 
-        var angle = Math.random() * 20 - 10 + 90;
-        var len = Math.random() * 100 + 150;
-        
-        var w = Math.random() * window.innerWidth;
-        var h = window.innerHeight;
-        
-        var x2 = w + Math.cos(angle / 360 * 2 * Math.PI) * len
-        var y2 = h - Math.sin(angle / 360 * 2 * Math.PI) * len
-        
-        ctx.moveTo(w, h);
-        ctx.lineTo(x2, y2);
-        
-        var x3 = w + Math.cos(angle / 360 * 2 * Math.PI) * len * 0.95
-        var y3 = h - Math.sin(angle / 360 * 2 * Math.PI) * len * 0.95
-        var x4 = w + Math.cos(angle / 360 * 2 * Math.PI) * len * 0.7
-        var y4 = h - Math.sin(angle / 360 * 2 * Math.PI) * len * 0.7
-        
-        ctx.moveTo(x2, y2);
-        ctx.lineTo(200, 400);
+                var len = 20 * i * 0.15
+                var x = w + Math.cos(ang / 360 * 2 * Math.PI) * len
+                var y = h - Math.sin(ang / 360 * 2 * Math.PI) * len
+                ctx.beginPath();
+                ctx.lineWidth = 4;
+                ctx.strokeStyle = "rgba(255, " + (i * 15) + ", 200, 0.9)";
+                ctx.moveTo(w, h)
+                ctx.lineTo(x, y)
+                ctx.stroke();    
 
-        ctx.moveTo(x2, y2);
-        ctx.lineTo(600, 400);
+                var len2 = 15 * 20/i * 0.2
+                var x2 = x + Math.cos(ang / 360 * 2 * Math.PI) * len2
+                var y2 = y - Math.sin(ang / 360 * 2 * Math.PI) * len2
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(255, 150, " + (i * 15) + ", 0.8)";
+                ctx.moveTo(x, y)
+                ctx.lineTo(x2, y2)
+                ctx.stroke();    
 
-        ctx.stroke();
-         
+                var len3 = 20 * i * 0.15
+                var x3 = x2 + Math.cos((ang+20) / 360 * 2 * Math.PI) * len3
+                var y3 = y2 - Math.sin((ang+20) / 360 * 2 * Math.PI) * len3
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(255, 150, " + (i * 15) + ", 0.7)";
+                ctx.moveTo(x2, y2)
+                ctx.lineTo(x3, y3)
+                ctx.stroke();            
+
+                var len4 = 15 * 20/i * 0.2
+                var x4 = x3 + Math.cos((ang+45) / 360 * 2 * Math.PI) * len3
+                var y4 = y3 - Math.sin((ang+45) / 360 * 2 * Math.PI) * len3
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(255, " + (i * 20) + ", 0, 0.6)";
+                ctx.moveTo(x3, y3)
+                ctx.lineTo(x4, y4)
+                ctx.stroke();           
+
+                var len3 = 20 * i * 0.15
+                var x5 = x2 + Math.cos((ang+90) / 360 * 2 * Math.PI) * len3
+                var y5 = y2 - Math.sin((ang+90) / 360 * 2 * Math.PI) * len3
+                ctx.beginPath();
+                ctx.strokeStyle = "rgba(220, " + (i * 15) + ", 255, 0.5)";
+                ctx.moveTo(x4, y4)
+                ctx.lineTo(x5, y5)
+                ctx.stroke();      
+        }
+        
     }
     
     window.addEventListener('load', main);
