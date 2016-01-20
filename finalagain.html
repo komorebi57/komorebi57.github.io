@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        
+        var grd = ctx.createLinearGradient(0, 0, 0, innerHeight);
+        grd.addColorStop(0, '#330473');
+        grd.addColorStop(1, '#392dd7');
+
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+        for(var i = 0; i < 30; i++){
+
+                var x = Math.random() * 100 * 13 + 50;
+                var y = Math.random() * 100 * 3 + 50;
+                var len = Math.random() * 40 + 5
+            
+                tree(x, y, len);
+     }
+ }
+    
+    function tree(x, y, len){
+        for(i = 0; i < 9; i++){
+            var ang = 40 * i;
+            var ang2 = 90 * i;
+            
+            var x2 = x + Math.cos(ang/ 360 * 2 * Math.PI) * len;
+            var y2 = y - Math.sin(ang/ 360 * 2 * Math.PI) * len;
+            
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "white";
+            ctx.moveTo(x, y);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            
+            var x3 = x2 + Math.cos(45/ 360 * 2 * Math.PI) * 50;
+            var y3 = y2 - Math.sin(45/ 360 * 2 * Math.PI) * 50;
+            
+            ctx.beginPath();
+            ctx.lineWidth = 1;
+            ctx.strokeStyle = "skyblue";
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x3, y3);
+            ctx.stroke();            
+            
+            
+        }
+        
+        
+    }
+        
+
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
