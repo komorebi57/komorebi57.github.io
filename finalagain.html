@@ -11,8 +11,8 @@
         
         var grd = ctx.createLinearGradient(0, 0, 0, innerHeight);
         grd.addColorStop(0, '#330473');
-        grd.addColorStop(1, '#392dd7');
-
+        grd.addColorStop(1, '#392dd7');     
+        
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -29,35 +29,39 @@
     function tree(x, y, len){
         for(i = 0; i < 9; i++){
             var ang = 40 * i;
-            var ang2 = 90 * i;
-            
+            var x2 = x + Math.cos(ang/ 360 * 2 * Math.PI) * len;
+            var y2 = y - Math.sin(ang/ 360 * 2 * Math.PI) * len;
+
+            var x3 = x2 + Math.cos(45/ 360 * 2 * Math.PI) * 50;
+            var y3 = y2 - Math.sin(45/ 360 * 2 * Math.PI) * 50;
+            var linearGradient2 = ctx.createLinearGradient(x, y, x3, y3);
+            linearGradient2.addColorStop(0  , 'rgba(0, 255, 255, 1)');
+            linearGradient2.addColorStop(0.5, 'rgba(0, 255, 255, 0.5)');
+            linearGradient2.addColorStop(1  , 'rgba(0, 200, 0, 0)');
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = linearGradient2;
+            ctx.moveTo(x2, y2);
+            ctx.lineTo(x3, y3);
+            ctx.stroke();
+        }
+        for(i = 0; i < 9; i++){
+            var ang = 40 * i;
             var x2 = x + Math.cos(ang/ 360 * 2 * Math.PI) * len;
             var y2 = y - Math.sin(ang/ 360 * 2 * Math.PI) * len;
             
+            var linearGradient3 = ctx.createLinearGradient(x, y, x2, y2);
+            linearGradient3.addColorStop(0  , 'rgba(255, 255, 255, 0.4)');
+            linearGradient3.addColorStop(0.5, 'rgba(255, 255, 255, 0.7)');
+            linearGradient3.addColorStop(1  , 'rgba(255, 255, 255, 1)');
             ctx.beginPath();
             ctx.lineWidth = 2;
-            ctx.strokeStyle = "white";
+            ctx.strokeStyle = linearGradient3;
             ctx.moveTo(x, y);
             ctx.lineTo(x2, y2);
             ctx.stroke();
-            
-            var x3 = x2 + Math.cos(45/ 360 * 2 * Math.PI) * 50;
-            var y3 = y2 - Math.sin(45/ 360 * 2 * Math.PI) * 50;
-            
-            ctx.beginPath();
-            ctx.lineWidth = 1;
-            ctx.strokeStyle = "skyblue";
-            ctx.moveTo(x2, y2);
-            ctx.lineTo(x3, y3);
-            ctx.stroke();            
-            
-            
         }
-        
-        
     }
-        
-
     
     window.addEventListener('load', main);
 
