@@ -13,23 +13,14 @@
         arc2();
     
     }
-    
-    var colors = [
-        'rgba(90, 15, 230, 0.6)',
-        'rgba(10, 60, 200, 0.6)',
-        'rgba(0, 170, 255, 0.6)',
-        'rgba(80, 10, 190, 0.6)',
-        'rgba(40, 100, 170, 0.6)'
-    ]
-    
-    var colors2 = [
-        'rgba(50, 255, 170, 0.6)',
-        'rgba(35, 190, 20, 0.6)',
-        'rgba(0, 255, 5, 0.6)',
-        'rgba(0, 255, 150, 0.6)',
-        'rgba(255, 255, 0, 0.6)',
 
-]    
+    var colors = [
+        'rgba(255, 155, 215, 0.6)',
+        'rgba(255, 0, 90, 0.6)',
+        'rgba(225, 55, 230, 0.6)',
+        'rgba(255, 80, 0, 0.6)',
+        'rgba(255, 255, 255, 0.6)'
+    ]
     
     var x = 0;
     var dx = 5;
@@ -48,28 +39,29 @@
         
         x = x + dx;
         if(x > innerWidth || x < 0) {
-            dx = dx * -1;
+            dx = (Math.random() * 5 + 5) * (x < 0 ? 1 : -1);
             color1 = colors[Math.floor(Math.random() * colors.length)];
+
         }
         y = y + dy;
         if(y > innerHeight || y < 0) {
-            dy = dy * -1;
+            dy = (Math.random() * 5 + 5) * (y < 0 ? 1 : -1);
         }
   
         window.requestAnimationFrame(arc);
 
     }
     var x2 = 5;
-    var dx2 = 3;
+    var dx2 =10;
     var y2 = 5;
     var dy2 = 9;  
-    var color2 = colors2[0];
+    var color2 = 55
     
         function arc2() {
         //ctx.clearRect(0, 0, innerWidth, innerHeight);
  
         ctx.beginPath();
-        ctx.fillStyle =color2;
+        ctx.fillStyle = "rgba(" + (color2) + ", 150, 255, 0.5)";
         ctx.arc(x2, y2, 5, 0, 2.0 * Math.PI); 
         ctx.fill();
         ctx.closePath();        
@@ -82,7 +74,7 @@
         y2 = y2 + dy2;
         if(y2 > innerHeight || y2 < 0) {
             dy2 = dy2 * -1;
-            color2 = colors2[Math.floor(Math.random() * colors2.length)];
+            color2 = color2 * dy2 * 1.5
         }        
 
         window.requestAnimationFrame(arc2);
