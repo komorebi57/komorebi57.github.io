@@ -8,10 +8,18 @@
         ctx = c.getContext('2d');
         c.width = window.innerWidth;
         c.height = window.innerHeight;
-     
-       for(var i = 0; i < 10; i++){
-            var rand = Math.random() * 700 + 100;
-            var rand2 = Math.random() * 500 + 100;
+        
+        var grd = ctx.createLinearGradient(0, 0, innerWidth, innerHeight);
+        grd.addColorStop(0, '#1d0228');
+        grd.addColorStop(0.5, '#7c00af');
+        grd.addColorStop(1, '#1d0228');
+
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        
+       for(var i = 0; i < 1; i++){
+            var rand = window.innerWidth/2;
+            var rand2 = window.innerHeight/2;
             tree(rand, rand2);
     }
     
@@ -19,70 +27,146 @@
 }
     
     function tree(rand, rand2){
-        for(i = 0;  i < 2; i++){
-            var width = rand;
-            var height = rand2;    
-            var ang2 = 70;
+        for(i = 0;  i < 9; i++){
+            var x = rand;
+            var y = rand2;    
+            var ang2 = 40 * i;
             var len = 70;
 
-            var x2 = width + Math.cos(ang2/ 360 * 2 * Math.PI) * len
-            var y2 = height - Math.sin(ang2 / 360 * 2 * Math.PI) * len
+            var x2 = x + Math.cos(ang2/ 360 * 2 * Math.PI) * len
+            var y2 = y - Math.sin(ang2 / 360 * 2 * Math.PI) * len
 
             ctx.beginPath();
-            ctx.lineWidth = '1.5';
+            ctx.lineWidth = '3';
             //ctx.strokeStyle = "rgb(255, 150, " + (i * 10) + ")";
-            ctx.strokeStyle = 'red';
-            ctx.moveTo(width, height);
+            ctx.strokeStyle = '#00ffae';
+            ctx.moveTo(x, y);
             ctx.lineTo(x2, y2);
             ctx.stroke();
 
             
-            var ang3 =60;
+            var ang3 = 40 * i + 10;
 
-            var x3 = width + Math.cos(ang3 / 360 * 2 * Math.PI) * len
-            var y3 = height - Math.sin(ang3 / 360 * 2 * Math.PI) * len
+            var x3 = x + Math.cos(ang3 / 360 * 2 * Math.PI) * len
+            var y3 = y - Math.sin(ang3 / 360 * 2 * Math.PI) * len
 
             ctx.beginPath();
-            ctx.lineWidth = '1.5';
-            ctx.strokeStyle = 'blue';
-            ctx.moveTo(width, height);
+            ctx.strokeStyle = '#00ffae';
+            ctx.moveTo(x, y);
             ctx.lineTo(x3, y3);
             ctx.stroke();       
             
-            var ang4 = 50;
+            var ang4 = 40 * i + 10;
             var len2 = 70;
 
             var x4 = x2 +Math.cos(ang4 / 360 * 2 * Math.PI) * len2
             var y4 = y2 -(Math.sin(ang4 / 360 * 2 * Math.PI) * len2)
-
+            
+            var linearGradient4 = ctx.createLinearGradient(x2, y2, x4, y4);
+            linearGradient4.addColorStop(0  , 'rgba(0, 255, 174, 1)');
+            linearGradient4.addColorStop(1, 'rgba(0, 234, 255, 1)');
+            
             ctx.beginPath();
-            ctx.lineWidth = '1.5';
-            ctx.strokeStyle = 'orange';
+            ctx.strokeStyle = linearGradient4;
             ctx.moveTo(x2, y2);
             ctx.lineTo(x4, y4);
             ctx.stroke();            
             
-            var ang5 = 60;
-            var len2 = 70;
+            var ang5 = 40 * i;
 
             var x5 = x2 +Math.cos(ang5 / 360 * 2 * Math.PI) * len2
             var y5 = y2 -(Math.sin(ang5 / 360 * 2 * Math.PI) * len2)
+            
+            var linearGradient5 = ctx.createLinearGradient(x3, y3, x5, y5);
+            linearGradient5.addColorStop(0  , 'rgba(0, 255, 174, 1)');
+            linearGradient5.addColorStop(1, 'rgba(0, 234, 255, 1)');            
 
             ctx.beginPath();
-            ctx.lineWidth = '1.5';
-            ctx.strokeStyle = 'pink';
+            ctx.strokeStyle = linearGradient5;
             ctx.moveTo(x3, y3);
             ctx.lineTo(x5, y5);
             ctx.stroke();             
         
             ctx.beginPath();
-            ctx.lineWidth = '1.5';
-            ctx.strokeStyle = 'skyblue';
+            ctx.strokeStyle = '#00eaff';
             ctx.moveTo(x5, y5);
             ctx.lineTo(x4, y4);
             ctx.stroke();             
             
-   
+            var ang6 = 40 * i + 23;
+            var len6 = 100
+
+            var x6 = x +Math.cos(ang6 / 360 * 2 * Math.PI) * len6
+            var y6 = y -(Math.sin(ang6 / 360 * 2 * Math.PI) * len6)
+            
+            var linearGradient6 = ctx.createLinearGradient(x, y, x6, y6);
+            linearGradient6.addColorStop(0  , 'rgba(0, 255, 100, 1)');
+            linearGradient6.addColorStop(0.5, 'rgba(255, 255, 255, 1)');
+            linearGradient6.addColorStop(1  , 'rgba(0, 255, 100, 1)');
+            
+            ctx.beginPath();
+            ctx.lineWidth = '5';
+            ctx.strokeStyle = linearGradient6;
+            ctx.moveTo(x, y);
+            ctx.lineTo(x6, y6);
+            ctx.stroke();             
+        
+            var ang7 = 40 * i - 15;
+            var len7 = 100
+
+            var x7 = x6 + Math.cos(ang7 / 360 * 2 * Math.PI) * len7
+            var y7 = y6 -(Math.sin(ang7 / 360 * 2 * Math.PI) * len7)
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#00ff66';
+            ctx.moveTo(x6, y6);
+            ctx.lineTo(x7, y7);
+            ctx.stroke();
+            
+            var ang8 = 40 * i + 60;
+
+            var x8 = x6 + Math.cos(ang8 / 360 * 2 * Math.PI) * len7
+            var y8 = y6 -(Math.sin(ang8 / 360 * 2 * Math.PI) * len7)
+
+            ctx.beginPath();
+            ctx.strokeStyle = '#00ff66';
+            ctx.moveTo(x6, y6);
+            ctx.lineTo(x8, y8);
+            ctx.stroke();         
+            
+            var ang9 = 40 * i + 20;
+            var len9 = 150
+
+            var x9 = x8 + Math.cos(ang9 / 360 * 2 * Math.PI) * len9
+            var y9 = y8 -(Math.sin(ang9 / 360 * 2 * Math.PI) * len9)
+            
+            var linearGradient9 = ctx.createLinearGradient(x8, y8, x9, y9);
+            linearGradient9.addColorStop(0  , 'rgba(0, 255, 100, 1)');
+            linearGradient9.addColorStop(0.5, 'rgba(0, 255, 174, 0.5)');
+            linearGradient9.addColorStop(1  , 'rgba(0, 255, 174, 0.2)');            
+            
+            ctx.beginPath();
+            ctx.strokeStyle = linearGradient9;
+            ctx.moveTo(x8, y8);
+            ctx.lineTo(x9, y9);
+            ctx.stroke();
+            
+            var ang10 = 40 * i + 15;
+
+            var x10 = x7 + Math.cos(ang10 / 360 * 2 * Math.PI) * len9
+            var y10 = y7 -(Math.sin(ang10 / 360 * 2 * Math.PI) * len9)
+            
+            var linearGradient10 = ctx.createLinearGradient(x7, y7, x10, y10);
+            linearGradient10.addColorStop(0  , 'rgba(0, 255, 100, 1)');
+            linearGradient10.addColorStop(0.5, 'rgba(0, 255, 174, 0.5)');
+            linearGradient10.addColorStop(1  , 'rgba(0, 255, 174, 0.2)');
+            
+            ctx.beginPath();
+            ctx.strokeStyle = linearGradient10;
+            ctx.moveTo(x7, y7);
+            ctx.lineTo(x10, y10);
+            ctx.stroke();               
+            
         }
   }
 
