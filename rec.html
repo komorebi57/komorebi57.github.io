@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;  
+        rec(30, 30, 300, 300, 30, 60, '#FF0000', '#00FF00');
+//사인 코사인 좌표 다시지정
+        for(i=0; i<7; i++){
+            
+        };
+}
+function rec(x1, y1, x2, y2, len1, len2, col1, col2) {
+        var angle = Math.atan2(y2 - y1, x2 - x1) + Math.PI * 0.5;
+    
+        var x3 = Math.cos(angle) * len1 * 0.5 + x1;
+        var y3 = Math.sin(angle) * len1 * 0.5 + y1;
+
+        var x4 = Math.cos(angle + Math.PI) * len1 * 0.5 + x1;
+        var y4 = Math.sin(angle + Math.PI) * len1 * 0.5 + y1;
+
+        var x5 = Math.cos(angle + Math.PI) * len2 * 0.5 + x2;
+        var y5 = Math.sin(angle + Math.PI) * len2 * 0.5 + y2;
+
+        var x6 = Math.cos(angle) * len2 * 0.5 + x2;
+        var y6 = Math.sin(angle) * len2 * 0.5 + y2;
+
+        ctx.moveTo(x3, y3);
+        ctx.lineTo(x4, y4);
+        ctx.lineTo(x5, y5);
+        ctx.lineTo(x6, y6);
+        ctx.lineTo(x3, y3);
+
+        console.log([x1, y1, x2, y2]);
+        var linearGradient = ctx.createLinearGradient(x1, y1, x2, y2);
+        linearGradient.addColorStop(0, 'pink');
+        linearGradient.addColorStop(1, 'skyblue');   
+        ctx.fillStyle = linearGradient;
+        ctx.fill();    
+
+    
+};
+
+
+
+
+window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

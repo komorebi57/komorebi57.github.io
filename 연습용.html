@@ -9,6 +9,7 @@
         c.width = window.innerWidth;
         c.height = window.innerHeight;
         
+        //배경색
         var grd = ctx.createLinearGradient(0, 0, innerWidth, innerHeight);
         grd.addColorStop(0, '#1d0228');
         grd.addColorStop(0.5, '#7c00af');
@@ -17,6 +18,7 @@
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
         
+    //위치지정    
        for(var i = 0; i < 1; i++){
             var rand = window.innerWidth/2;
             var rand2 = window.innerHeight/2;
@@ -25,6 +27,7 @@
     
         
 }
+    //꽃모양
     
     function tree(rand, rand2){
         for(i = 0;  i < 9; i++){
