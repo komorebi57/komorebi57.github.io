@@ -8,32 +8,65 @@
         ctx = c.getContext('2d');
         c.width = window.innerWidth;
         c.height = window.innerHeight;  
-    
-        rec()
+        
+        for(var i = 0; i < 6; i++){
+            var ang = 60 * i;
+            var len = 61;
+            var len2 = 35;
+            var x = window.innerWidth/2;
+            var y = window.innerHeight/2;
+            rec(x, y, ang, len, len2)
+        }
 }
     
-function rec() {
-        var angle = Math.atan2(y2 - y1, x2 - x1) + Math.PI * 0.5;
+function rec(x, y, ang, len, len2) {
+        var ang2 = ang + 90;
+        var x2 = x + Math.cos(ang2 / 360 * 2 * Math.PI) * len; 
+        var y2 = y - Math.sin(ang2 / 360 * 2 * Math.PI) * len;
+        
+        var x22 = x2 + Math.cos(ang2 / 360 * 2 * Math.PI) * len; 
+        var y22 = y2 - Math.sin(ang2 / 360 * 2 * Math.PI) * len;
+      
+        var ang3 = ang2 + 90;
+        var x3 = x22 + Math.cos(ang3 / 360 * 2 * Math.PI) * len2; 
+        var y3 = y22 - Math.sin(ang3 / 360 * 2 * Math.PI) * len2;
     
-        var x3 = Math.cos(angle) * len1 * 0.5 + x1;
-        var y3 = Math.sin(angle) * len1 * 0.5 + y1;
+        var x33 = x3 + Math.cos(ang3 / 360 * 2 * Math.PI) * len2; 
+        var y33 = y3 - Math.sin(ang3 / 360 * 2 * Math.PI) * len2;
+       
+    
+        var ang4 = ang3 + 60;
+        var x4 = x33+ Math.cos(ang4 / 360 * 2 * Math.PI) * len2; 
+        var y4 = y33 - Math.sin(ang4 / 360 * 2 * Math.PI) * len2;
+    
+        var x44 = x4+ Math.cos(ang4 / 360 * 2 * Math.PI) * len2; 
+        var y44 = y4 - Math.sin(ang4 / 360 * 2 * Math.PI) * len2;    
 
-        var x4 = Math.cos(angle + Math.PI) * len1 * 0.5 + x1;
-        var y4 = Math.sin(angle + Math.PI) * len1 * 0.5 + y1;
-
-        var x5 = Math.cos(angle + Math.PI) * len2 * 0.5 + x2;
-        var y5 = Math.sin(angle + Math.PI) * len2 * 0.5 + y2;
-
-        var x6 = Math.cos(angle) * len2 * 0.5 + x2;
-        var y6 = Math.sin(angle) * len2 * 0.5 + y2;
-
+        
+        var ang5 = ang4 + 90;
+        var x5 = x44+ Math.cos(ang5 / 360 * 2 * Math.PI) * len; 
+        var y5 = y44 - Math.sin(ang5 / 360 * 2 * Math.PI) * len;
+  
+        var x55 = x5+ Math.cos(ang5 / 360 * 2 * Math.PI) * len; 
+        var y55 = y5 - Math.sin(ang5 / 360 * 2 * Math.PI) * len;  
+    
         ctx.beginPath();
-        ctx.moveTo(x3, y3);
-        ctx.lineTo(x4, y4);
-        ctx.lineTo(x5, y5);
-        ctx.lineTo(x6, y6);
+        ctx.moveTo(x, y);
+    
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x22, y22);
+    
         ctx.lineTo(x3, y3);
+        ctx.lineTo(x33, y33);
 
+        ctx.lineTo(x4, y4);
+        ctx.lineTo(x44, y44);      
+    
+        ctx.lineTo(x5, y5);
+        ctx.lineTo(x55, y55);      
+    
+        ctx.moveTo(x, y);
+        ctx.stroke();
 };
 
 window.addEventListener('load', main);
