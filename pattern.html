@@ -2,71 +2,106 @@
 <html>
 <head>
 <script>
-    var ctx;
-    function main() {
-        var c = document.getElementById('c');
-        ctx = c.getContext('2d');
-        c.width = window.innerWidth;
-        c.height = window.innerHeight;  
-        
-        for(var i = 0; i < 6; i++){
-            var ang = 60 * i;
-            var len = 61;
-            var len2 = 35;
-            var x = window.innerWidth/2;
-            var y = window.innerHeight/2;
-            rec(x, y, ang, len, len2)
+var ctx;
+function main() {
+    var c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight; 
+
+    for(var k = 0; k < 22; k++){
+        for(var j = 0; j < 22; j++){
+            for(var i = 0; i < 6; i++){
+                var ang = 60 * i;
+                var len = 20;
+                var x = k * len * 3.45 + len - 50;
+                var y = j * len * 4.0 + len - 40;
+                if(k % 2 === 1) {
+                    y += len * 2;
+                }
+                rec(x, y, ang, len, (k / 20.0));  
+             }
         }
+    }
 }
     
-function rec(x, y, ang, len, len2) {
-        var ang2 = ang + 90;
-        var x2 = x + Math.cos(ang2 / 360 * 2 * Math.PI) * len; 
-        var y2 = y - Math.sin(ang2 / 360 * 2 * Math.PI) * len;
-        
-        var x22 = x2 + Math.cos(ang2 / 360 * 2 * Math.PI) * len; 
-        var y22 = y2 - Math.sin(ang2 / 360 * 2 * Math.PI) * len;
-      
-        var ang3 = ang2 + 90;
-        var x3 = x22 + Math.cos(ang3 / 360 * 2 * Math.PI) * len2; 
-        var y3 = y22 - Math.sin(ang3 / 360 * 2 * Math.PI) * len2;
-    
-        var x33 = x3 + Math.cos(ang3 / 360 * 2 * Math.PI) * len2; 
-        var y33 = y3 - Math.sin(ang3 / 360 * 2 * Math.PI) * len2;
-       
-    
-        var ang4 = ang3 + 60;
-        var x4 = x33+ Math.cos(ang4 / 360 * 2 * Math.PI) * len2; 
-        var y4 = y33 - Math.sin(ang4 / 360 * 2 * Math.PI) * len2;
-    
-        var x44 = x4+ Math.cos(ang4 / 360 * 2 * Math.PI) * len2; 
-        var y44 = y4 - Math.sin(ang4 / 360 * 2 * Math.PI) * len2;    
+function rec(x, y, ang, len, shrink) {
+    var len2 = len * 0.57708;
+    var ang2 = ang + 90;
+    var x2 = x + Math.cos(ang2 / 360 * 2 * Math.PI) * len; 
+    var y2 = y - Math.sin(ang2 / 360 * 2 * Math.PI) * len;
 
-        
-        var ang5 = ang4 + 90;
-        var x5 = x44+ Math.cos(ang5 / 360 * 2 * Math.PI) * len; 
-        var y5 = y44 - Math.sin(ang5 / 360 * 2 * Math.PI) * len;
-  
-        var x55 = x5+ Math.cos(ang5 / 360 * 2 * Math.PI) * len; 
-        var y55 = y5 - Math.sin(ang5 / 360 * 2 * Math.PI) * len;  
-    
-        ctx.beginPath();
-        ctx.moveTo(x, y);
-    
-        ctx.lineTo(x2, y2);
-        ctx.lineTo(x22, y22);
-    
-        ctx.lineTo(x3, y3);
-        ctx.lineTo(x33, y33);
+    var x22 = x2 + Math.cos(ang2 / 360 * 2 * Math.PI) * len; 
+    var y22 = y2 - Math.sin(ang2 / 360 * 2 * Math.PI) * len;
 
-        ctx.lineTo(x4, y4);
-        ctx.lineTo(x44, y44);      
-    
-        ctx.lineTo(x5, y5);
-        ctx.lineTo(x55, y55);      
-    
-        ctx.moveTo(x, y);
-        ctx.stroke();
+    var ang3 = ang2 + 90;
+    var x3 = x22 + Math.cos(ang3 / 360 * 2 * Math.PI) * len2; 
+    var y3 = y22 - Math.sin(ang3 / 360 * 2 * Math.PI) * len2;
+
+    var x33 = x3 + Math.cos(ang3 / 360 * 2 * Math.PI) * len2; 
+    var y33 = y3 - Math.sin(ang3 / 360 * 2 * Math.PI) * len2;
+
+    var ang4 = ang3 + 60;
+    var x4 = x33 + Math.cos(ang4 / 360 * 2 * Math.PI) * len2; 
+    var y4 = y33 - Math.sin(ang4 / 360 * 2 * Math.PI) * len2;
+
+    var x44 = x4 + Math.cos(ang4 / 360 * 2 * Math.PI) * len2; 
+    var y44 = y4 - Math.sin(ang4 / 360 * 2 * Math.PI) * len2;    
+
+    var ang5 = ang4 + 90;
+    var x5 = x44 + Math.cos(ang5 / 360 * 2 * Math.PI) * len; 
+    var y5 = y44 - Math.sin(ang5 / 360 * 2 * Math.PI) * len;
+
+    var x55 = x5 + Math.cos(ang5 / 360 * 2 * Math.PI) * len; 
+    var y55 = y5 - Math.sin(ang5 / 360 * 2 * Math.PI) * len;  
+
+    var ix = x + Math.cos((ang + 120) / 360 * 2 * Math.PI) * len * (1 - shrink) * 1.3;
+    var iy = y - Math.sin((ang + 120) / 360 * 2 * Math.PI) * len * (1 - shrink) * 1.3;
+    var ilen = len * shrink;
+    var ilen2 = ilen * 0.57708;
+    var iang2 = ang + 90;
+    var ix2 = ix + Math.cos(iang2 / 360 * 2 * Math.PI) * ilen; 
+    var iy2 = iy - Math.sin(iang2 / 360 * 2 * Math.PI) * ilen;
+
+    var ix22 = ix2 + Math.cos(iang2 / 360 * 2 * Math.PI) * ilen; 
+    var iy22 = iy2 - Math.sin(iang2 / 360 * 2 * Math.PI) * ilen;
+
+    var iang3 = ang2 + 90;
+    var ix3 = ix22 + Math.cos(iang3 / 360 * 2 * Math.PI) * ilen2; 
+    var iy3 = iy22 - Math.sin(iang3 / 360 * 2 * Math.PI) * ilen2;
+
+    var ix33 = ix3 + Math.cos(iang3 / 360 * 2 * Math.PI) * ilen2; 
+    var iy33 = iy3 - Math.sin(iang3 / 360 * 2 * Math.PI) * ilen2;
+
+    var iang4 = iang3 + 60;
+    var ix4 = ix33 + Math.cos(iang4 / 360 * 2 * Math.PI) * ilen2; 
+    var iy4 = iy33 - Math.sin(iang4 / 360 * 2 * Math.PI) * ilen2;
+
+    var ix44 = ix4 + Math.cos(iang4 / 360 * 2 * Math.PI) * ilen2; 
+    var iy44 = iy4 - Math.sin(iang4 / 360 * 2 * Math.PI) * ilen2;    
+
+    var iang5 = iang4 + 90;
+    var ix5 = ix44 + Math.cos(iang5 / 360 * 2 * Math.PI) * ilen; 
+    var iy5 = iy44 - Math.sin(iang5 / 360 * 2 * Math.PI) * ilen;
+
+    var ix55 = ix5 + Math.cos(iang5 / 360 * 2 * Math.PI) * ilen; 
+    var iy55 = iy5 - Math.sin(iang5 / 360 * 2 * Math.PI) * ilen;  
+
+    ctx.beginPath();
+    ctx.moveTo(ix, iy);
+
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(ix22, iy22);
+
+    ctx.lineTo(x3, y3);
+    ctx.lineTo(ix33, iy33);
+
+    ctx.lineTo(x4, y4);
+    ctx.lineTo(ix44, iy44);      
+
+    ctx.lineTo(x5, y5);
+    ctx.lineTo(ix55, iy55);      
+    ctx.fill();
 };
 
 window.addEventListener('load', main);
