@@ -28,6 +28,9 @@ function main() {
 function rec(x, y, ang, len, shrink) {
     var len2 = len * 0.57708;
     var ang2 = ang + 90;
+    
+    var ilen = len * shrink;
+
     var x2 = x + Math.cos(ang2 / 360 * 2 * Math.PI) * len; 
     var y2 = y - Math.sin(ang2 / 360 * 2 * Math.PI) * len;
 
