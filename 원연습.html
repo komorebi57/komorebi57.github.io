@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        ctx.fillStyle = "skyblue";
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+        var x = window.innerWidth * 0.5;
+        var y = window.innerHeight * 0.5;
+        var len = 60;
+        tree(x, y, len);
+     }
+    
+    function tree(x, y, len){
+        for(i = 0; i < 36; i++){
+            var ang = 10 * i;
+            var x2 = x + Math.cos(ang/ 360 * 2 * Math.PI) * len;
+            var y2 = y - Math.sin(ang/ 360 * 2 * Math.PI) * len;
+            
+            ctx.beginPath();
+            ctx.lineWidth = 2;
+            ctx.strokeStyle = "white";
+            ctx.moveTo(x, y);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            
+        }
+                
+ }
+        
+
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

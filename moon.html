@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        
+        var grd = "black";
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        moon();
+     }
+
+    var dx = 2;
+    var x = window.innerWidth * 0.5;
+    var y = window.innerHeight * 0.5;
+    var r = 50;
+    var x1 = x - (r * 2);
+
+    function moon() {
+        ctx.beginPath();
+        ctx.fillStyle = "white";
+        ctx.arc(x, y, r, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();
+        
+        ctx.beginPath();
+        ctx.fillStyle = "black";
+        ctx.arc(x1, y, r, 0, 2 * Math.PI);
+        ctx.closePath();
+        ctx.fill();      
+
+        x1 = x1 + dx;
+        if(x1 > x + (r * 2)) {
+            x1 = x - (r * 2);
+        }
+  
+        window.requestAnimationFrame(moon);
+    
+        
+}
+            
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
