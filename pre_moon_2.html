@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        
+        var grd = "black";
+        ctx.fillStyle = grd;
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    
+        moon();
+    }
+
+    var w = 150;
+    var h = 150;
+    var r = 5;
+
+    function moon() {
+        for(var i = 0; i < 40; i++) {
+            for(var j = 0; j < 40; j++){
+                
+                var ang = 20 * i;
+                var ww = w * i * 0.5;
+                var len = 2 * i;
+                
+                var x = w + Math.cos(ang/ 360 * 2 * Math.PI) * len;
+                var y = h - Math.sin(ang/ 360 * 2 * Math.PI) * len;
+         
+                var distance = x - ww;
+                    if(distance < 50){
+                        
+                        ctx.beginPath();
+                        ctx.fillStyle = "pink";
+                        ctx.arc(x, y, r, 0, 2 * Math.PI);
+                        ctx.closePath();
+                        ctx.fill();
+
+/*                        ctx.fill();
+                        ctx.lineWidth = 2;
+                        ctx.strokeStyle = "orange";
+                        ctx.moveTo(w, h);
+                        ctx.lineTo(x, y);
+                        ctx.stroke();*/
+                        }
+                }
+
+        }
+        
+                    window.requestAnimationFrame(moon);
+
+    }
+    
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
