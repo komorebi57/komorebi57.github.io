@@ -17,43 +17,22 @@
         moon();
     }
 
-    var w = 150;
-    var h = 150;
-    var r = 5;
 
     function moon() {
-        for(var i = 0; i < 40; i++) {
-            for(var j = 0; j < 40; j++){
-                
-                var ang = 20 * i;
-                var ww = w * i * 0.5;
-                var len = 2 * i;
-                
-                var x = w + Math.cos(ang/ 360 * 2 * Math.PI) * len;
-                var y = h - Math.sin(ang/ 360 * 2 * Math.PI) * len;
-         
-                var distance = x - ww;
-                    if(distance < 50){
-                        
-                        ctx.beginPath();
-                        ctx.fillStyle = "pink";
-                        ctx.arc(x, y, r, 0, 2 * Math.PI);
-                        ctx.closePath();
-                        ctx.fill();
-
-/*                        ctx.fill();
-                        ctx.lineWidth = 2;
-                        ctx.strokeStyle = "orange";
-                        ctx.moveTo(w, h);
-                        ctx.lineTo(x, y);
-                        ctx.stroke();*/
-                        }
+        for(var i = 0; i < 100; i++) {
+            for(var k = 0; k < 100; k++) {
+                var w = Math.sqrt((i-50) * (i-50) + (k-50) * (k-50));
+                if(w < 50) {
+                    ctx.beginPath();
+                    ctx.fillStyle = 'rgb(' + Math.floor(280 - (w * 2)) + ', 90, ' + Math.floor(70 - (w * 2)) + ')';
+                    ctx.rect(i + 100, k + 100, 1, 1);
+                    ctx.closePath();
+                    ctx.fill();
                 }
-
+            }    
+              
         }
-        
                     window.requestAnimationFrame(moon);
-
     }
     
     
