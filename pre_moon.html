@@ -14,7 +14,6 @@
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
         moon();
-        cloud();
      }
 
     var dx = 2;
@@ -26,16 +25,17 @@
     function moon() {     
         for(var i = 0; i < 100; i++) {
             for(var k = 0; k < 100; k++) {
-                var w = Math.sqrt((i-50) * (i-50) + (k-50) * (k-50));
+                var w = Math.sqrt((i-50) * (i-50) + (k-50) * (k-50)) + Math.random() * 400;
                 if(w < 50) {
+                    var x2 = i + 100 - (r * 1.5);
                     ctx.beginPath();
-                    ctx.fillStyle = 'rgb(' + Math.floor(280 - (w * 2)) + ', 90, ' + Math.floor(70 - (w * 2)) + ')';
+                    ctx.fillStyle = 'rgb(' + Math.floor(300 - (w * 2)) + ', 250, ' + Math.floor(w * 2) + ')';
                     ctx.rect(i + 100, k + 100, 1, 1);
                     ctx.closePath();
                     ctx.fill();
-                    
                     }
-                }   
+        
+                }
                    
         }
             ctx.beginPath();
@@ -47,11 +47,11 @@
             x1 = x1 + dx;
             if(x1 > x + (r * 2)) {
                 x1 = x - (r * 2); 
-                }
+    }
 
         window.requestAnimationFrame(moon);
                     
-    }
+}
   
             
     
