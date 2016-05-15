@@ -1,70 +1,85 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<script>
-    var ctx;
+    <script>
+        var r = 25;
+        var ctx;
+        var stamps = [];
 
-    function main() {
-        var c = document.getElementById('c');
-        ctx = c.getContext('2d');
-        c.width = window.innerWidth;
-        c.height = window.innerHeight;
-        
-        var grd = "black";
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-        moon();
-     }
+        function main() {
+            var c = document.getElementById('c');
+            ctx = c.getContext('2d');
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
 
-    var dx = 2;
-    var x = 100 + 50;
-    var y = 100 + 50;
-    var r = 50;
-    var x1 = x - (r * 1.5);
-
-    function moon() {     
-        for(var i = 0; i < 100; i++) {
-            for(var k = 0; k < 100; k++) {
-                var w = Math.sqrt((i-50) * (i-50) + (k-50) * (k-50)) + Math.random() * 400;
-                if(w < 50) {
-                    var x2 = i + 100 - (r * 1.5);
-                    ctx.beginPath();
-                    ctx.fillStyle = 'rgb(' + Math.floor(300 - (w * 2)) + ', 250, ' + Math.floor(w * 2) + ')';
-                    ctx.rect(i + 100, k + 100, 1, 1);
-                    ctx.closePath();
-                    ctx.fill();
-                    }
-        
-                }
-                   
-        }
-            ctx.beginPath();
             ctx.fillStyle = "black";
-            ctx.arc(x1, y, r, 0, 2 * Math.PI);
-            ctx.closePath();
-            ctx.fill();      
+            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-            x1 = x1 + dx;
-            if(x1 > x + (r * 2)) {
-                x1 = x - (r * 2); 
-    }
+            for (var l = 0; l < 40; l++) {
+                stamps[l] = document.createElement('canvas');
+                stamps[l].width = r * 2;
+                stamps[l].height = r * 2;
+                var stampCtx = stamps[l].getContext('2d');
 
-        window.requestAnimationFrame(moon);
-                    
-}
-  
-            
-    
-    window.addEventListener('load', main);
 
-</script>    
-<style>
-    body{margin: 0;}
-    canvas {display: block;}
-</style>
+                stampCtx.beginPath();
+                stampCtx.fillStyle = 'yellow';
+                stampCtx.arc(r, r, r, 0, 2.0 * Math.PI);
+                stampCtx.fill();
+                stampCtx.closePath();
+
+                for (var i = 0; i < r * 2; i++) {
+                    for (var k = 0; k < r * 2; k++) {
+                        var w = Math.sqrt((i - r) * (i - r) + (k - r) * (k - r)) + Math.random() * r;
+                        if (w < r) {
+                            var x = i;
+                            var y = k;
+                            var offset = (l + r * 0.5) % (r * 4) - r * 2;
+
+                            // Shadow
+                            stampCtx.beginPath();
+                            stampCtx.fillStyle = 'red';
+                            stampCtx.rect(x + offset, y, 1, 1);
+                            stampCtx.closePath();
+                            stampCtx.fill();
+                        }
+                    }
+                }
+
+            }
+
+            animate();
+
+        }
+
+        var frame = 0;
+
+        function animate() {
+            frame++;
+
+            for (var i = 0; i < stamps.length; i++) {
+                ctx.drawImage(stamps[(i + frame) % stamps.length], i * r * 2, 0);
+            }
+            window.requestAnimationFrame(animate);
+        }
+        window.addEventListener('load', main);
+
+    </script>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        canvas {
+            display: block;
+        }
+
+    </style>
 </head>
 
 <body>
     <canvas id="c"></canvas>
 </body>
+
 </html>

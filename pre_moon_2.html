@@ -1,51 +1,84 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<script>
-    var ctx;
+    <script>
+        var ctx;
 
-    function main() {
-        var c = document.getElementById('c');
-        ctx = c.getContext('2d');
-        c.width = window.innerWidth;
-        c.height = window.innerHeight;
-        
-        var grd = "black";
-        ctx.fillStyle = grd;
-        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-    
-        moon();
-    }
+        function main() {
+            var c = document.getElementById('c');
+            ctx = c.getContext('2d');
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
 
+            ctx.fillStyle = "black";
+            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+            moon();
 
-    function moon() {
-        for(var i = 0; i < 100; i++) {
-            for(var k = 0; k < 100; k++) {
-                var w = Math.sqrt((i-50) * (i-50) + (k-50) * (k-50));
-                if(w < 50) {
-                    ctx.beginPath();
-                    ctx.fillStyle = 'rgb(' + Math.floor(280 - (w * 2)) + ', 90, ' + Math.floor(70 - (w * 2)) + ')';
-                    ctx.rect(i + 100, k + 100, 1, 1);
-                    ctx.closePath();
-                    ctx.fill();
-                }
-            }    
-              
         }
-                    window.requestAnimationFrame(moon);
-    }
-    
-    
-    window.addEventListener('load', main);
 
-</script>    
-<style>
-    body{margin: 0;}
-    canvas {display: block;}
-</style>
+
+        var frame = 0;
+        var r = 25;
+        var gap = r * 4;
+
+        function moon() {
+            frame++;
+
+            for (var j = 0; j < 3; j++) {
+                for (var l = 0; l < 3; l++) {
+                    for (var i = 0; i < r * 2; i++) {
+                        for (var k = 0; k < r * 2; k++) {
+                            var w = Math.sqrt((i - r) * (i - r) + (k - r) * (k - r)) + Math.random() * r * 2;
+                            if (w < r) {
+                                var x = i + 100 + j * gap;
+                                var y = k + 100 + l * gap;
+                                var offset;
+                                if (l % 2 === 0) {
+                                    offset = (frame + j * r * 0.5) % (r * 4) - r * 2;
+                                } else {
+                                    offset = r * 2 - (frame + j * r * 0.5) % (r * 4);
+                                }
+
+                                // Moon
+                                ctx.beginPath();
+                                ctx.fillStyle = 'rgb(' + Math.floor(300 - (w * 2)) + ', 250, ' + Math.floor(w * 2) + ')';
+                                ctx.rect(x, y, 1, 1);
+                                ctx.closePath();
+                                ctx.fill();
+
+                                // Shadow
+                                ctx.beginPath();
+                                ctx.fillStyle = 'black';
+                                ctx.rect(x + offset, y, 1, 1);
+                                ctx.closePath();
+                                ctx.fill();
+                            }
+                        }
+                    }
+                }
+            }
+            window.requestAnimationFrame(moon);
+        }
+
+
+        window.addEventListener('load', main);
+
+    </script>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        canvas {
+            display: block;
+        }
+
+    </style>
 </head>
 
 <body>
     <canvas id="c"></canvas>
 </body>
+
 </html>
