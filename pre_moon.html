@@ -3,7 +3,8 @@
 
 <head>
     <script>
-        var r = 25;
+        var r = 30;
+        var len = 100;
         var ctx;
         var stamps = [];
 
@@ -16,12 +17,11 @@
             ctx.fillStyle = "black";
             ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
-            for (var l = 0; l < 40; l++) {
+            for (var l = 0; l < len; l++) {
                 stamps[l] = document.createElement('canvas');
                 stamps[l].width = r * 2;
                 stamps[l].height = r * 2;
                 var stampCtx = stamps[l].getContext('2d');
-
 
                 stampCtx.beginPath();
                 stampCtx.fillStyle = 'yellow';
@@ -35,12 +35,13 @@
                         if (w < r) {
                             var x = i;
                             var y = k;
-                            var offset = (l + r * 0.5) % (r * 4) - r * 2;
+                            var offset = (l * 1.5) % (r * 4) - r * 2;
+                            var off = ((l / len) + 1 - 2) * r * 2;
 
                             // Shadow
                             stampCtx.beginPath();
-                            stampCtx.fillStyle = 'red';
-                            stampCtx.rect(x + offset, y, 1, 1);
+                            stampCtx.fillStyle = 'black';
+                            stampCtx.rect(x + off, y, 1, 1);
                             stampCtx.closePath();
                             stampCtx.fill();
                         }
@@ -63,6 +64,7 @@
             }
             window.requestAnimationFrame(animate);
         }
+
         window.addEventListener('load', main);
 
     </script>
