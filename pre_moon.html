@@ -4,7 +4,7 @@
 <head>
     <script>
         var r = 30;
-        var len = 100;
+        var len = 20;
         var ctx;
         var stamps = [];
 
@@ -13,7 +13,7 @@
             ctx = c.getContext('2d');
             c.width = window.innerWidth;
             c.height = window.innerHeight;
-
+            //배경검은색
             ctx.fillStyle = "black";
             ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
 
@@ -23,6 +23,7 @@
                 stamps[l].height = r * 2;
                 var stampCtx = stamps[l].getContext('2d');
 
+                //노랑달
                 stampCtx.beginPath();
                 stampCtx.fillStyle = 'yellow';
                 stampCtx.arc(r, r, r, 0, 2.0 * Math.PI);
@@ -35,8 +36,9 @@
                         if (w < r) {
                             var x = i;
                             var y = k;
-                            var offset = (l * 1.5) % (r * 4) - r * 2;
-                            var off = ((l / len) + 1 - 2) * r * 2;
+
+                            //var offset = (l * 1.5) % (r * 4) - r * 2;
+                            var off = (2 * (l / len) - 2 + 1) * r * 2;
 
                             // Shadow
                             stampCtx.beginPath();
@@ -48,19 +50,23 @@
                     }
                 }
 
+
             }
 
             animate();
 
         }
 
+
         var frame = 0;
 
         function animate() {
             frame++;
 
-            for (var i = 0; i < stamps.length; i++) {
-                ctx.drawImage(stamps[(i + frame) % stamps.length], i * r * 2, 0);
+            for (var j = 0; j < 6; j++) {
+                for (var i = 0; i < stamps.length; i++) {
+                    ctx.drawImage(stamps[(i + Math.floor(frame / 3)) % stamps.length], i * r * 2, j * r * 2.5);
+                }
             }
             window.requestAnimationFrame(animate);
         }
