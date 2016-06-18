@@ -3,7 +3,8 @@
 
 <head>
     <script>
-        var r = 20;
+        var columns = 15;
+        var r = Math.floor(window.innerWidth / columns / 2);
         var len = 50;
         var ctx;
         var stamps = [];
@@ -32,8 +33,8 @@
 
                 for (var i = 0; i < r * 2; i++) {
                     for (var k = 0; k < r * 2; k++) {
-                        var w = Math.sqrt((i - r) * (i - r) + (k - r) * (k - r)) + Math.random() * r * 1.2;
-                        if (w < r * 1.2) {
+                        var w = Math.sqrt((i - r) * (i - r) + (k - r) * (k - r)) + Math.random() * r * 1.0;
+                        if (w < r * 1.0) {
                             var x = i;
                             var y = k;
                             var off = (2 * l / len - 2 + 1) * r * 2;
@@ -62,7 +63,7 @@
             frame++;
 
             for (var j = 0; j < 10; j++) {
-                for (var i = 0; i < 15; i++) {
+                for (var i = 0; i < columns; i++) {
                     if (j % 2 === 0) {
                         var stampIndex = (i * 4 + Math.floor(frame / 6)) % stamps.length;
                     } else {
@@ -72,7 +73,7 @@
                     ctx.drawImage(
                         stamps[stampIndex],
                         i * r * 2,
-                        j * r * 2.5 + r * 3
+                        j * r * 2
                     );
                 }
             }
