@@ -3,8 +3,8 @@
 
 <head>
     <script>
-        var r = 30;
-        var len = 20;
+        var r = 20;
+        var len = 50;
         var ctx;
         var stamps = [];
 
@@ -25,7 +25,7 @@
 
                 //노랑달
                 stampCtx.beginPath();
-                stampCtx.fillStyle = 'yellow';
+                stampCtx.fillStyle = '#FFFFDD';
                 stampCtx.arc(r, r, r, 0, 2.0 * Math.PI);
                 stampCtx.fill();
                 stampCtx.closePath();
@@ -36,9 +36,7 @@
                         if (w < r) {
                             var x = i;
                             var y = k;
-
-                            //var offset = (l * 1.5) % (r * 4) - r * 2;
-                            var off = (2 * (l / len) - 2 + 1) * r * 2;
+                            var off = (2 * l / len - 2 + 1) * r * 2;
 
                             // Shadow
                             stampCtx.beginPath();
@@ -63,9 +61,21 @@
         function animate() {
             frame++;
 
-            for (var j = 0; j < 6; j++) {
-                for (var i = 0; i < stamps.length; i++) {
-                    ctx.drawImage(stamps[(i + Math.floor(frame / 3)) % stamps.length], i * r * 2, j * r * 2.5);
+            for (var j = 0; j < 10; j++) {
+                for (var i = 0; i < 15; i++) {
+                    if (j % 2 === 0) {
+                        var stampIndex = (i * 4 + Math.floor(frame / 6)) % stamps.length;
+//                        off = (frame + k * r * 0.5) % (r * 4) - r * 2;
+                    } else {
+                        var stampIndex = stamps.length - 1 - ((i * 4 + Math.floor(frame / 6)) % stamps.length);
+//                        off = r * 2 - (frame + k * r * 0.5) % (r * 4);
+                    }
+                    
+                    ctx.drawImage(
+                        stamps[stampIndex],
+                        i * r * 2,
+                        j * r * 2.5 + r * 3
+                    );
                 }
             }
             window.requestAnimationFrame(animate);
