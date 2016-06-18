@@ -32,8 +32,8 @@
 
                 for (var i = 0; i < r * 2; i++) {
                     for (var k = 0; k < r * 2; k++) {
-                        var w = Math.sqrt((i - r) * (i - r) + (k - r) * (k - r)) + Math.random() * r;
-                        if (w < r) {
+                        var w = Math.sqrt((i - r) * (i - r) + (k - r) * (k - r)) + Math.random() * r * 1.2;
+                        if (w < r * 1.2) {
                             var x = i;
                             var y = k;
                             var off = (2 * l / len - 2 + 1) * r * 2;
@@ -41,7 +41,7 @@
                             // Shadow
                             stampCtx.beginPath();
                             stampCtx.fillStyle = 'black';
-                            stampCtx.rect(x + off, y, 1, 1);
+                            stampCtx.rect(Math.round(x + off), y, 1, 1);
                             stampCtx.closePath();
                             stampCtx.fill();
                         }
@@ -65,10 +65,8 @@
                 for (var i = 0; i < 15; i++) {
                     if (j % 2 === 0) {
                         var stampIndex = (i * 4 + Math.floor(frame / 6)) % stamps.length;
-//                        off = (frame + k * r * 0.5) % (r * 4) - r * 2;
                     } else {
                         var stampIndex = stamps.length - 1 - ((i * 4 + Math.floor(frame / 6)) % stamps.length);
-//                        off = r * 2 - (frame + k * r * 0.5) % (r * 4);
                     }
                     
                     ctx.drawImage(
