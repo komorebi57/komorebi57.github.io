@@ -69,7 +69,9 @@
                         // Shadow
                         if (shadow > noise[i][k]) {
                             stampCtx.beginPath();
-                            stampCtx.fillStyle = '#000f2b';
+    //                        stampCtx.fillStyle = '#000f2b';
+                            //그라데이션
+                            stampCtx.fillStyle = 'rgba(0, 15, 43, ' + Math.min(1.0, (shadow - noise[i][k]) * 10) + ')';
                             stampCtx.rect(x, y, 1, 1);
                             stampCtx.closePath();
                             stampCtx.fill();
