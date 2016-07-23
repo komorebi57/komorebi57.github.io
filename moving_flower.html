@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        animate();
+     }
+ 
+    function triangle(x, y, angle, len) {
+        var ang = 120 + angle;
+        var ang2 = 240 + angle;
+        var ang3 = 360 + angle;
+
+        var x2 = x + Math.cos(ang/ 360 * 2 * Math.PI) * len;
+        var y2 = y - Math.sin(ang/ 360 * 2 * Math.PI) * len;
+
+        var x3 = x2 + Math.cos(ang2/ 360 * 2 * Math.PI) * len;
+        var y3 = y2 - Math.sin(ang2/ 360 * 2 * Math.PI) * len;
+
+        var x4 = x3 + Math.cos(ang3/ 360 * 2 * Math.PI) * len;
+        var y4 = y3 - Math.sin(ang3/ 360 * 2 * Math.PI) * len;
+
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.fillStyle = "pink";
+        ctx.moveTo(x, y);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x3, y3);
+        ctx.lineTo(x4, y4);
+        ctx.fill();
+        ctx.closePath();
+  }
+    
+    var frame = 0;
+    var angle1 = Math.random() * 360;
+
+    function animate() {
+        frame += 0.05;
+        ctx.fillStyle = "white";
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        var r = (Math.sin(frame) + 1) * window.innerWidth * 0.2 + 50;
+
+        for(var i = 0; i < Math.PI * 2; i += 0.04) {
+            var x = Math.cos(i) * r;
+            var y = Math.sin(i) * r;
+            triangle(
+                x + window.innerWidth * 0.5,
+                y + window.innerHeight * 0.5,
+                angle1 ,
+                10
+            );
+        }
+
+        var r = (Math.sin(frame * 2.5) + 1) * window.innerWidth * 0.2 + 50;
+        for(var i = 0; i < Math.PI * 2; i += 0.04) {
+            var x = Math.cos(i) * r * 0.5;
+            var y = Math.sin(i) * r * 0.5;
+            triangle(
+                x + window.innerWidth * 0.5,
+                y + window.innerHeight * 0.5,
+                angle1,
+                10
+            );
+        }
+
+        window.requestAnimationFrame(animate);
+    }
+    
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
