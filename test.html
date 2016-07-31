@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body {margin: 0;}
+        canvas {display: block;}
+    </style>
+    <script>
+    var ctx;
+        
+    function main() {
+        var c = document.getElementById('c');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        ctx = c.getContext('2d');
+        ctx.fillStyle = 'red';
+        ctx.strokeStyle = 'red';
+        ctx.fillRect(10, 10, 20, 20);
+    }
+        
+    window.addEventListener('load', main);
+    </script>
+</head>
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
