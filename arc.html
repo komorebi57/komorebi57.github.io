@@ -7,52 +7,93 @@
     function main() {
         var c = document.getElementById('c');
         ctx = c.getContext('2d');
-        c.width = window.innerWidth;
-        c.height = window.innerHeight;
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
 
-        var w = 0.5 * window.innerWidth;
-        var h = 0.5 * window.innerHeight
+        var w = 0.5 * c.width;
+        var h = 0.5 * c.height;
+         
+        arc(w, h, 300, color1);
+        arc(w * 0.8, h * 0.5, 300, color2);
+    }
+    
+    function color1(percent) {
+        return 'rgb(255, ' + Math.floor(percent * 255) + ', 150)';
+    }
         
-        for(i = 0; i < 100; i++){
+    function color2(percent) {
+        return 'rgb(' + Math.floor(percent * 250) + ', 155, 150)';
+    }
+
+    function arc(w, h, r, colorFunction) {
+//        var lines = 10;
+//        for(var i = 0; i < lines; i++) {
+//            var dx = Math.cos(angle) * r * (i / lines * 2 - 1);
+//            var dy = Math.sin(angle) * r * (i / lines * 2 - 1);
+//            var rLine = Math.cos(i / lines * Math.PI) * r;
+//
+//            ctx.beginPath();
+//            ctx.strokeStyle = 'red';
+//            ctx.strokeWidth = 1;
+//            ctx.moveTo(w + dx, h - dy);
+//            ctx.lineTo(w + dx + 1, h - dy + 1);
+//            ctx.stroke();
+//        }
+        var lines = 100;
+        for(i = 0; i < lines; i++){
+            var percent = (i / lines);
+            
+            // 계산
+            var y = h + Math.cos(percent * Math.PI) * r;
+            var x = Math.sin(percent * Math.PI) * r;
+            var color = colorFunction(percent);
+
+            // 그리기
             ctx.beginPath();
-            ctx.strokeStyle = "red";
+            ctx.strokeStyle = color;
             ctx.strokeWidth = 1;
-            //y에 cos넣기
-            var y = h + Math.cos((i / 100) * Math.PI) * 100;
-            ctx.moveTo(w, y);
-            ctx.lineTo(w + Math.sin((i / 100) * Math.PI) * 100, y);
+            ctx.moveTo(w - x, y);
+            ctx.lineTo(w + x, y);
             ctx.stroke();
             ctx.closePath();
     
         }
+//        
+//        for(i = 0; i < 100; i++){
+//            ctx.beginPath();
+//            ctx.strokeStyle = "red";
+//            ctx.strokeWidth = 1;
+//            //y에 cos넣기
+//            var y = h - Math.cos((i / 100) * Math.PI) * 150;
+//            ctx.moveTo(w, y);
+//            ctx.lineTo(w - Math.sin((i / 100) * Math.PI) * 150, y);
+//            ctx.stroke();
+//            ctx.closePath();
+//        
+//        }
+ 
         
+//        ctx.beginPath();
+//        ctx.fillStyle = "rgba(225, 245, 20, 0.3)";
+//        ctx.arc(w, h, 150, 0, 2.0 * Math.PI);
+//        ctx.fill();
+//        ctx.closePath();
+//        
         
-        
-        for(i = 0; i < 100; i++){
-            ctx.beginPath();
-            ctx.strokeStyle = "red";
-            ctx.strokeWidth = 1;
-            //y에 cos넣기
-            var y = h - Math.cos((i / 100) * Math.PI) * 100;
-            ctx.moveTo(w, y);
-            ctx.lineTo(w - Math.sin((i / 100) * Math.PI) * 100, y);
-            ctx.stroke();
-            ctx.closePath();
-    
-        }
-        
-        ctx.beginPath();
-        ctx.fillStyle = "rgba(225, 245, 20, 0.5)";
-        ctx.arc(w, h, 100, 0, 2.0 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
     }
     
     window.addEventListener('load', main);
 </script>    
 <style>
-    body{margin: 0;}
-    canvas {display: block;}
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+        transform: rotate(45deg);
+    }
 </style>
 </head>
 
