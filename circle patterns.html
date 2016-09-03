@@ -10,19 +10,25 @@
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
 
-        circle();
-        circle2();
-        circle3();
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, c.width, c.height);
+        
+        circle(260, 260, 220, 0);
+        circle(380, 380, 220, Math.PI / 4);
 
-    }
     
-    var w1 = innerWidth * 0.5;
-    var h1 = innerHeight * 0.5;
+    circle(780, 780, 220, 0);
+    circle(860, 860, 220, Math.PI / 4);
+    
+    }
             
-    function circle(){
+    function circle(x, y, r, rotation){
             ctx.save();
+
+            ctx.translate(x, y)
+            ctx.rotate(rotation)
             ctx.beginPath();
-            ctx.arc(w1 + 210, h1 + 210, 220, 0, 2.0 * Math.PI);
+            ctx.arc(0, 0, r, 0, 2.0 * Math.PI);
             ctx.clip();
   
             
@@ -31,10 +37,10 @@
             for(var i = 0; i < lines; i++){
                 for(var k = 0; k < lines; k++){
                 ctx.beginPath();
-                ctx.strokeStyle = "pink";
+                ctx.strokeStyle = '#FFFFDD';
                 ctx.strokeWidth = 10;
-                ctx.arc(w1 + ((pointsize * 3.5) * i), h1 + ((pointsize * 3.5) * k), pointsize, 0, 2.0 * Math.PI);
-                ctx.fillStyle = "pink";
+                ctx.arc(-r + ((pointsize * 3.5) * i), -r + ((pointsize * 3.5) * k), pointsize, 0, 2.0 * Math.PI);
+                ctx.fillStyle = '#FFFFDD';
                 ctx.fill();
                 ctx.stroke();
                 ctx.closePath();    
@@ -43,64 +49,66 @@
             ctx.restore();
     }
     
-    var w2 = 490;
-    var h2 = 390;
-        function circle2(){
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(w2 + 210, h2 + 210, 220, 0, 2.0 * Math.PI);
-//            ctx.fillStyle = "yellow";
-//            ctx.fill();
-//            ctx.closePath();
-            ctx.clip();
-        
-            var lines = 13;
-            var pointsize = 10;
-            for(var j = 0; j < lines; j++){
-                for(var l = 0; l < lines; l++){
-                ctx.beginPath();
-                ctx.strokeStyle = "pink";
-                ctx.strokeWidth = 10;
-                ctx.arc(w2 + ((pointsize * 3.5) * j) + (l % 2) * (pointsize * 1.75), h2 + ((pointsize * 3.5) * l), pointsize, 0, 2.0 * Math.PI);
-                ctx.fillStyle = "pink";
-                ctx.fill();
-                ctx.stroke();
-                ctx.closePath();    
-
-                }
-           }
-            ctx.restore();
-    }
+//    var w2 = 480;
+//    var h2 = 434;
+//        function circle2(){
+//            ctx.save();
+//            ctx.beginPath();
+//            ctx.arc(w2 + 210, h2 + 210, 220, 0, 2.0 * Math.PI);
+////            ctx.fillStyle = "yellow";
+////            ctx.fill();
+////            ctx.closePath();
+//            ctx.clip();
+//        
+//            var lines = 20;
+//            var pointsize = 10;
+//            for(var j = 0; j < lines; j++){
+//                for(var l = 0; l < lines; l++){
+//                ctx.beginPath();
+//                ctx.strokeStyle = "pink";
+//                ctx.strokeWidth = 10; 
+//                ctx.arc(w2 + ((pointsize * 3.5) * j) + (l % 2) * (pointsize *1.75), 
+//                        h2 + ((pointsize * 2.5) * l), 
+//                        pointsize, 0, 2.0 * Math.PI);
+//                ctx.fillStyle = "pink";
+//                ctx.fill();
+//                ctx.stroke();
+//                ctx.closePath();    
+//
+//                }
+//           }
+//            ctx.restore();
+//    }
 
     
-        var w3 = 300;
-        var h3 = 600;
-        function circle3(){
-            ctx.save();
-            ctx.beginPath();
-            ctx.arc(w3 + 210, h3 + 210, 220, 0, 2.0 * Math.PI);
-//            ctx.fillStyle = "yellow";
-//            ctx.fill();
-//            ctx.closePath();
-            ctx.clip();
-        
-            var lines = 13;
-            var pointsize = 10;
-            for(var j = 0; j < lines; j++){
-                for(var l = 0; l < lines; l++){
-                ctx.beginPath();
-                ctx.strokeStyle = "pink";
-                ctx.strokeWidth = 10;
-                ctx.arc(w3 + ((pointsize * 3.5) * j) + (l % 2) * (pointsize * 1.75), h3 + ((pointsize * 3.5) * l), pointsize, 0, 2.0 * Math.PI);
-                ctx.fillStyle = "pink";
-                ctx.fill();
-                ctx.stroke();
-                ctx.closePath();    
-
-                }
-           }
-            ctx.restore();
-    }
+//        var w3 = 300;
+//        var h3 = 600;
+//        function circle3(){
+//            ctx.save();
+//            ctx.beginPath();
+//            ctx.arc(w3 + 210, h3 + 210, 220, 0, 2.0 * Math.PI);
+////            ctx.fillStyle = "yellow";
+////            ctx.fill();
+////            ctx.closePath();
+//            ctx.clip();
+//        
+//            var lines = 13;
+//            var pointsize = 10;
+//            for(var j = 0; j < lines; j++){
+//                for(var l = 0; l < lines; l++){
+//                ctx.beginPath();
+//                ctx.strokeStyle = "pink";
+//                ctx.strokeWidth = 10;
+//                ctx.arc(w3 + ((pointsize * 3.5) * j) + (l % 2) * (pointsize * 1.75), h3 + ((pointsize * 3.5) * l), pointsize, 0, 2.0 * Math.PI);
+//                ctx.fillStyle = "pink";
+//                ctx.fill();
+//                ctx.stroke();
+//                ctx.closePath();    
+//
+//                }
+//           }
+//            ctx.restore();
+//    }
     
     
     window.addEventListener('load', main);
