@@ -13,12 +13,12 @@
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, c.width, c.height);
         
-        circle(260, 260, 220, 0);
-        circle(380, 380, 220, Math.PI / 4);
+        circle(0, 0, 2500, 0);
+        circle(380, 380, 900, Math.PI / 4);
 
     
-    circle(780, 780, 220, 0);
-    circle(860, 860, 220, Math.PI / 4);
+//    circle(780, 780, 2200, 0);
+//    circle(860, 860, 2200, Math.PI / 4);
     
     }
             
@@ -32,8 +32,8 @@
             ctx.clip();
   
             
-            var lines = 13;
             var pointsize = 10;
+            var lines = r / pointsize;
             for(var i = 0; i < lines; i++){
                 for(var k = 0; k < lines; k++){
                 ctx.beginPath();
