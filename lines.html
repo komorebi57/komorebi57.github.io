@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+
+        var w = 0.5 * c.width;
+        var h = 0.5 * c.height;
+        
+         //중앙아래 핑크
+        arc(w, h);
+        //오른쪽 빨강
+        arc2(w + 150, h - 160);
+        //중앙위 오렌지
+        arc3(w, h - 300);
+        //왼쪽 그레이
+        arc4(w - 150, h - 160);
+
+    }
+    
+    var color = "pink";
+    var line = 1.5;
+
+    function arc(w, h) {
+        var lines = 100;
+        var size = 150;
+        
+        for(i = 0; i < lines; i++){
+            
+            //오른쪽
+            var x = w + Math.cos(25/ lines * 2 * Math.PI) * size;
+            var y = h - Math.sin(25 / lines * 2 * Math.PI) * size;
+            
+            //둘레점들
+            var x2 = w + Math.cos(i / lines * 2 * Math.PI) * size;
+            var y2 = h - Math.sin(i / lines * 2 * Math.PI) * size;
+            
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = line;
+            ctx.moveTo(x, y);    
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+        }
+        
+    }
+    
+    function arc2(w, h) {
+        var lines = 100;
+        var size = 150;
+        
+        for(i = 0; i < lines; i++){
+              
+            //둘레점들
+            var x2 = w + Math.cos(i / lines * 2 * Math.PI) * size;
+            var y2 = h - Math.sin(i / lines * 2 * Math.PI) * size;
+            
+            //왼쪽
+            var x1 = w + Math.cos(150/ lines * 2 * Math.PI) * size;
+            var y1 = h - Math.sin(150 / lines * 2 * Math.PI) * size;
+            
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = line;
+            ctx.moveTo(x1, y1);    
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+    
+        }
+        
+    }
+    
+  
+    function arc3(w, h) {
+        var lines = 100;
+        var size = 150;
+        
+        for(i = 0; i < lines; i++){
+            //둘레점들
+            var x2 = w + Math.cos(i / lines * 2 * Math.PI) * size;
+            var y2 = h - Math.sin(i / lines * 2 * Math.PI) * size;
+            
+            //아래
+            var x1 = w + Math.cos(75/ lines * 2 * Math.PI) * size;
+            var y1 = h - Math.sin(75 / lines * 2 * Math.PI) * size;
+            
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = line;
+            ctx.moveTo(x1, y1);    
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+    
+        }
+        
+    }  
+    
+
+    function arc4(w, h) {
+        var lines = 100;
+        var size = 150;
+        
+        for(i = 0; i < lines; i++){
+              
+            //둘레점들
+            var x2 = w + Math.cos(i / lines * 2 * Math.PI) * size;
+            var y2 = h - Math.sin(i / lines * 2 * Math.PI) * size;
+            
+            //위
+            var x1 = w + Math.cos(100 / lines * 2 * Math.PI) * size;
+            var y1 = h - Math.sin(100 / lines * 2 * Math.PI) * size;
+            
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = line;
+            ctx.moveTo(x1, y1);    
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+    
+        }
+        
+    }      
+    
+    window.addEventListener('load', main);
+</script>    
+<style>
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
