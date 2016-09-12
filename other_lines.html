@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+
+        var w = 0.5 * c.width;
+        var h = 0.5 * c.height;
+        
+        var radius = 250;
+        var lines = 150;
+        arc(w, h, lines, radius, 0, "#a4d7ea");
+        arc(w, h + 10, lines, radius + 30, "#80a7b6");
+        arc(w + 10, h, lines, radius, "#aad8e9");
+        arc(w, h - 10, lines, radius + 50, "#7ddcff");
+        arc(w, h + 10, lines, radius + 100, "#98b0b9");
+        arc(w, h, lines, radius + 100, "#6cb9d6");
+        arc(w - 10, h - 10, lines + 100, radius + 150, "#7dbed6");
+        arc(w - 10, h, lines + 100, radius + 200, "#37c9ff");
+
+    }
+    
+    var lineWith = 0.5;
+    function arc(w, h, lines, size, color) {
+        
+        for(i = 0; i < lines; i++){
+            //둘레점들
+            var x2 = w + Math.cos(i / lines * 2 * Math.PI) * size;
+            var y2 = h - Math.sin(i / lines * 2 * Math.PI) * size;
+            
+            ctx.beginPath();
+            ctx.strokeStyle = color;
+            ctx.lineWidth = lineWith;
+            ctx.moveTo(w, h);    
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+        }
+        
+    }
+    
+    window.addEventListener('load', main);
+</script>    
+<style>
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
