@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+
+        var w = 0.5 * c.width;
+        
+        arc(w);
+    }
+    
+    function arc(w) {
+        for(i = 0; i < 15; i++){
+            var h = (c.height * 0.5) *Math.random() + (c.height * 0.3);
+            var size = Math.random() * 150 + 50;
+
+            ctx.beginPath();
+            ctx.fillStyle = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 55) + ",240, 0.4)";
+            //ctx.fillStyle = 'rgba(240,140,125,0.6)';
+            ctx.arc(w, h, size, 0, 2.0 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
+        }
+        
+        
+     for(i = 0; i < 20; i++){
+            var h = (c.height * 0.6) *Math.random() + (c.height * 0.3);
+            var size = Math.random() * 180 + 50;
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 55) + ",200, 0.4)";
+            ctx.lineWidth = Math.floor(Math.random() * 3 + 0.5);
+            //ctx.fillStyle = 'rgba(240,140,125,0.6)';
+            ctx.arc(w, h, size, 0, 2.0 * Math.PI);
+            ctx.stroke();
+            ctx.closePath();
+    };
+};
+  
+    window.addEventListener('load', main);
+</script>    
+<style>
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
