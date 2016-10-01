@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    var bgStamp;
+    var fgStamp;
+
+    var columns = 20;
+    var fgSize = 500;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+
+        ctx.fillStyle = "#000f2b";
+        ctx.fillRect(0, 0, c.width, c.height);
+
+        bgStamp = document.createElement('canvas');
+        bgStamp.width = innerWidth * 2;
+        bgStamp.height = innerHeight * 2;
+        var bgstampCtx = bgStamp.getContext('2d');
+        circle(bgstampCtx, 0, 0, 2000, 0, 'rgba(255, 255, 190, 0.8)');
+
+        fgStamp = document.createElement('canvas');
+        fgStamp.width = innerWidth * 2;
+        fgStamp.height = innerHeight * 2;
+        var fgstampCtx = fgStamp.getContext('2d');
+        circle(fgstampCtx, fgSize, fgSize, fgSize, Math.PI / 4, 'rgba(255, 255, 230, 0.8)');
+
+        window.addEventListener('mousemove', update);
+    }
+
+    function circle(ctx, x, y, r, rotation, color){
+        ctx.save();
+
+        ctx.translate(x, y);
+        ctx.rotate(rotation);
+        ctx.beginPath();
+        ctx.arc(0, 0, r, 0, 2.0 * Math.PI);
+        ctx.clip();
+
+        var pointsize = 10;
+        var lines = r / pointsize;
+        for(var i = 0; i < lines; i++){
+            for(var k = 0; k < lines; k++){
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255, 255, 200, 0.7)';
+            ctx.strokeWidth = 10;
+            ctx.arc(-r + ((pointsize * 3.5) * i), -r + ((pointsize * 3.5) * k), pointsize, 0, 2.0 * Math.PI);
+           // ctx.fillStyle = 'rgba(255, 255, 200,  ' + alpha + ')';
+            ctx.fillStyle = color;
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();    
+            }
+        }
+        ctx.restore();
+    }
+   
+    function update(e) {
+        ctx.fillStyle = "#000f2b";
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        ctx.drawImage(bgStamp, 0, 0);
+        ctx.drawImage(fgStamp, e.offsetX * 2 - fgSize, e.offsetY * 2 - fgSize);
+    }
+
+    
+    
+    window.addEventListener('load', main);
+</script>    
+<style>
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
