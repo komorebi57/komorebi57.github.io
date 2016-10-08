@@ -13,10 +13,10 @@
         var w = 0;
         var h = 0;
         var wLines = window.innerWidth * 2 / 100;
-        
+        var hLines = window.innerHeight * 2.3 / 10;
         for(j = 0; j< wLines; j++){
             var random = Math.random() * 100 + 70;
-            for(i = 0; i< 300; i++){
+            for(i = 0; i< hLines; i++){
                 line(w + (j * 99), h + (i * 10), 70, Math.sin(i / random * Math.PI * 2.0));
             }
         }
