@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+
+        var w = 0;
+        var h = 0;
+        var wLines = window.innerWidth * 2 / 100;
+        
+        for(j = 0; j< wLines; j++){
+            var random = Math.random() * 100 + 70;
+            for(i = 0; i< 300; i++){
+                line(w + (j * 99), h + (i * 10), 70, Math.sin(i / random * Math.PI * 2.0));
+            }
+        }
+        
+    }
+    
+    function line(w, h, len, angle) {
+
+        var x = w + Math.cos(angle) * len;
+        var y = h - Math.sin(angle) * len;
+        
+        var x2 = w + 100;
+        var y2 = y - Math.sin(-angle) * len;
+
+            ctx.beginPath();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = '3';
+            ctx.moveTo(w, h);    
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.strokeStyle = 'black';
+            ctx.lineWidth = '3';
+            ctx.moveTo(x, y);    
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+        }
+        
+    
+    
+    window.addEventListener('load', main);
+</script>    
+<style>
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
