@@ -36,7 +36,8 @@
         for(j = 0; j< wLines; j++){
             var random = Math.random() * 100 + 70;
             for(i = 0; i< hLines; i++){
-                line(w + (j * a), h + (i * 10), 50, Math.sin(i / random * Math.PI * 5 - phase), a);
+                var freq = Math.sin(phase * 0.1) * 5;
+                line(w + (j * a), h + (i * 10), 50, Math.sin(i / random * Math.PI * freq - phase), a);
             }
         }
         phase += 0.025;
