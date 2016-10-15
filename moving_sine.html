@@ -36,11 +36,11 @@
         for(j = 0; j< wLines; j++){
             var random = Math.random() * 100 + 70;
             for(i = 0; i< hLines; i++){
-                line(w + (j * a), h + (i * 10), 70, Math.sin(i / random * Math.PI * 2.0 - phase), a);
+                line(w + (j * a), h + (i * 10), 70, Math.sin(i / random * Math.PI * 1.5 - phase), a);
             }
         }
         
-        phase += 0.03;
+        phase += 0.02;
         requestAnimationFrame(update);
     }
     
