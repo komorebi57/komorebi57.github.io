@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="seedrandom.js"></script>
+<script>
+    var ctx;
+    var seed = 'Hello' + Math.random();
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        
+        update();
+    }
+    
+    var phase = 0;
+    function update() {
+        Math.seedrandom(seed);
+
+        var w = 0;
+        var h = -50;
+        var a = 100;
+        
+        var wLines = window.innerWidth * 2 / a;
+        var hLines = window.innerHeight * 2.3 / 10;
+
+        // Math.sin(phase + t * frequency) * amplitude
+        // Math.sin(0 + t * 1.0) * 1.0
+        // Math.sin(t)
+
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        for(j = 0; j< wLines; j++){
+            var random = Math.random() * 100 + 70;
+            for(i = 0; i< hLines; i++){
+                line(w + (j * a), h + (i * 10), 70, Math.sin(i / random * Math.PI * 2.0 - phase), a);
+            }
+        }
+        
+        phase += 0.03;
+        requestAnimationFrame(update);
+    }
+    
+
+    function line(w, h, len, angle, a) {
+        var x = w + Math.cos(angle) * len;
+        var y = h - Math.sin(angle) * len;
+
+        var x2 = w + a;
+        var y2 = y - Math.sin(-angle) * len;
+
+        ctx.beginPath();
+        //블루색상
+        ctx.strokeStyle = 'rgb(' + Math.floor((Math.sin(angle) + 1) / 2 * 220) + ', 210, 250)';        
+        ctx.lineWidth = '1';
+        ctx.moveTo(w, h);    
+        ctx.lineTo(x, y);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();
+    }     
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

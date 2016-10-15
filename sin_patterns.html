@@ -12,38 +12,32 @@
 
         var w = 0;
         var h = 0;
+        var a = 130;
         
-        var wLines = window.innerWidth * 2 / 130;
+        var wLines = window.innerWidth * 2 / a;
         var hLines = window.innerHeight * 2.3 / 10;
         for(j = 0; j< wLines; j++){
             var random = Math.random() * 100 + 70;
             for(i = 0; i< hLines; i++){
-                line(w + (j * 129), h + (i * 10), 70, Math.sin(i / random * Math.PI * 2.0));
+                line(w + (j * a), h + (i * 10), 70, Math.sin(i / random * Math.PI * 2.0), a);
             }
         }
         
     }
     
-    function line(w, h, len, angle, patternW) {
+    function line(w, h, len, angle, a) {
 
         var x = w + Math.cos(angle) * len;
         var y = h - Math.sin(angle) * len;
         
-        var x2 = w + 130;
+        var x2 = w + a;
         var y2 = y - Math.sin(-angle) * len;
 
             ctx.beginPath();
-            ctx.strokeStyle = 'black';
+            ctx.strokeStyle = 'skyblue';
             ctx.lineWidth = '3';
             ctx.moveTo(w, h);    
             ctx.lineTo(x, y);
-            ctx.stroke();
-            ctx.closePath();
-            
-            ctx.beginPath();
-            ctx.strokeStyle = 'black';
-            ctx.lineWidth = '3';
-            ctx.moveTo(x, y);    
             ctx.lineTo(x2, y2);
             ctx.stroke();
             ctx.closePath();
