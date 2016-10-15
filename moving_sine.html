@@ -30,7 +30,9 @@
         // Math.sin(0 + t * 1.0) * 1.0
         // Math.sin(t)
 
-        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        ctx.fillStyle = 'rgb(0, 11, 24)';
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
         for(j = 0; j< wLines; j++){
             var random = Math.random() * 100 + 70;
             for(i = 0; i< hLines; i++){
