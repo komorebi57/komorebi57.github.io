@@ -13,29 +13,31 @@ function main() {
     ctx = c.getContext('2d');
     c.width = window.innerWidth;
     c.height = window.innerHeight; 
-
+    
+    ctx.fillStyle = 'rgb(0, 11, 24)';
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    
     var unit = 50;
     var unit2 = Math.sqrt(Math.pow(unit, 2) - Math.pow(unit * 0.5, 2));
     turtleX = c.width * 0.5;
     turtleY = c.height * 0.5;
     rotate(90);
 
-    for(var i = 0; i < 500; i++) {
-        ctx.strokeStyle = 'rgba(255, 130, 230, 0.5)';
+    for(var i = 0; i < 600; i++) {
+        ctx.strokeStyle = 'rgba(55, 130, 230, 0.5)';
         forward(unit);
         rotate(120);
         forward(unit);
         rotate(120);
         forward(unit);
-        rotate(120);
+        rotate(120)
 
-        rotate(90 * Math.floor(Math.random() * 4));
+        rotate(60 * Math.floor(Math.random() * 4));
         forward(unit2);
-        rotate(90);
+        rotate(60);
         forward(unit2);
-        rotate(90);
+        rotate(60);
         forward(unit2);
-        rotate(90);
         
     }
     
