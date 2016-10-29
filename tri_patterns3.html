@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var ctx;
+var turtleX = 100;
+var turtleY = 100;
+var turtleA = 0;
+var turtlePenDown = true;
+
+function main() {
+    var c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight; 
+
+    
+    ctx.fillStyle = 'rgb(0, 11, 24)';
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+    
+    var unit = 50;
+    var unit2 = Math.sqrt(Math.pow(unit, 2) - Math.pow(unit * 0.5, 2));
+    turtleX = c.width * 0.5;
+    turtleY = c.height * 0.5;
+    rotate(90);
+
+    for(var i = 0; i < 500; i++) {
+        ctx.strokeStyle = 'rgba(55, 230, 230, 0.5)';
+        forward(unit);
+        rotate(120);
+        forward(unit);
+        rotate(120);
+        forward(unit);
+        rotate(120);
+        
+        rotate(90 * Math.floor(Math.random() * 3));
+        forward(unit2);
+        rotate(60);
+        forward(unit2);
+        rotate(60);
+        forward(unit2);
+        rotate(60);
+    
+        
+        
+//        forward(unit);
+//        rotate(90);
+//        forward(unit);
+//        rotate(90);
+//        forward(unit);
+//        rotate(90);
+//        
+//        rotate(90 * Math.floor(Math.random() * 3));
+//        forward(unit2);
+//        rotate(30);
+//        forward(unit2);
+//        rotate(30);
+//        forward(unit2);
+//        rotate(30);
+//    
+    }
+    
+}
+    
+function forward(n) {
+    ctx.beginPath();
+    ctx.moveTo(turtleX, turtleY);
+    var x = turtleX + Math.cos(turtleA / 360.0 * 2 * Math.PI) * n;
+    var y = turtleY - Math.sin(turtleA / 360.0 * 2 * Math.PI) * n;
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.closePath();
+    turtleX = x;
+    turtleY = y;
+}
+    
+function rotate(n) {
+    turtleA += n;
+}
+
+window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
