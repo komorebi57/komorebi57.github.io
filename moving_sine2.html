@@ -1,8 +1,33 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
 <script src="seedrandom.js"></script>
+<script src="suncalc.js"></script>
 <script>
+    
+    var now = new Date();
+    var times = SunCalc.getTimes(now, 37.1, 126.58);
+    var sunrise = times.sunrise;
+    var sunset = times.sunset;
+    
+    var nowNum = now.getHours() * 60 + now.getMinutes();
+    var sunriseNum = sunrise.getHours() * 60 + sunrise.getMinutes();
+    var sunsetNum = sunset.getHours() * 60 + sunset.getMinutes();
+    
+    var color = d3.scaleLinear()
+        .domain([0, sunriseNum, (sunriseNum + sunsetNum) / 2, sunsetNum, 1440])
+        .range(["rgb(10,0,255)", "rgb(255,100,85)", "rgb(255,80,40)", "rgb(140,250,255)", "rgb(10,0,255)"]);
+    var color2 = d3.scaleLinear()
+        .domain([0, sunriseNum, (sunriseNum + sunsetNum) / 2, sunsetNum, 1440])
+        .range(["rgb(80,40,180)", "rgb(180, 100, 255)", "rgb(255,170,0)", "rgb(90,80,255)", "rgb(80,40,180)"]);
+
+    var c1 = color(nowNum);
+    var c2 = color2(nowNum);
+    var color3 = d3.scaleLinear()
+        .domain([0, 1])
+        .range([c1, c2]);
+
     var ctx;
     var seed = 'Hello' + Math.random();
     
@@ -54,7 +79,9 @@
         var y2 = y - Math.sin(-angle) * len;
 
         ctx.beginPath();
-        ctx.strokeStyle = 'rgb(' + Math.floor((Math.sin(angle) + 1) / 2 * 220) + ', 210, 250)';
+        ctx.strokeStyle = color3((angle + 1) * 0.5);
+
+//        ctx.strokeStyle = 'rgb(' + Math.floor((Math.sin(angle) + 1) / 2 * 220) + ', 210, 250)';
 //        ctx.strokeStyle = 'rgb(' + Math.floor((Math.sin(angle) + 1) / 2 * 220) + ', ' + (w * 20 % 255) + ', 250)';
         ctx.lineWidth = '1';
         ctx.moveTo(w, h);    

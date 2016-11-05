@@ -2,33 +2,14 @@
 <html>
 <head>
 <script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
 <script src="seedrandom.js"></script>
 <script src="suncalc.js"></script>
+<!--<script src="weather.js"></script>-->
 <script>
-    var now = new Date();
-    var times = SunCalc.getTimes(now, 37.1, 126.58);
-    var sunrise = times.sunrise;
-    var sunset = times.sunset;
-    
-    var nowNum = now.getHours() * 60 + now.getMinutes();
-    var sunriseNum = sunrise.getHours() * 60 + sunrise.getMinutes();
-    var sunsetNum = sunset.getHours() * 60 + sunset.getMinutes();
-    
-    var color = d3.scaleLinear()
-        .domain([0, sunriseNum, (sunriseNum + sunsetNum) / 2, sunsetNum, 1440])
-        .range(["rgb(10,0,255)", "rgb(255,100,85)", "rgb(255,80,40)", "rgb(140,250,255)", "rgb(10,0,255)"]);
-    var color2 = d3.scaleLinear()
-        .domain([0, sunriseNum, (sunriseNum + sunsetNum) / 2, sunsetNum, 1440])
-        .range(["rgb(80,40,180)", "rgb(180, 100, 255)", "rgb(255,170,0)", "rgb(90,80,255)", "rgb(80,40,180)"]);
-
-    var c1 = color(nowNum);
-    var c2 = color2(nowNum);
-    var color3 = d3.scaleLinear()
-        .domain([0, 1])
-        .range([c1, c2]);
-
     var ctx;
     var seed = 'Hello' + Math.random();
+    var weather;
     
     function main() {
         var c = document.getElementById('c');
@@ -36,12 +17,14 @@
         c.width = window.innerWidth;
         c.height = window.innerHeight;
         
-        update();
+        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Seoul&APPID=28a6192c157b2c01ffd0f19399f8d62b",function(data){
+            weather = data;
+            update();
+        });
     }
     
     var phase = 0;
     function update() {
-        
         Math.seedrandom(seed);
 
         var w = 0;
@@ -54,14 +37,15 @@
         // Math.sin(phase + t * frequency) * amplitude
         // Math.sin(0 + t * 1.0) * 1.0
         // Math.sin(t)
-            ctx.fillStyle = 'rgb(0, 11, 24)';
+            ctx.fillStyle = snowBackground();
             ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
-        
+    
+        var colorScale = getColorScaleBySun();
         for(j = 0; j< wLines; j++){
             var random = Math.random() * 100 + 70;
             for(i = 0; i< hLines; i++) {
                 var freq = (Math.sin(phase * 0.07) + 1) * 2.5;
-                line(w + (j * a), h + (i * 10), 50, Math.sin(i / random * Math.PI * freq - phase), a);
+                line(w + (j * a), h + (i * 10), 50, Math.sin(i / random * Math.PI * freq - phase), a, colorScale);
             }
         }
         phase += 0.015;
@@ -69,7 +53,7 @@
     }
     
 
-    function line(w, h, len, angle, a) {
+    function line(w, h, len, angle, a, colorScale) {
         angle = angle + w * 0.002;
         var x = w + Math.cos(angle) * len;
         var y = h - Math.sin(angle) * len;
@@ -78,9 +62,8 @@
         var y2 = y - Math.sin(-angle) * len;
 
         ctx.beginPath();
-        ctx.strokeStyle = color3((angle + 1) * 0.5);
-        
-//     ctx.strokeStyle = 'rgb(' + Math.floor((Math.sin(angle) + 1) / 2 * 220) + ', ' + (w * 20 % 255) + ', 250)';
+        ctx.strokeStyle = colorScale((angle + 1) * 0.5);
+      
         ctx.lineWidth = '1';
         ctx.moveTo(w, h);    
         ctx.lineTo(x, y);
@@ -89,6 +72,47 @@
         ctx.closePath();
     }     
     
+    function getColorScaleBySun() {
+        var now = new Date();
+        var times = SunCalc.getTimes(now, 37.1, 126.58);
+        var sunrise = times.sunrise;
+        var sunset = times.sunset;
+
+        var nowNum = now.getHours() * 60 + now.getMinutes();
+        var sunriseNum = sunrise.getHours() * 60 + sunrise.getMinutes();
+        var sunsetNum = sunset.getHours() * 60 + sunset.getMinutes();
+
+        var color = d3.scaleLinear()
+            .domain([0, sunriseNum, (sunriseNum + sunsetNum) / 2, sunsetNum, 1440])
+            .range(["rgb(10,0,255)", "rgb(255,100,85)", "rgb(255,80,40)", "rgb(140,250,255)", "rgb(10,0,255)"]);
+        var color2 = d3.scaleLinear()
+            .domain([0, sunriseNum, (sunriseNum + sunsetNum) / 2, sunsetNum, 1440])
+            .range(["rgb(80,40,180)", "rgb(180, 100, 255)", "rgb(255,170,0)", "rgb(90,80,255)", "rgb(80,40,180)"]);
+
+        var c1 = color(nowNum);
+        var c2 = color2(nowNum);
+        var colorScale = d3.scaleLinear()
+            .domain([0, 1])
+            .range([c1, c2]);
+        return colorScale;
+    }
+    
+    // http://openweathermap.org/weather-conditions
+
+    function snowBackground() {
+        var color = d3.scaleLinear()
+            .domain([0, 1])
+            .range(["rgb(0, 11, 24)", "rgb(170,250,255)"]);
+        
+        var weathers = weather.weather;
+        for(var i = 0; i < weathers.length; i++) {
+            if(600 <= weathers[i].id && weathers[i].id <= 622) {
+                return color((weathers[i].id - 600) / 22 * 0.6 + 0.4);
+            }
+        }
+        return color(0.0);
+    }
+
     window.addEventListener('load', main);
 
 </script>    
