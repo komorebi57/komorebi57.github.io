@@ -37,7 +37,7 @@
         // Math.sin(phase + t * frequency) * amplitude
         // Math.sin(0 + t * 1.0) * 1.0
         // Math.sin(t)
-            ctx.fillStyle = snowBackground();
+            ctx.fillStyle = getBackground();
             ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
     
         var colorScale = getColorScaleBySun();
@@ -99,18 +99,41 @@
     
     // http://openweathermap.org/weather-conditions
 
-    function snowBackground() {
-        var color = d3.scaleLinear()
-            .domain([0, 1])
-            .range(["rgb(0, 11, 24)", "rgb(170,250,255)"]);
-        
+    function getBackground() {
         var weathers = weather.weather;
+
+        // 비
         for(var i = 0; i < weathers.length; i++) {
-            if(600 <= weathers[i].id && weathers[i].id <= 622) {
+            if(500 <= weathers[i].id && weathers[i].id <= 531) {
+                var color = d3.scaleLinear()
+                    .domain([0, 1])
+                    .range(["rgb(0, 11, 24)", "rgb(62, 76, 87)"]);
+                return color((weathers[i].id - 500) / 31 * 0.6 + 0.4);
+            }
+        }
+
+        // 눈
+        for(var i = 0; i < weathers.length; i++) {
+            if(600 <= weathers[i].id && weathers[i].id <= 622) {        
+                var color = d3.scaleLinear()
+                    .domain([0, 1])
+                    .range(["rgb(0, 11, 24)", "rgb(170,250,255)"]);
                 return color((weathers[i].id - 600) / 22 * 0.6 + 0.4);
             }
         }
-        return color(0.0);
+        
+        return "rgb(0, 11, 24)";
+        
+        
+        // 구름
+        for(var i = 0; i < weathers.length; i++) {
+            if(800 <= weathers[i].id && weathers[i].id <= 804) {
+                var color = d3.scaleLinear()
+                    .domain([0, 1])
+                    .range(["rgb(0, 11, 24)", "rgb(105, 105, 105)"]);
+                return color((weathers[i].id - 800) / 4 * 0.6 + 0.4);
+            }
+        }
     }
 
     window.addEventListener('load', main);
