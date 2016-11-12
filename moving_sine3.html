@@ -17,8 +17,9 @@
         c.width = window.innerWidth;
         c.height = window.innerHeight;
         
-        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Seoul&APPID=28a6192c157b2c01ffd0f19399f8d62b",function(data){
+        $.getJSON("http://api.openweathermap.org/data/2.5/weather?q=Seoul&units=metric&APPID=28a6192c157b2c01ffd0f19399f8d62b",function(data){
             weather = data;
+            console.log(weather);
             update();
         });
     }
@@ -48,6 +49,11 @@
                 line(w + (j * a), h + (i * 10), 50, Math.sin(i / random * Math.PI * freq - phase), a, colorScale);
             }
         }
+        
+        //안개
+        ctx.fillStyle = getMistColor();
+        ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+        
         phase += 0.015;
         requestAnimationFrame(update);
     }
@@ -100,14 +106,17 @@
     // http://openweathermap.org/weather-conditions
 
     function getBackground() {
+        if(weather.main.temp > 30) {
+            return "rgb(90, 0, 24)";
+        }
+        
         var weathers = weather.weather;
-
         // 비
         for(var i = 0; i < weathers.length; i++) {
             if(500 <= weathers[i].id && weathers[i].id <= 531) {
                 var color = d3.scaleLinear()
                     .domain([0, 1])
-                    .range(["rgb(0, 11, 24)", "rgb(62, 76, 87)"]);
+                    .range(["rgb(0, 11, 24)", "rgb(30, 95, 95)"]);
                 return color((weathers[i].id - 500) / 31 * 0.6 + 0.4);
             }
         }
@@ -117,23 +126,36 @@
             if(600 <= weathers[i].id && weathers[i].id <= 622) {        
                 var color = d3.scaleLinear()
                     .domain([0, 1])
-                    .range(["rgb(0, 11, 24)", "rgb(170,250,255)"]);
+                    .range(["rgb(0, 11, 24)", "rgb(170,230,230)"]);
                 return color((weathers[i].id - 600) / 22 * 0.6 + 0.4);
             }
         }
         
-        return "rgb(0, 11, 24)";
-        
-        
         // 구름
         for(var i = 0; i < weathers.length; i++) {
-            if(800 <= weathers[i].id && weathers[i].id <= 804) {
+            if(801 <= weathers[i].id && weathers[i].id <= 804) {
                 var color = d3.scaleLinear()
                     .domain([0, 1])
                     .range(["rgb(0, 11, 24)", "rgb(105, 105, 105)"]);
                 return color((weathers[i].id - 800) / 4 * 0.6 + 0.4);
             }
         }
+
+        
+        return "rgb(0, 11, 24)";
+    }
+    //안개
+    function getMistColor() {
+        var weathers = weather.weather;
+            for(var i = 0; i < weathers.length; i++) {
+                if(700 <= weathers[i].id && weathers[i].id <= 781) {
+                    var color = d3.scaleLinear()
+                    .domain([0, 1])
+                    .range(["rgba(200,240,255,0.1)", "rgba(200,240,255,0.7)"]);
+                    return color((weathers[i].id - 700) / 81 * 0.8 + 0.2);
+            }
+        }
+        return 'rgba(0, 0, 0, 0)';
     }
 
     window.addEventListener('load', main);
