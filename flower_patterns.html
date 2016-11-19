@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        
+        drawrect();
+    }
+    
+    
+    function drawrect(){
+        var x = innerWidth * 0.5;
+        var y = innerHeight * 0.5;
+
+        for(i = 0; i < 100; i++){
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(i);
+            
+            ctx.beginPath();
+            ctx.strokeStyle = 'white';
+            ctx.strokeWidth = 2;
+            ctx.rect(-10, 40, 20, 200 - i * 1.8);
+            ctx.fillStyle = 'rgba(205, 150, 255, 0.5)';
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.restore();
+        } 
+    }
+     
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
