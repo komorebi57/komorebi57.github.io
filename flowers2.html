@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="seedrandom.js"></script>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = innerWidth;
+        c.height = innerHeight;
+
+        update();
+    }
+    
+    var frame = 0;
+    function update() {
+        ctx.clearRect(0, 0, innerWidth, innerHeight);
+        for(var l = 0; l < 72; l++) {
+            drawleaf(0, 0, 300 - (l * 3), 2.39996322972865332 * l * 0.25, frame);
+        }
+        
+        frame++;
+        requestAnimationFrame(update);
+    }
+    
+    
+    function drawleaf(x, y, i, l, frame) {
+        ctx.save();
+        ctx.translate(innerWidth * 0.5, innerHeight * 0.5);
+
+        Math.seedrandom(l + i);
+        var wind = Math.sin(frame * 0.01) * 0.5 + 0.5;
+        var freq = Math.random() * 0.03;
+        var amp = Math.random() * 0.04 * wind;
+        var phase = Math.random();
+        
+        ctx.rotate(l + Math.sin(frame * freq + phase) * amp);
+
+        var openness = Math.sin(frame * 0.011) * (i * 0.0001) + 0.9;
+        var ylen1 = i;
+        var ylen2 = i * 0.6;
+        var ylen3 = i * 0.3;
+        var xlen1 = i * 0.2;
+        var xlen2 = i * 0.3;  
+
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+        ctx.lineWidth = 2;
+        ctx.moveTo(x,y);
+       // ctx.bezierCurveTo(110, 300, 60, 210, 150, 80);
+        ctx.bezierCurveTo(x - xlen1, y - ylen3, (x - xlen2) * openness, y - ylen2, x, y - ylen1 * openness);
+//        ctx.fillStyle = 'rgba(155, 250, 255, 0.2)';
+        ctx.fillStyle = 'rgba(255, 150, 255, 0.4)';
+
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+        ctx.lineWidth = 2;
+        ctx.moveTo(x,y);
+        //ctx.bezierCurveTo(190, 300, 240, 210, 150, 80);
+        ctx.bezierCurveTo(x + xlen1, y - ylen3, (x + xlen2) * openness, y - ylen2, x, y - ylen1 * openness);
+        ctx.fillStyle = 'rgba(255, 150, 255, 0.4)';
+        ctx.fill();
+        ctx.stroke();
+        ctx.closePath();    
+
+        ctx.restore();
+    } 
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

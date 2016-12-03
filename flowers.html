@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+
+            drawrect();
+        }
+    
+    
+    
+    function drawrect() {    
+        for(var l = 0; l < 10; l++){
+            
+            for(var i = 100; i < 300; i += 30){
+                
+            var x = 0;
+            var y = 0;
+                
+            ctx.save();
+            ctx.translate(innerWidth * 0.5, innerHeight * 0.5);
+            ctx.rotate(l * (10 / 360 * Math.PI * 2));
+
+            var ylen1 = i;
+            var ylen2 = i * 0.6;
+            var ylen3 = i * 0.3;
+            var xlen1 = i * 0.2;
+            var xlen2 = i * 0.3;  
+
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+            ctx.lineWidth = 2;
+            ctx.moveTo(x,y);
+           // ctx.bezierCurveTo(110, 300, 60, 210, 150, 80);
+            ctx.bezierCurveTo(x - xlen1, y - ylen3, x - xlen2, y - ylen2, x, y - ylen1);
+            ctx.fillStyle = 'rgba(155, 250, 255, 0.2)';
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+
+            ctx.beginPath();
+            ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+            ctx.lineWidth = 2;
+            ctx.moveTo(x,y);
+            //ctx.bezierCurveTo(190, 300, 240, 210, 150, 80);
+            ctx.bezierCurveTo(x + xlen1, y - ylen3, x + xlen2, y - ylen2, x, y - ylen1);
+            ctx.fillStyle = 'rgba(255, 150, 255, 0.2)';
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();    
+            
+            ctx.restore();
+            }
+        }
+    } 
+    
+    
+    
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

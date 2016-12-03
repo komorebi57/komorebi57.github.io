@@ -10,7 +10,8 @@
         c.width = window.innerWidth;
         c.height = window.innerHeight;
         
-        drawrect();
+        //drawrect();
+        drawarc();
     }
     
     
@@ -24,14 +25,39 @@
             ctx.rotate(i);
             
             ctx.beginPath();
-            ctx.strokeStyle = 'white';
-            ctx.strokeWidth = 2;
-            ctx.rect(-10, 40, 20, 200 - i * 1.8);
+            ctx.strokeStyle = 'red';
+            ctx.lineWidth = 2;
+            ctx.rect(-10, 0, 20, 200 - i * 1.8);
             ctx.fillStyle = 'rgba(205, 150, 255, 0.5)';
             ctx.fill();
             ctx.stroke();
             ctx.closePath();
+            
+            ctx.restore();
+        } 
+    }
+    
+    
+     function drawarc(){
+        var x = innerWidth * 0.5;
+        var y = innerHeight * 0.5;
 
+        for(l = 0; l < 100; l++){
+            ctx.save();
+            ctx.translate(x, y);
+            ctx.rotate(l * (222.4922 / 360 * Math.PI * 2));
+            
+            ctx.beginPath();
+            ctx.strokeStyle = 'white';
+            ctx.lineWidth = 1;
+            ctx.ellipse(0, -160 + l * 1, 20, 160 - l * 1.1, 0, 0, Math.PI * 2);
+            
+            //ctx.ellipse(x, y, radiusX, radiusY, rotation, startAngle, endAngle, anticlockwise);
+            ctx.fillStyle = 'rgba(255, 150, 255, 0.5)';
+            ctx.fill();
+            ctx.stroke();
+            ctx.closePath();
+            
             ctx.restore();
         } 
     }
