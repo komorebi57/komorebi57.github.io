@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script>
+    var ctx;
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+
+        var w = 0.2 * c.width;
+        var h = 0.2 * c.height;
+        var wide = 0.5 * c.width;
+        var height = 0.6 * c.height;
+
+        
+        rainbow(w, h, wide, height);
+        
+    }
+    
+    
+    function rainbow(w, h, wide, height) {
+        var lines = height;
+        var color = d3.scaleLinear()
+            .domain([0, lines * 0.5, lines])
+            .range(["rgb(255,255,0)", "rgb(255,0,115)", "rgb(100,0,255)"]);
+
+        for(var i = 0; i < lines; i++){
+//            var start_Hrand = Math.random() * 70;
+            var end_Hrand = Math.random() * height;
+            
+            ctx.beginPath();
+            ctx.strokeStyle = color(i);
+            ctx.lineWidth = '1';
+            ctx.moveTo(w, h + i);
+            ctx.lineTo(w + wide, h + end_Hrand);
+            ctx.stroke();
+            ctx.closePath();            
+        }
+//    
+//        for(var i = 0; i < 50; i++){
+//                    
+//            var start_Hrand = Math.random() * 70 + 50;
+//            var end_Hrand = Math.random() * innerHeight;
+//            
+//            ctx.beginPath();
+//            ctx.strokeStyle = 'rgba(255, 200, 50, 1)';
+//            ctx.lineWidth = '1';
+//            ctx.moveTo(w, h + start_Hrand);    
+//            ctx.lineTo(w + wide, h + end_Hrand);
+//            ctx.stroke();
+//            ctx.closePath();            
+//        }    
+//    
+//        for(var i = 0; i < 50; i++){
+//                    
+//            var start_Hrand = Math.random() * 70 + 90;
+//            var end_Hrand = Math.random() * innerHeight;
+//            
+//            ctx.beginPath();
+//            ctx.strokeStyle = 'rgba(255, 70, 165, 1)';
+//            ctx.lineWidth = '1';
+//            ctx.moveTo(w, h + start_Hrand);    
+//            ctx.lineTo(w + wide, h + end_Hrand);
+//            ctx.stroke();
+//            ctx.closePath();            
+//        }    
+//        
+//    
+//        for(var i = 0; i < 50; i++){
+//                    
+//            var start_Hrand = Math.random() * 70 + 120;
+//            var end_Hrand = Math.random() * innerHeight;
+//            
+//            ctx.beginPath();
+//            ctx.strokeStyle = 'rgba(200, 0, 255, 1)';
+//            ctx.lineWidth = '1';
+//            ctx.moveTo(w, h + start_Hrand);    
+//            ctx.lineTo(w + wide, h + end_Hrand);
+//            ctx.stroke();
+//            ctx.closePath();            
+//        }        
+//    
+}
+    
+    
+    window.addEventListener('load', main);
+</script>    
+<style>
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
