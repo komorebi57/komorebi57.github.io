@@ -4,47 +4,118 @@
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
     var ctx;
+    var color;
+    var line;
+    var lines = [];
     
     function main() {
         var c = document.getElementById('c');
         ctx = c.getContext('2d');
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
-
+            
         var w = 0.2 * c.width;
         var h = 0.2 * c.height;
-        var wide = 0.5 * c.width;
+        var width = 0.5 * c.width;
         var height = 0.6 * c.height;
         
-        rainbow(w, h, wide, height);
+        for(var i = c.height * 0.2; i < c.height * 0.8; i += 0.5) {
+            var x1 = c.width * 0.3;
+            var y1 = i;
+            var x4 = c.width * 0.7;
+            var y4 = (Math.random() * 0.6 + 0.2) * c.height;
+            
+            var x2 = (Math.random() * 0.3 - 0.05) * c.width + x1;
+            var y2 = (Math.random() * 0.3 - 0.15) * c.height + y1;
+            var x3 = (Math.random() * 0.3 - 0.25) * c.width + x4;
+            var y3 = (Math.random() * 0.3 - 0.15) * c.height + y4;
+
+            var points = [
+                [x1, y1],
+                [x2, y2], 
+                [x3, y3], 
+                [x4, y4]
+            ];
+            lines.push(points);
+        }
         
+        color = d3.scaleLinear()
+            .domain([0, lines.length * 0.5, lines.length])
+            .range(["rgb(255,255,0)", "rgb(255,0,115)", "rgb(35,0,255)"]);
+        line = d3.line()
+            .x(function(d) {return d[0];})
+            .y(function(d) {return d[1];})
+            .curve(d3.curveBasis)
+            .context(ctx)
+
+        update();
+    }
+    
+    var frame = 0;
+    function update() {
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, window.innerWidth * 2, window.innerHeight * 2);
+      
+        for(var i = 0; i < lines.length; i++) {
+            var x1 = lines[i][0][0];
+            var y1 = lines[i][0][1];
+            var x2 = lines[i][1][0] + Math.sin(i * 0.2 + frame * 0.11) * 20 + Math.sin(i * 0.1 + frame * 0.07) * 10;
+            var y2 = lines[i][1][1] + Math.sin(i * 0.2 + frame * 0.05) * 20 + Math.sin(i * 0.1 + frame * 0.07) * 10;
+            var x3 = lines[i][2][0] + Math.sin(i * 0.5 + frame * 0.03) * 30 + Math.sin(i * 0.2 + frame * 0.11) * 10;
+            var y3 = lines[i][2][1] + Math.sin(i * 0.5 + frame * 0.11) * 30 + Math.sin(i * 0.1 + frame * 0.17) * 10;
+            var x4 = lines[i][3][0];
+            var y4 = lines[i][3][1];
+            
+            ctx.beginPath();
+            line([
+                [x1, y1],
+                [x2, y2],
+                [x3, y3],
+                [x4, y4],
+            ]);
+            ctx.lineWidth = 0.5;
+            ctx.strokeStyle = color(i);
+            ctx.strokeStyle = '#FFF';
+            ctx.stroke();
+        }
+
+        frame += 0.3;
+        requestAnimationFrame(update);
     }
     
     
-    function rainbow(w, h, wide, height) {
+    function rainbow(w, h, width, height) {
         var lines = height;
         var color = d3.scaleLinear()
             .domain([0, lines * 0.5, lines])
-            .range(["rgb(255,255,0)", "rgb(255,0,115)", "rgb(100,0,255)"]);
-
-        for(var i = 0; i < lines; i++){
+            .range(["rgb(255,0,0)", "rgb(255,0,115)", "rgb(100,0,255)"]);
+        
+        for(var i = 0; i < 1; i++){
 //            var start_Hrand = Math.random() * 70;
             var end_Hrand = Math.random() * height;
-            var Cwide = 0.8 * c.width;
+            var Cwidth = 0.8 * c.width;
             var Cheight = 0.9 * c.height;
 
             ctx.beginPath();
             ctx.strokeStyle = color(i);
             ctx.lineWidth = '1';
-            ctx.moveTo(w, h + i);
-         //   ctx.lineTo(w + wide, h + end_Hrand);
-            ctx.bezierCurveTo(w, h + i, 
-                              w + Math.random() * (Cwide * 0.5), h + Math.random() * (Cheight * 0.5), 
-                              w + wide, h + end_Hrand);
+            ctx.bezierCurveTo(w, h + i,
+                              w + Math.random() * (Cwidth * 0.5), h + Math.random() * (Cheight * 0.5), 
+                              w + width, h + end_Hrand
+                             );
+//            ctx.moveTo(w - 30, h + i * 1);
+//            ctx.bezierCurveTo(w - 30, h + i * 0.2,
+//                              w - 50, h + i * 0.9, 
+//                              w, h + i
+//                             );
             ctx.stroke();
-            ctx.closePath();            
+//            ctx.closePath();
         }
-}
+    }
+   
+    
+    
+     
     
     
     window.addEventListener('load', main);
