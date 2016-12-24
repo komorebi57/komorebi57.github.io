@@ -42,7 +42,7 @@
         
         color = d3.scaleLinear()
             .domain([0, lines.length * 0.5, lines.length])
-            .range(["rgb(255,255,0)", "rgb(255,0,115)", "rgb(35,0,255)"]);
+            .range(["rgba(255,255,0,0.5)", "rgba(255,0,115,0.5)", "rgba(35,0,255,0.5)"]);
         line = d3.line()
             .x(function(d) {return d[0];})
             .y(function(d) {return d[1];})
