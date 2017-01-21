@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script src="delaunay.js"></script>
+    <script>
+        var ctx;
+        var dots2;
+        var triangles2;
+
+function main() {
+    var c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth * 2;
+    c.height = window.innerHeight * 2;
+
+    var dots = [];
+    var sample = poisson(innerWidth * 2.2, innerHeight * 2.2, 80);
+    while(true) {
+        var dot = sample();
+        if(!dot) break;
+        dots.push(dot);
+    }    
+    var triangles = Delaunay.triangulate(dots);
+    
+    dots2 = [];
+    for (var i = 0; i < triangles.length; i += 3) {
+        var x1 = dots[triangles[i]][0];
+        var y1 = dots[triangles[i]][1];
+        var x2 = dots[triangles[i + 1]][0];
+        var y2 = dots[triangles[i + 1]][1];
+        var x3 = dots[triangles[i + 2]][0];
+        var y3 = dots[triangles[i + 2]][1];
+
+        var centerX = (x1 + x2 + x3) / 3;
+        var centerY = (y1 + y2 + y3) / 3;
+        dots2.push([centerX, centerY]);
+    }
+    triangles2 = Delaunay.triangulate(dots2);
+
+    var colors = [
+       //회색하늘
+        '#6cb6bf',
+        //하늘
+        '#06e0fb',
+        //가을하늘
+        '#069cfb',
+        //말린장미
+        '#ea6079',
+        //네이비
+        '#040476',
+        //연보라
+        '#9962ff',
+        //보라
+        '#5c198b'
+    ];
+    
+    ctx.translate(-innerWidth * 0.1, -innerHeight * 0.1)
+
+    for (var i = 0; i < triangles.length; i += 3) {
+        var x1 = dots[triangles[i]][0];
+        var y1 = dots[triangles[i]][1];
+        var x2 = dots[triangles[i + 1]][0];
+        var y2 = dots[triangles[i + 1]][1];
+        var x3 = dots[triangles[i + 2]][0];
+        var y3 = dots[triangles[i + 2]][1];
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x3, y3);
+        ctx.closePath();
+        var grd = ctx.createLinearGradient(
+            dots[triangles[i]][0],
+            dots[triangles[i]][1],
+            dots[triangles[i + 1]][0],
+            dots[triangles[i + 1]][1]
+        );
+        var color1 = colors[Math.floor(Math.random() * colors.length)];
+        var color2 = color1;
+        while(color1 == color2) {
+            color2 = colors[Math.floor(Math.random() * colors.length)];
+        }
+        grd.addColorStop(0, color1);
+        grd.addColorStop(1, color2);
+
+        ctx.fillStyle = grd;
+        ctx.lineWidth = 0.5;
+        ctx.strokeStyle = '#000';
+//        ctx.stroke();
+        ctx.fill();
+    }
+    
+    for (var i = 0; i < dots2.length; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = '#FFF';
+        ctx.arc(dots2[i][0], dots2[i][1], 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+    }
+    
+    update();
+}
+
+var rate = 0.0;
+
+function update() {
+    for (var i = 0; i < triangles2.length; i += 3) {
+        var x1 = dots2[triangles2[i]][0];
+        var y1 = dots2[triangles2[i]][1];
+        var x2 = dots2[triangles2[i + 1]][0];
+        var y2 = dots2[triangles2[i + 1]][1];
+        var x3 = dots2[triangles2[i + 2]][0];
+        var y3 = dots2[triangles2[i + 2]][1];
+
+        ctx.beginPath();
+        ctx.moveTo(x1, y1);
+        ctx.lineTo(x2, y2);
+        ctx.lineTo(x3, y3);
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+        ctx.stroke();
+        ctx.closePath();
+    }
+    
+    for (var i = 0; i < dots2.length; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
+        ctx.arc(dots2[i][0], dots2[i][1], 4, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.closePath();
+    }
+    
+    
+   // rate += 0.002;
+   // if(rate < 1.0) window.requestAnimationFrame(update);
+}
+
+// Based on https://www.jasondavies.com/poisson-disc/
+function poisson(width, height, radius) {
+  var k = 20, // maximum number of samples before rejection
+      radius2 = radius * radius,
+      R = 3 * radius2,
+      cellSize = radius * Math.SQRT1_2,
+      gridWidth = Math.ceil(width / cellSize),
+      gridHeight = Math.ceil(height / cellSize),
+      grid = new Array(gridWidth * gridHeight),
+      queue = [],
+      queueSize = 0,
+      sampleSize = 0;
+
+  return function() {
+    if (!sampleSize) return sample(Math.random() * width, Math.random() * height);
+
+    // Pick a random existing sample and remove it from the queue.
+    while (queueSize) {
+      var i = Math.random() * queueSize | 0,
+          s = queue[i];
+
+      // Make a new candidate between [radius, 2 * radius] from the existing sample.
+      for (var j = 0; j < k; ++j) {
+        var a = 2 * Math.PI * Math.random(),
+            r = Math.sqrt(Math.random() * R + radius2),
+            x = s[0] + r * Math.cos(a),
+            y = s[1] + r * Math.sin(a);
+
+        // Reject candidates that are outside the allowed extent,
+        // or closer than 2 * radius to any existing sample.
+        if (0 <= x && x < width && 0 <= y && y < height && far(x, y)) return sample(x, y);
+      }
+
+      queue[i] = queue[--queueSize];
+      queue.length = queueSize;
+    }
+  };
+
+  function far(x, y) {
+    var i = x / cellSize | 0,
+        j = y / cellSize | 0,
+        i0 = Math.max(i - 2, 0),
+        j0 = Math.max(j - 2, 0),
+        i1 = Math.min(i + 3, gridWidth),
+        j1 = Math.min(j + 3, gridHeight);
+
+    for (j = j0; j < j1; ++j) {
+      var o = j * gridWidth;
+      for (i = i0; i < i1; ++i) {
+        if (s = grid[o + i]) {
+          var s,
+              dx = s[0] - x,
+              dy = s[1] - y;
+          if (dx * dx + dy * dy < radius2) return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  function sample(x, y) {
+    var s = [x, y];
+    queue.push(s);
+    grid[gridWidth * (y / cellSize | 0) + (x / cellSize | 0)] = s;
+    ++sampleSize;
+    ++queueSize;
+    return s;
+  }
+}
+        
+window.addEventListener('load', main);
+    </script>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+
+</html>
