@@ -5,15 +5,26 @@
     <script src="delaunay.js"></script>
     <script>
         var ctx;
+        var offctx;
+        var backgroundctx;
+        var backgroundcanvas;
+        var linecanvas;
+        var linecanvasctx; 
         var dots2;
         var triangles2;
 
+        
 function main() {
     var c = document.getElementById('c');
     ctx = c.getContext('2d');
     c.width = window.innerWidth * 2;
     c.height = window.innerHeight * 2;
 
+    backgroundcanvas = document.createElement('canvas');
+    backgroundcanvas.width = window.innerWidth * 2.2;
+    backgroundcanvas.height = window.innerHeight * 2.2;
+    backgroundctx = backgroundcanvas.getContext('2d');
+    
     var dots = [];
     var sample = poisson(innerWidth * 2.2, innerHeight * 2.2, 80);
     while(true) {
@@ -54,8 +65,6 @@ function main() {
         //보라
         '#5c198b'
     ];
-    
-    ctx.translate(-innerWidth * 0.1, -innerHeight * 0.1)
 
     for (var i = 0; i < triangles.length; i += 3) {
         var x1 = dots[triangles[i]][0];
@@ -65,12 +74,12 @@ function main() {
         var x3 = dots[triangles[i + 2]][0];
         var y3 = dots[triangles[i + 2]][1];
 
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.lineTo(x3, y3);
-        ctx.closePath();
-        var grd = ctx.createLinearGradient(
+        backgroundctx.beginPath();
+        backgroundctx.moveTo(x1, y1);
+        backgroundctx.lineTo(x2, y2);
+        backgroundctx.lineTo(x3, y3);
+        backgroundctx.closePath();
+        var grd = backgroundctx.createLinearGradient(
             dots[triangles[i]][0],
             dots[triangles[i]][1],
             dots[triangles[i + 1]][0],
@@ -84,28 +93,41 @@ function main() {
         grd.addColorStop(0, color1);
         grd.addColorStop(1, color2);
 
-        ctx.fillStyle = grd;
-        ctx.lineWidth = 0.5;
-        ctx.strokeStyle = '#000';
-//        ctx.stroke();
-        ctx.fill();
+        backgroundctx.fillStyle = grd;
+        backgroundctx.fill();
     }
-    
     for (var i = 0; i < dots2.length; i++) {
-        ctx.beginPath();
-        ctx.fillStyle = '#FFF';
-        ctx.arc(dots2[i][0], dots2[i][1], 4, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
+        backgroundctx.beginPath();
+        backgroundctx.fillStyle = '#FFF';
+        backgroundctx.arc(dots2[i][0], dots2[i][1], 4, 0, Math.PI * 2);
+        backgroundctx.fill();
+        backgroundctx.closePath();
     }
-    
+
+    linecanvas = createlinecanvas();
+    ctx.translate(-innerWidth * 0.1, -innerHeight * 0.1)
+
     update();
 }
 
-var rate = 0.0;
-
+var blah = 0;
 function update() {
-    for (var i = 0; i < triangles2.length; i += 3) {
+    blah += 2;
+    ctx.drawImage(backgroundcanvas, 0, 0);
+    ctx.drawImage(linecanvas, 0, 0, blah, innerHeight * 2.2, 0, 0, blah, innerHeight * 2.2);
+    
+    if(blah < innerWidth * 2.2) {
+        requestAnimationFrame(update);
+    }
+}
+
+function createlinecanvas(){
+    var offcanvas = document.createElement('canvas');
+    offcanvas.width = window.innerWidth * 2.2;
+    offcanvas.height = window.innerHeight * 2.2;
+    offctx = offcanvas.getContext('2d');
+    
+     for (var i = 0; i < triangles2.length; i += 3) {
         var x1 = dots2[triangles2[i]][0];
         var y1 = dots2[triangles2[i]][1];
         var x2 = dots2[triangles2[i + 1]][0];
@@ -113,28 +135,26 @@ function update() {
         var x3 = dots2[triangles2[i + 2]][0];
         var y3 = dots2[triangles2[i + 2]][1];
 
-        ctx.beginPath();
-        ctx.moveTo(x1, y1);
-        ctx.lineTo(x2, y2);
-        ctx.lineTo(x3, y3);
-        ctx.lineWidth = 1;
-        ctx.strokeStyle = 'rgba(255, 255, 255, 1)';
-        ctx.stroke();
-        ctx.closePath();
+        offctx.beginPath();
+        offctx.moveTo(x1, y1);
+        offctx.lineTo(x2, y2);
+        offctx.lineTo(x3, y3);
+        offctx.lineWidth = 1;
+        offctx.strokeStyle = 'rgba(255, 255, 255, 1)';
+        offctx.stroke();
+        offctx.closePath();
     }
-    
-    for (var i = 0; i < dots2.length; i++) {
-        ctx.beginPath();
-        ctx.fillStyle = 'rgba(255, 255, 255, 1)';
-        ctx.arc(dots2[i][0], dots2[i][1], 4, 0, Math.PI * 2);
-        ctx.fill();
-        ctx.closePath();
-    }
-    
-    
-   // rate += 0.002;
-   // if(rate < 1.0) window.requestAnimationFrame(update);
-}
+    return offcanvas;
+};               
+        
+function createbacgraoundcanvas(){
+    var backgroundcanvas = document.createElement('canvas');
+    backgroundcanvas.width = window.innerWidth * 2.2;
+    backgroundcanvas.height = window.innerHeight * 2.2;
+    backgroundctx = backgroundcanvas.getContext('2d');
+};
+        
+var rate = 0.0;
 
 // Based on https://www.jasondavies.com/poisson-disc/
 function poisson(width, height, radius) {
@@ -208,6 +228,7 @@ function poisson(width, height, radius) {
 }
         
 window.addEventListener('load', main);
+
     </script>
     <style>
         body {
