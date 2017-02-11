@@ -13,7 +13,8 @@
         var linecanvasctx; 
         var dots2;
         var triangles2;
-
+        var dotcanvasctx;
+        var dotcanvas;
         
 function main() {
     var c = document.getElementById('c');
@@ -97,27 +98,47 @@ function main() {
         backgroundctx.fillStyle = grd;
         backgroundctx.fill();
     }
-    for (var i = 0; i < dots2.length; i++) {
-        backgroundctx.beginPath();
-        backgroundctx.fillStyle = '#FFF';
-        backgroundctx.arc(dots2[i][0], dots2[i][1], 4, 0, Math.PI * 2);
-        backgroundctx.fill();
-        backgroundctx.closePath();
-    }
 
     linecanvas = createlinecanvas();
+    dotcanvas = createdotcanvas();
     ctx.translate(-innerWidth * 0.1, -innerHeight * 0.1)
 
     update();
 }
 
-var blah = 0;
-function update() {
-    blah += 2;
-    ctx.drawImage(backgroundcanvas, 0, 0);
-    ctx.drawImage(linecanvas, 0, 0, blah, innerHeight * 2.2, 0, 0, blah, innerHeight * 2.2);
+function createdotcanvas(){
+    var canv = document.createElement('canvas');
+    canv.width = window.innerWidth * 2.2;
+    canv.height = window.innerHeight * 2.2;
+    dotcanvasctx = canv.getContext('2d');
     
-    if(blah < innerWidth * 2.2) {
+    for (var i = 0; i < dots2.length; i++) {
+        dotcanvasctx.beginPath();
+        dotcanvasctx.fillStyle = '#FFF';
+        dotcanvasctx.arc(dots2[i][0], dots2[i][1], 4, 0, Math.PI * 2);
+        dotcanvasctx.fill();
+        dotcanvasctx.closePath();
+    }
+    return canv;
+}       
+        
+var step = 0;
+function update() {
+    step += 2;
+    ctx.drawImage(backgroundcanvas, 0, 0);
+    ctx.drawImage(
+        linecanvas,
+        0, 0, step, innerHeight * 2.2,
+        0, 0, step, innerHeight * 2.2
+    );
+    var step2 = step - 50;
+    ctx.drawImage(
+        dotcanvas,
+        step2, 0, innerWidth * 2.2 - step2, innerHeight * 2.2,
+        step2, 0, innerWidth * 2.2 - step2, innerHeight * 2.2
+    );
+    
+    if(step < innerWidth * 2.2) {
         requestAnimationFrame(update);
     }
 }
