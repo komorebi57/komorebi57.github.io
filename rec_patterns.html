@@ -1,26 +1,38 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="seedrandom.js"></script>
 <script>
 var ctx;
+var frame = 0;
+var seed = 'Hello' + Math.random();
+
 function main() {
     var c = document.getElementById('c');
     ctx = c.getContext('2d');
     c.width = window.innerWidth * 2;
     c.height = window.innerHeight * 2;
+    update();
+}
+
+function update() {
+    Math.seedrandom(seed);
+    frame += 0.02;
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
     var xCount = 15;
     var unit = c.width / xCount;
     var yCount = Math.ceil(c.height / unit);
     
     for(var x = 0; x < xCount; x++) {
         for(var y = 0; y < yCount; y++){
-            var randomY = Math.random() * y * 5;
-            var randomX = Math.random() * y * 5;
-            var randomR = (Math.random() - 0.5) * (y / yCount) * 2 * Math.PI * 0.1;
+            var randomY = (Math.random() * y * 5) * Math.sin(frame);
+            var randomX = (Math.random() * y * 5) * Math.sin(frame);
+            var randomR = ((Math.random() - 0.5) * (y / yCount) * 2 * Math.PI * 0.1) * Math.sin(frame);
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-            ctx.fillStyle = "rgba(100, 200, 255, 0.7)";
-            ctx.lineWidth = "1";
+            ctx.fillStyle = "rgba(250, 200, 255, 0.7)";
+            //ctx.lineWidth = "1";
             
             ctx.save();
             var ox = x * unit + randomX;
@@ -28,13 +40,14 @@ function main() {
             ctx.translate(ox, oy);
             ctx.rotate(randomR);
             ctx.rect(0, 0, unit, unit);
-            ctx.stroke();
+           // ctx.stroke();
             ctx.fill();
             ctx.closePath();
 
             ctx.restore();
-       }    
-    }
+            }    
+     }
+    window.requestAnimationFrame(update);
 }
     
 window.addEventListener('load', main);
