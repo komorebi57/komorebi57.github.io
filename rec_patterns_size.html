@@ -57,16 +57,17 @@ function update() {
             var move = Math.sqrt(Math.pow(ox - mousex, 2) + Math.pow(oy - mousey, 2)) > innerWidth * 0.8;
             var randomY = (Math.random() * 5) * Math.sin(frame) * move;
             var randomX = (Math.random() * 5) * Math.sin(frame) * move;
-            var randomR = ((Math.random() - 0.5) * Math.PI * 0.1) * (Math.sin(frame * ((x * 2 + y * 3) % 6) + x + y) * move * 1.0);
+            var randomR = ((Math.random() - 0.5) * Math.PI * 0.1) * (Math.sin(frame * ((x * 2 + y * 3) % 8) + x + y) * move * 1.0);
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 255, 255, 1)";
             ctx.fillStyle = "rgba(170, 230, 255, 0.7)";
             //ctx.lineWidth = "1";
-            
             ctx.save();
+            var unitVar = Math.random() * 100 + 30;
+
             ctx.translate(ox + randomX + unit * 0.5, oy + randomY + unit * 0.5);
             ctx.rotate(randomR);
-            ctx.rect(-unit * 0.5, -unit * 0.5, unit, unit);
+            ctx.rect(-unitVar * 0.5, -unitVar * 0.5, unitVar, unitVar);
            // ctx.stroke();
             ctx.fill();
             ctx.closePath();
