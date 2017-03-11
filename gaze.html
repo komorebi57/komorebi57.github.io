@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script>
+var pastx = [];
+var pasty = [];
+    
+function main() {
+    var c = document.getElementById('c');
+    c.addEventListener('mousemove', function(e) {
+        var mousex = e.clientX;
+        var mousey = e.clientY;
+        
+        var R = Math.random() * 10 + 5;
+        
+        pastx.push(e.clientX);
+        pasty.push(e.clientY);
+        if(pastx.length > 50) {
+            pastx.shift();
+            pasty.shift();
+        }
+        var sumx = 0;
+        var sumy = 0;
+        for(var i = 0; i < pastx.length; i++) {
+            sumx += pastx[i];
+            sumy += pasty[i];
+        }
+        
+        mousex = sumx / pastx.length;
+        mousey = sumy / pasty.length;
+        
+        var radgrad = ctx.createRadialGradient(mousex, mousey, R, mousex, mousey, 0);
+        radgrad.addColorStop(0, 'rgba(170, 230, 255, 0)');
+        radgrad.addColorStop(1, 'rgba(170, 230, 255, 0.5)');
+
+        ctx.beginPath();
+        ctx.fillStyle = radgrad;
+        ctx.arc(mousex, mousey, R, 0, 2.0 * Math.PI);
+        ctx.fill();
+        ctx.closePath();
+    });
+    
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight; 
+}
+    
+    
+window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
