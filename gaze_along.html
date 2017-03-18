@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no">
+<script src="webgazer.js"></script>
+<script>
+var pastx = [];
+var pasty = [];
+var ctx;
+
+var mousex = 0;
+var mousey = 0;
+    
+function main() {
+    initWebgazer();
+    var c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth * 2;
+    c.height = window.innerHeight * 2; 
+//    
+//        update();
+//
+}
+    
+//function update(){
+//    c.addEventListener('mousemove', function(e) {
+//    var R = Math.random() * 10 + 5;
+//    var mousex = e.clientX;
+//    var mousey = e.clientY;
+//        
+//    var radgrad = ctx.createRadialGradient(mousex, mousey, R, mousex, mousey, 0);
+//    radgrad.addColorStop(0, 'rgba(170, 230, 255, 0)');
+//    radgrad.addColorStop(1, 'rgba(170, 230, 255, 0.5)');
+//
+//    ctx.beginPath();
+//    ctx.fillStyle = radgrad;
+//    ctx.arc(mousex, mousey, R, 0, 2.0 * Math.PI);
+//    ctx.fill();
+//    ctx.closePath();
+//    
+//    });
+//    
+//}
+    
+function initWebgazer() {
+    webgazer.setRegression('ridge') /* currently must set regression and tracker */
+        .setTracker('clmtrackr')
+        .setGazeListener(function(data, clock) {
+         //   console.log(data); /* data is an object containing an x and y key which are the x and y prediction coordinates (no bounds limiting) */
+         //   console.log(clock); /* elapsed time in milliseconds since webgazer.begin() was called */
+        })
+        .begin()
+        .showPredictionPoints(false); /* shows a square every 100 milliseconds where current prediction is */
+
+    var width = 320;
+    var height = 240;
+    var topDist = '0px';
+    var leftDist = '0px';
+    
+    var setup = function() {
+        var video = document.getElementById('webgazerVideoFeed');
+        video.style.display = 'hidden';
+        video.style.position = 'absolute';
+        video.style.top = topDist;
+        video.style.left = leftDist;
+        video.width = width;
+        video.height = height;
+        video.style.margin = '0px';
+
+        webgazer.params.imgWidth = width;
+        webgazer.params.imgHeight = height;
+        var cl = webgazer.getTracker().clm;
+        
+        function drawLoop() {
+            requestAnimFrame(drawLoop);
+            var pos = webgazer.getCurrentPrediction();
+            pastx.push(pos.x * 2);
+            pasty.push(pos.y * 2);
+            
+            if(pastx.length > 30) {
+                pastx.shift();
+                pasty.shift();
+            }
+            var sumx = 0;
+            var sumy = 0;
+            for(var i = 0; i < pastx.length; i++) {
+                sumx += pastx[i];
+                sumy += pasty[i];
+            }
+
+            var mousex = sumx / pastx.length;
+            var mousey = sumy / pasty.length;
+            
+            var radgrad = ctx.createRadialGradient(mousex, mousey, 10, mousex, mousey, 0);
+            radgrad.addColorStop(0, 'rgba(170, 230, 255, 0)');
+            radgrad.addColorStop(1, 'rgba(170, 230, 255, 0.5)');
+
+            ctx.beginPath();
+            ctx.fillStyle = radgrad;
+            ctx.arc(mousex, mousey, 10, 0, 2.0 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
+        }
+        drawLoop();
+    };
+
+    function checkIfReady() {
+        if (webgazer.isReady()) {
+            setup();
+        } else {
+            setTimeout(checkIfReady, 100);
+        }
+    }
+    setTimeout(checkIfReady,100);
+
+    window.onbeforeunload = function() {
+        webgazer.end(); //Uncomment if you want to save the data even if you reload the page.
+        window.localStorage.clear(); //Comment out if you want to save data across different sessions 
+    }
+}    
+    
+window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block; width: 100%}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
