@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script>
+var c;
+var ctx;
+var rects = [
+    [0, 0, 0]
+];
+
+function main() {
+    c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth * 2;
+    c.height = window.innerHeight * 2;
+    
+    update();
+}
+
+function update(){
+    var nextRects = [];
+    
+    for(var i = 0; i < rects.length; i++) {
+        var rect = rects[i];
+        var x = rect[0];
+        var y = rect[1];
+        var age = rect[2];
+        var size = c.width / Math.pow(2, age);
+        ctx.strokeStyle = "rgba(255, 255, 255, 1)";
+        ctx.lineWidth = 1;
+        ctx.fillStyle = "rgba(255, 230, 255, 1)";
+        ctx.rect(x, y, size, size);
+        ctx.fill();
+        ctx.stroke();
+
+        var split = age < 3 || (age < 6 && Math.random() > 0.3);
+        
+        if(split) {
+            nextRects.push([x, y, age + 1]);
+            nextRects.push([x + size * 0.5, y, age + 1]);
+            nextRects.push([x, y + size * 0.5, age + 1]);
+            nextRects.push([x + size * 0.5, y + size * 0.5, age + 1]);
+        }
+    }
+    rects = nextRects;
+    if(rects.length != 0) requestAnimationFrame(update);
+}
+    
+window.addEventListener('load', main);
+
+    </script>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+
+</html>
