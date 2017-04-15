@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<script>
+var c;
+var ctx;
+var circles = [
+    [0, 0, 0]
+];
+
+function main() {
+    c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth * 2;
+    c.height = window.innerHeight * 2;
+    
+    update();
+}
+
+var lastUpdate = new Date();
+
+function update(){
+    if(circles.length != 0) {
+        requestAnimationFrame(update);
+    }
+
+    var now = new Date();
+    if(now - lastUpdate < 400) return;
+    lastUpdate = now;
+
+    var netxCircles = [];
+    
+    for(var i = 0; i < circles.length; i++) {
+        var circle = circles[i];
+        var x = circle[0];
+        var y = circle[1];
+        var age = circle[2];
+        var size = c.width / Math.pow(2, age) * (Math.random() * 0.2 + 0.9);
+        x += Math.pow(2, age) * (Math.random() * 0.4 + 0.8);
+        y += Math.pow(2, age) * (Math.random() * 0.4 + 0.8);
+        
+        ctx.beginPath();
+        ctx.strokeStyle = "rgba(55, 155, 255, 1)";
+        ctx.lineWidth = 1;
+        ctx.fillStyle = Math.random() > 0.5 ? "rgba(255, 230, 255,0.5)" : "rgba(240, 230, 255, 0.5)";
+        ctx.arc(x, y, size, 0, 2.0 * Math.PI);
+        ctx.stroke();
+       // ctx.fill();
+        ctx.closePath();
+
+        var split = age < 3 || (age < 6 && Math.random() > 0.4);
+        
+        if(split) {
+            netxCircles.push([x, y, age + 1]);
+            netxCircles.push([x + size * 0.5, y, age + 1]);
+            netxCircles.push([x, y + size * 0.5, age + 1]);
+            netxCircles.push([x + size * 0.5, y + size * 0.5, age + 1]);
+        }
+    }
+    circles = netxCircles;
+}
+    
+window.addEventListener('load', main);
+
+    </script>
+    <style>
+        body {
+            margin: 0;
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+
+</html>

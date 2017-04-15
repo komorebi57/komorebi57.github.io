@@ -18,7 +18,17 @@ function main() {
     update();
 }
 
+var lastUpdate = new Date();
+
 function update(){
+    if(rects.length != 0) {
+        requestAnimationFrame(update);
+    }
+
+    var now = new Date();
+    if(now - lastUpdate < 500) return;
+    lastUpdate = now;
+
     var nextRects = [];
     
     for(var i = 0; i < rects.length; i++) {
@@ -29,12 +39,11 @@ function update(){
         var size = c.width / Math.pow(2, age);
         ctx.strokeStyle = "rgba(255, 255, 255, 1)";
         ctx.lineWidth = 1;
-        ctx.fillStyle = "rgba(255, 230, 255, 1)";
-        ctx.rect(x, y, size, size);
-        ctx.fill();
-        ctx.stroke();
+        ctx.fillStyle = Math.random() > 0.5 ? "rgb(255, 230, 255)" : "rgb(240, 230, 255)";
+        ctx.fillRect(x, y, size, size);
+        ctx.strokeRect(x, y, size, size);
 
-        var split = age < 3 || (age < 6 && Math.random() > 0.3);
+        var split = age < 3 || (age < 8 && Math.random() > 0.3);
         
         if(split) {
             nextRects.push([x, y, age + 1]);
@@ -44,7 +53,6 @@ function update(){
         }
     }
     rects = nextRects;
-    if(rects.length != 0) requestAnimationFrame(update);
 }
     
 window.addEventListener('load', main);
