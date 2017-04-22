@@ -24,7 +24,6 @@ function mousemove(e) {
     update(e.clientX * 2, e.clientY * 2);
 }
 function touchmove(e) {
-    e.preventDefault();
     update(e.touches[0].clientX * 2, e.touches[0].clientY * 2);
 }
     
@@ -94,7 +93,10 @@ window.addEventListener('load', main);
             display: block;
             width: 100%;
         }
-
+        body,
+        html {
+          position: fixed;
+        }
     </style>
 </head>
 
