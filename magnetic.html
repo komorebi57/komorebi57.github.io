@@ -24,7 +24,7 @@ function mousemove(e) {
     update(e.clientX * 2, e.clientY * 2);
 }
 function touchmove(e) {
-    update(e.touches[0].pageX * 2, e.touches[0].pageY * 2);
+    update(e.touches[0].clientX * 2, e.touches[0].clientY * 2);
 }
     
 function update(mousex, mousey) {
