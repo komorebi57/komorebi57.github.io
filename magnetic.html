@@ -16,16 +16,21 @@ function main() {
     c.width = window.innerWidth * 2;
     c.height = window.innerHeight * 2;
     
-    window.addEventListener('mousemove', update);
-    window.addEventListener('touchmove', update);
+    window.addEventListener('mousemove', mousemove);
+    window.addEventListener('touchmove', touchmove);
 }
 
-function update(e){
+function mousemove(e) {
+    update(e.clientX * 2, e.clientY * 2);
+}
+function touchmove(e) {
+    update(e.touches[0].pageX * 2, e.touches[0].pageY * 2);
+}
+    
+function update(mousex, mousey) {
     ctx.fillStyle = "rgba(255, 225, 255, 1)";
     ctx.fillRect(0, 0, innerWidth * 2, innerHeight * 2);
 
-    var mousex = e.clientX * 2;
-    var mousey = e.clientY * 2;
     ctx.beginPath();
     ctx.strokeStyle = "rgba(55, 155, 255, 1)";
     ctx.lineWidth = 2;
