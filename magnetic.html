@@ -17,50 +17,59 @@ function main() {
 }
 
 function update(e){
-    
-    ctx.clearRect(0, 0, innerWidth * 2, innerHeight * 2);
+    ctx.fillStyle = "rgba(255, 225, 255, 1)";
+    ctx.fillRect(0, 0, innerWidth * 2, innerHeight * 2);
 
-    var tx = e.clientX * 2;
-    var ty = e.clientY * 2;
+    var mousex = e.clientX * 2;
+    var mousey = e.clientY * 2;
     ctx.beginPath();
     ctx.strokeStyle = "rgba(55, 155, 255, 1)";
     ctx.lineWidth = 2;
-    ctx.fillStyle = "rgba(255, 225, 255, 1)";
-    ctx.arc(tx, ty, 5, 0, 2.0 * Math.PI);
+    ctx.fillStyle = "rgba(107, 80, 150, 1)";
+    ctx.arc(mousex, mousey, 5, 0, 2.0 * Math.PI);
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
+
     for(i = 0; i < 50; i++){
-        for(l = 0; l < 40; l++){
+        for(j = 0; j < 40; j++) {
             var x = 65 * i;
-            var y = 65 * l;
+            var y = 65 * j;
 
             var size = 30;
             ctx.beginPath();
-            ctx.strokeStyle = "rgba(55, 155, 255, 1)";
+            ctx.strokeStyle = "rgba(255, 225, 255, 1)";
             ctx.lineWidth = 2;
-            ctx.fillStyle = "rgba(255, 225, 255, 1)";
+            ctx.fillStyle = "rgba(107, 80, 150, 1)";
             ctx.arc(x, y, size, 0, 2.0 * Math.PI);
-            ctx.stroke();
+            //ctx.stroke();
             ctx.fill();
             ctx.closePath();
 
-        //두 점사이의 각도 구하는 것
-            var angle = Math.atan2(-(ty - y), tx - x);
+            // 두 점사이의 각도 구하는 것
+            var distance = Math.min(
+                500,
+                Math.sqrt(Math.pow(mousex - x, 2) + Math.pow(mousey - y, 2))
+            );
+            var influence = 1 - (distance / 500);
+            var angle = (
+                (Math.PI * 0.5) * (1 - influence) +
+                (Math.atan2(-(mousey - y), mousex - x)) * influence
+            );
+
             var x2 = Math.cos(angle) * size;
             var y2 = Math.sin(angle) * size;
-
+            
             ctx.beginPath();
-            ctx.strokeStyle = "rgba(55, 155, 255, 1)";
-            ctx.lineWidth = 2;
+            ctx.strokeStyle = "rgba(255, 225, 255, 1)";
+            ctx.lineWidth = 5;
             ctx.moveTo(x + x2, y - y2);
             ctx.lineTo(x - x2, y + y2);
             ctx.stroke();
             ctx.closePath();
-
         }
     }
-    }
+}
  
     
 window.addEventListener('load', main);
