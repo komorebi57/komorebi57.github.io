@@ -13,12 +13,15 @@ function main() {
     c.width = window.innerWidth * 2;
     c.height = window.innerHeight * 2;
     
-    update();
+    window.addEventListener('mousemove', update);
 }
 
-function update(){
-    var tx = 700;
-    var ty = 450;
+function update(e){
+    
+    ctx.clearRect(0, 0, innerWidth * 2, innerHeight * 2);
+
+    var tx = e.clientX * 2;
+    var ty = e.clientY * 2;
     ctx.beginPath();
     ctx.strokeStyle = "rgba(55, 155, 255, 1)";
     ctx.lineWidth = 2;
@@ -27,34 +30,38 @@ function update(){
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
-    
-    var x = 200;
-    var y = 200;
+    for(i = 0; i < 50; i++){
+        for(l = 0; l < 40; l++){
+            var x = 65 * i;
+            var y = 65 * l;
 
-    var size = 50;
-    ctx.beginPath();
-    ctx.strokeStyle = "rgba(55, 155, 255, 1)";
-    ctx.lineWidth = 2;
-    ctx.fillStyle = "rgba(255, 225, 255, 1)";
-    ctx.arc(x, y, size, 0, 2.0 * Math.PI);
-    ctx.stroke();
-    ctx.fill();
-    ctx.closePath();
-    
-//두 점사이의 각도 구하는 것
-    var angle = Math.atan2(-(ty - y), tx - x);
-    var x2 = Math.cos(angle) * size;
-    var y2 = Math.sin(angle) * size;
+            var size = 30;
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(55, 155, 255, 1)";
+            ctx.lineWidth = 2;
+            ctx.fillStyle = "rgba(255, 225, 255, 1)";
+            ctx.arc(x, y, size, 0, 2.0 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
 
-    ctx.beginPath();
-    ctx.strokeStyle = "rgba(55, 155, 255, 1)";
-    ctx.lineWidth = 2;
-    ctx.moveTo(x + x2, y - y2);
-    ctx.lineTo(x - x2, y + y2);
-    ctx.stroke();
-    ctx.closePath();
-}
-   
+        //두 점사이의 각도 구하는 것
+            var angle = Math.atan2(-(ty - y), tx - x);
+            var x2 = Math.cos(angle) * size;
+            var y2 = Math.sin(angle) * size;
+
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(55, 155, 255, 1)";
+            ctx.lineWidth = 2;
+            ctx.moveTo(x + x2, y - y2);
+            ctx.lineTo(x - x2, y + y2);
+            ctx.stroke();
+            ctx.closePath();
+
+        }
+    }
+    }
+ 
     
 window.addEventListener('load', main);
 
