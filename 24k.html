@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+
+<head>   
+    <script>
+    var c;
+    var ctx;
+    var frame = 0;
+
+    var recs = [
+    ];
+
+    function main() {
+        c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+        
+        var xCount = 80;
+        var unit = c.width / xCount;
+        var yCount = Math.ceil(c.height / unit);
+        var size = 30;
+        var recsize = size * 1.1;
+        
+        for(var x = 0; x < xCount; x++) {
+            for(var y = 0; y < yCount; y++){                
+                var rec = {
+                    ox: size * x,
+                    oy: size * y,
+                    x: size * x,
+                    y: size * y,
+                    freq: Math.random() * 1.5 + 1.0,
+                    size: recsize
+                };
+                recs.push(rec);
+            }
+        }
+        
+        update();
+    }
+    
+
+    function update() {
+        frame++;
+
+        // update positions
+        for(var i = 0; i < recs.length; i++) {
+            var rec = recs[i];
+            rec.x = rec.ox + Math.cos(frame * 0.05 * rec.freq) * 3;
+            rec.y = rec.oy + Math.sin(frame * 0.05 * rec.freq) * 3;
+
+        }
+
+        // redraw
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        for(var i = 0; i < recs.length; i++) {
+            var rec = recs[i];
+            ctx.beginPath();
+            ctx.strokeStyle = "rgba(255, 255, 255, 1)";
+            ctx.fillStyle = "rgba(222, 164, 82, 0.8)";
+            ctx.lineWidth = 1;
+            ctx.rect(rec.x, rec.y, rec.size, rec.size);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath();
+        }
+
+        window.requestAnimationFrame(update);
+    }
+        
+    window.addEventListener('load', main);
+        
+    </script>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        
+        body {
+            background-image: url(logo.png);
+            background-position: center center;
+            background-size: cover;
+        }
+        
+        canvas {
+            display: block;
+            width: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+
+</html>
