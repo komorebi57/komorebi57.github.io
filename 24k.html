@@ -6,12 +6,15 @@
     var c;
     var ctx;
     var frame = 0;
+    var mousex = 0;
+    var mousey = 0;
 
     var recs = [
     ];
 
     function main() {
         c = document.getElementById('c');
+        c.addEventListener('mousemove', mousemove);
         ctx = c.getContext('2d');
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
@@ -19,8 +22,8 @@
         var xCount = 80;
         var unit = c.width / xCount;
         var yCount = Math.ceil(c.height / unit);
-        var size = 30;
-        var recsize = size * 1.1;
+        var size = 40;
+        var recsize = size * 1.2;
         
         for(var x = 0; x < xCount; x++) {
             for(var y = 0; y < yCount; y++){                
@@ -39,25 +42,45 @@
         update();
     }
     
+    function mousemove(e) {
+        mousex = e.clientX * 2;
+        mousey = e.clientY * 2;
+    }
 
     function update() {
         frame++;
-
+        
         // update positions
         for(var i = 0; i < recs.length; i++) {
             var rec = recs[i];
-            rec.x = rec.ox + Math.cos(frame * 0.05 * rec.freq) * 3;
-            rec.y = rec.oy + Math.sin(frame * 0.05 * rec.freq) * 3;
 
+            // 마우스로부터 멀어지려는 힘
+            var d1 = Math.sqrt(Math.pow(rec.x - mousex, 2) + Math.pow(rec.y - mousey, 2));
+            var angle1 = Math.atan2(-(mousey - rec.y), mousex - rec.x);
+            var fx1 = -Math.cos(angle1) * (1 / d1) * 250;
+            var fy1 = Math.sin(angle1) * (1 / d1) * 250;
+
+            // 원래 있던 위치로 돌아가려는 힘
+            var d2 = Math.sqrt(Math.pow(rec.ox - rec.x, 2) + Math.pow(rec.oy - rec.y, 2));
+            var angle2 = Math.atan2(-(rec.y - rec.oy), rec.x - rec.ox);
+            var fx2 = -Math.cos(angle2) * d2 * 0.02;
+            var fy2 = Math.sin(angle2) * d2 * 0.02;
+    
+            // 혼자 지글지글 움직이는 힘
+            var fx3 = Math.cos(frame * 0.05 * rec.freq) * 1;
+            var fy3 = Math.sin(frame * 0.05 * rec.freq) * 1;
+            
+            rec.x = rec.x + fx1 + fx2 + fx3;
+            rec.y = rec.y + fy1 + fy2 + fy3;
         }
-
+          
         // redraw
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         for(var i = 0; i < recs.length; i++) {
             var rec = recs[i];
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-            ctx.fillStyle = "rgba(222, 164, 82, 0.8)";
+            ctx.fillStyle = "rgba(240, 189, 66, 1)";
             ctx.lineWidth = 1;
             ctx.rect(rec.x, rec.y, rec.size, rec.size);
             ctx.stroke();
