@@ -49,7 +49,7 @@
 
     function update() {
         frame++;
-        
+    
         // update positions
         for(var i = 0; i < recs.length; i++) {
             var rec = recs[i];
@@ -57,14 +57,14 @@
             // 마우스로부터 멀어지려는 힘
             var d1 = Math.sqrt(Math.pow(rec.x - mousex, 2) + Math.pow(rec.y - mousey, 2));
             var angle1 = Math.atan2(-(mousey - rec.y), mousex - rec.x);
-            var fx1 = -Math.cos(angle1) * (1 / d1) * 250;
-            var fy1 = Math.sin(angle1) * (1 / d1) * 250;
+            var fx1 = -Math.cos(angle1) * (1 / d1) * 350;
+            var fy1 = Math.sin(angle1) * (1 / d1) * 350;
 
             // 원래 있던 위치로 돌아가려는 힘
             var d2 = Math.sqrt(Math.pow(rec.ox - rec.x, 2) + Math.pow(rec.oy - rec.y, 2));
             var angle2 = Math.atan2(-(rec.y - rec.oy), rec.x - rec.ox);
-            var fx2 = -Math.cos(angle2) * d2 * 0.02;
-            var fy2 = Math.sin(angle2) * d2 * 0.02;
+            var fx2 = -Math.cos(angle2) * d2 * 0.01;
+            var fy2 = Math.sin(angle2) * d2 * 0.01;
     
             // 혼자 지글지글 움직이는 힘
             var fx3 = Math.cos(frame * 0.05 * rec.freq) * 1;
@@ -80,19 +80,19 @@
             var rec = recs[i];
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-            ctx.fillStyle = "rgba(240, 189, 66, 1)";
+            ctx.fillStyle = "rgba(240, 189, 66, 0.9)";
             ctx.lineWidth = 1;
             ctx.rect(rec.x, rec.y, rec.size, rec.size);
             ctx.stroke();
             ctx.fill();
             ctx.closePath();
         }
-
+//빠르게 갔다가 느리게 돌아오기
         window.requestAnimationFrame(update);
     }
         
     window.addEventListener('load', main);
-        
+        //배경 블랙으로
     </script>
     <style>
         html, body {
@@ -101,9 +101,10 @@
         }
         
         body {
-            background-image: url(logo.png);
+            background-image: url(Glogo.png);
             background-position: center center;
             background-size: cover;
+            background-color: black;
         }
         
         canvas {
