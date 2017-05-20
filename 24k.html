@@ -8,6 +8,7 @@
     var frame = 0;
     var mousex = 0;
     var mousey = 0;
+    var isMouseOn = false;
 
     var recs = [
     ];
@@ -15,6 +16,12 @@
     function main() {
         c = document.getElementById('c');
         c.addEventListener('mousemove', mousemove);
+        c.addEventListener('mouseenter', function() {
+            isMouseOn = true;
+        });
+        c.addEventListener('mouseleave', function() {
+            isMouseOn = false;
+        });
         ctx = c.getContext('2d');
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
@@ -57,14 +64,18 @@
             // 마우스로부터 멀어지려는 힘
             var d1 = Math.sqrt(Math.pow(rec.x - mousex, 2) + Math.pow(rec.y - mousey, 2));
             var angle1 = Math.atan2(-(mousey - rec.y), mousex - rec.x);
-            var fx1 = -Math.cos(angle1) * (1 / d1) * 350;
-            var fy1 = Math.sin(angle1) * (1 / d1) * 350;
+            var fx1 = -Math.cos(angle1) * (1 / d1) * 1000;
+            var fy1 = Math.sin(angle1) * (1 / d1) * 1000;
+            if(!isMouseOn) {
+                fx1 = 0;
+                fy1 = 0;
+            }
 
             // 원래 있던 위치로 돌아가려는 힘
             var d2 = Math.sqrt(Math.pow(rec.ox - rec.x, 2) + Math.pow(rec.oy - rec.y, 2));
             var angle2 = Math.atan2(-(rec.y - rec.oy), rec.x - rec.ox);
-            var fx2 = -Math.cos(angle2) * d2 * 0.01;
-            var fy2 = Math.sin(angle2) * d2 * 0.01;
+            var fx2 = -Math.cos(angle2) * d2 * 0.05;
+            var fy2 = Math.sin(angle2) * d2 * 0.05;
     
             // 혼자 지글지글 움직이는 힘
             var fx3 = Math.cos(frame * 0.05 * rec.freq) * 1;
@@ -87,7 +98,6 @@
             ctx.fill();
             ctx.closePath();
         }
-//빠르게 갔다가 느리게 돌아오기
         window.requestAnimationFrame(update);
     }
         
