@@ -12,7 +12,14 @@
 
     var recs = [
     ];
-
+        
+   var colors = [
+            '#ddbb33',
+            '#c87320',
+            '#efbc23'
+            
+        ];
+        
     function main() {
         c = document.getElementById('c');
         c.addEventListener('mousemove', mousemove);
@@ -29,7 +36,7 @@
         var xCount = 80;
         var unit = c.width / xCount;
         var yCount = Math.ceil(c.height / unit);
-        var size = 40;
+        var size = 30;
         var recsize = size * 1.2;
         
         for(var x = 0; x < xCount; x++) {
@@ -56,7 +63,7 @@
 
     function update() {
         frame++;
-    
+        
         // update positions
         for(var i = 0; i < recs.length; i++) {
             var rec = recs[i];
@@ -84,17 +91,18 @@
             rec.x = rec.x + fx1 + fx2 + fx3;
             rec.y = rec.y + fy1 + fy2 + fy3;
         }
-          
+     
         // redraw
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         for(var i = 0; i < recs.length; i++) {
             var rec = recs[i];
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-            ctx.fillStyle = "rgba(240, 189, 66, 0.9)";
+            ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+            //"rgba(240, 189, 66, 1)";
             ctx.lineWidth = 1;
             ctx.rect(rec.x, rec.y, rec.size, rec.size);
-            ctx.stroke();
+           // ctx.stroke();
             ctx.fill();
             ctx.closePath();
         }
