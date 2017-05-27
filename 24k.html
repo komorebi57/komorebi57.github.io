@@ -14,11 +14,12 @@
     ];
         
    var colors = [
-            '#ddbb33',
-            '#c87320',
-            '#efbc23'
-            
-        ];
+            'rgba(239, 188, 35, 0.9)',
+            'rgba(252, 210, 108, 0.9)',
+            'rgba(247, 167, 42, 0.9)',
+            'rgba(245, 217, 29, 0.9)',
+            'rgba(247, 177, 21, 0.9)'
+   ];
         
     function main() {
         c = document.getElementById('c');
@@ -47,7 +48,9 @@
                     x: size * x,
                     y: size * y,
                     freq: Math.random() * 1.5 + 1.0,
-                    size: recsize
+                    size: recsize,
+                    color : colors[Math.floor(Math.random() * colors.length)]
+                    
                 };
                 recs.push(rec);
             }
@@ -98,7 +101,7 @@
             var rec = recs[i];
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-            ctx.fillStyle = colors[Math.floor(Math.random() * colors.length)];
+            ctx.fillStyle = rec.color;
             //"rgba(240, 189, 66, 1)";
             ctx.lineWidth = 1;
             ctx.rect(rec.x, rec.y, rec.size, rec.size);
