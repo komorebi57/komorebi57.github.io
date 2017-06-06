@@ -34,7 +34,7 @@ function update(mousex, mousey) {
     ctx.beginPath();
     ctx.strokeStyle = "rgba(55, 155, 255, 1)";
     ctx.lineWidth = 2;
-    ctx.fillStyle = "rgba(107, 80, 150, 1)";
+    ctx.fillStyle = "rgba(71, 39, 0, 1)";
     ctx.arc(mousex, mousey, 5, 0, 2.0 * Math.PI);
     ctx.stroke();
     ctx.fill();
@@ -48,8 +48,8 @@ function update(mousex, mousey) {
             var size = 30;
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 225, 255, 1)";
-            ctx.lineWidth = 2;
-            ctx.fillStyle = "rgba(107, 80, 150, 1)";
+            ctx.lineWidth = 3;
+            ctx.fillStyle = "rgba(71, 39, 0, 1)";
             ctx.arc(x, y, size, 0, 2.0 * Math.PI);
             //ctx.stroke();
             ctx.fill();
@@ -71,7 +71,7 @@ function update(mousex, mousey) {
             
             ctx.beginPath();
             ctx.strokeStyle = "rgba(255, 225, 255, 1)";
-            ctx.lineWidth = 5;
+            ctx.lineWidth = 7;
             ctx.moveTo(x + x2, y - y2);
             ctx.lineTo(x - x2, y + y2);
             ctx.stroke();
