@@ -91,10 +91,12 @@ function initWebgazer() {
             var mousex = sumx / pastx.length;
             var mousey = sumy / pasty.length;
             
-            var radgrad = ctx.createRadialGradient(mousex, mousey, 10, mousex, mousey, 0);
-            radgrad.addColorStop(0, 'rgba(170, 230, 255, 0)');
-            radgrad.addColorStop(1, 'rgba(170, 230, 255, 0.5)');
+            grd.addColorStop(0, color1);
+            grd.addColorStop(1, color2);
 
+            backgroundctx.fillStyle = grd;
+            backgroundctx.fill();
+            
             ctx.beginPath();
             ctx.fillStyle = radgrad;
             ctx.arc(mousex, mousey, 10, 0, 2.0 * Math.PI);

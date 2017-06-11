@@ -11,6 +11,7 @@
     var frame = 0;
     var mousex = 0;
     var mousey = 0;
+    var depth = 0;
     var isMouseOn = false;
 
     var recs = [
@@ -37,10 +38,9 @@
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
         
-        var xCount = 80;
-        var unit = c.width / xCount;
-        var yCount = Math.ceil(c.height / unit);
         var size = 30;
+        var xCount = c.width / size;
+        var yCount = Math.ceil(c.height / size);
         var recsize = size * 1.2;
         
         for(var x = 0; x < xCount; x++) {
@@ -64,6 +64,7 @@
     function mousemove(e) {
         mousex = e.clientX * 2;
         mousey = e.clientY * 2;
+        depth = (e.shiftKey + e.ctrlKey + e.altKey) / 3;
     }
 
     function update() {
@@ -77,8 +78,9 @@
             var d1 = Math.sqrt(Math.pow(rec.x - mousex, 2) + Math.pow(rec.y - mousey, 2));
             var d1Scaled = d3.easeExpOut(Math.min(d1, 200) / 200);
             var angle1 = Math.atan2(-(mousey - rec.y), mousex - rec.x);
-            var fx1 = -Math.cos(angle1) * d1Scaled * 10;
-            var fy1 = Math.sin(angle1) * d1Scaled * 10;
+            var fx1 = -Math.cos(angle1) * d1Scaled * 10 * depth;
+            var fy1 = Math.sin(angle1) * d1Scaled * 10 * depth;
+           
             if(!isMouseOn) {
                 fx1 = 0;
                 fy1 = 0;
@@ -95,6 +97,7 @@
             var fx3 = Math.cos(frame * 0.05 * rec.freq) * 1;
             var fy3 = Math.sin(frame * 0.05 * rec.freq) * 1;
             
+            // 깊이에 따라서 퍼지는 힘 
             rec.x = rec.x + fx1 + fx2 + fx3;
             rec.y = rec.y + fy1 + fy2 + fy3;
         }

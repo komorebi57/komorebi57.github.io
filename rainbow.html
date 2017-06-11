@@ -48,7 +48,7 @@
             .y(function(d) {return d[1];})
             .curve(d3.curveBasis)
             .context(ctx)
-
+        
         update();
     }
     
@@ -83,41 +83,6 @@
         frame += 0.3;
         requestAnimationFrame(update);
     }
-    
-    
-    function rainbow(w, h, width, height) {
-        var lines = height;
-        var color = d3.scaleLinear()
-            .domain([0, lines * 0.5, lines])
-            .range(["rgb(255,0,0)", "rgb(255,0,115)", "rgb(100,0,255)"]);
-        
-        for(var i = 0; i < 1; i++){
-//            var start_Hrand = Math.random() * 70;
-            var end_Hrand = Math.random() * height;
-            var Cwidth = 0.8 * c.width;
-            var Cheight = 0.9 * c.height;
-
-            ctx.beginPath();
-            ctx.strokeStyle = color(i);
-            ctx.lineWidth = '1';
-            ctx.bezierCurveTo(w, h + i,
-                              w + Math.random() * (Cwidth * 0.5), h + Math.random() * (Cheight * 0.5), 
-                              w + width, h + end_Hrand
-                             );
-//            ctx.moveTo(w - 30, h + i * 1);
-//            ctx.bezierCurveTo(w - 30, h + i * 0.2,
-//                              w - 50, h + i * 0.9, 
-//                              w, h + i
-//                             );
-            ctx.stroke();
-//            ctx.closePath();
-        }
-    }
-   
-    
-    
-     
-    
     
     window.addEventListener('load', main);
 </script>    
