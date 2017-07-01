@@ -14,7 +14,6 @@
  
     
     function hexagon(){
-        var len = 100;
         var xo = window.innerWidth * 0.5;
         var yo = window.innerHeight * 0.5;
 
@@ -22,6 +21,7 @@
 
         for(var i = 0; i < 6; i++){
             //작은 육각형
+            var len = 100;
             var ang1 = 60 * i;
             var x1 = Math.cos(ang1 / 360 * 2 * Math.PI) * len;
             var y1 = Math.sin(ang1 / 360 * 2 * Math.PI) * len;
@@ -42,6 +42,32 @@
                 
             }
         }
+        
+        
+            for(var k = 0; k < 6; k++){
+            //작은 육각형
+            var ang4 = 60 * k;
+            var len4 = 150;
+            var x4 = Math.cos(ang4 / 360 * 2 * Math.PI) * len4;
+            var y4 = Math.sin(ang4 / 360 * 2 * Math.PI) * len4;
+
+            var ang5 = 60 * (k + 1);
+            var x5 = Math.cos(ang5 / 360 * 2 * Math.PI) * len4;
+            var y5 = Math.sin(ang5 / 360 * 2 * Math.PI) * len4;
+            
+            for(var l = 0; l < 20; l++) {
+                var x6 = (x4 - x5) / 20 * l;
+                var y6 = (y4 - y5) / 20 * l;
+                ctx.beginPath();
+                ctx.moveTo(xo, yo);
+                ctx.strokeStyle = 'rgba(155, 150, 255, 0.5)';
+                ctx.lineTo(xo + x5 + x6, yo + y5 + y6);
+                ctx.stroke();
+                ctx.closePath();
+                
+            }
+        }
+    
         
      }
     
