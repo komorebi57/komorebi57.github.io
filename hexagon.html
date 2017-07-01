@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth;
+        c.height = window.innerHeight;
+        
+        hexagon();
+     }
+ 
+    
+    function hexagon(){
+        var len = 100;
+        var xo = window.innerWidth * 0.5;
+        var yo = window.innerHeight * 0.5;
+
+        ctx.lineWidth = 1;
+        ctx.strokeStyle = "pink";
+
+        for(var i = 0; i < 6; i++){
+            //큰육각형
+            var ang1 = 60 * i;
+            var x1 = Math.cos(ang1 / 360 * 2 * Math.PI) * len;
+            var y1 = Math.sin(ang1 / 360 * 2 * Math.PI) * len;
+
+            var ang2 = 60 * (i + 1);
+            var x2 = Math.cos(ang2 / 360 * 2 * Math.PI) * len;
+            var y2 = Math.sin(ang2 / 360 * 2 * Math.PI) * len;
+            
+            for(var j = 0; j < 10; j++) {
+                var x3 = (x2 - x1) / 10 * j;
+                var y3 = (y2 - y1) / 10 * j;
+                ctx.beginPath();
+                ctx.moveTo(xo, yo);
+                ctx.strokeStyle = "pink";
+                ctx.lineTo(xo + x1 + x3, yo + y1 + y3);
+                ctx.stroke();
+            }
+
+//            ctx.beginPath();
+//            ctx.moveTo(x1, y1);
+//            ctx.strokeStyle = "blue";
+//            ctx.lineTo(x2, y2);
+//            ctx.stroke();
+        }
+        
+        
+    }
+        
+
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
