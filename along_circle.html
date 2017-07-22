@@ -38,7 +38,8 @@
         var x2 = w + Math.cos(ang/ 360 * 2 * Math.PI) * curLen;
         var y2 = h - Math.sin(ang/ 360 * 2 * Math.PI) * curLen;
         var color = curColor + ((Math.sin(i * 0.11) + 1) / 4) + ')';
-        var color = "rgba(" + 255 + "," + 145 + "," + 202 + ", " + i * 0.2 + ")";
+        var color = "rgba(" + 255 + "," + 145 + "," + 202 + ", 1)";
+        ctx.globalCompositeOperation = 'xor';
         ctx.beginPath();
         ctx.lineWidth = 1.5;
         ctx.strokeStyle = color;
