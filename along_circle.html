@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    var colors = [
+        'rgba(255,145,202,',
+        'rgba(255,255,0,',
+        'rgba(255,0,255,'
+    ];
+    var curColor = colors[0];
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+        
+        var w = c.width * 0.5;
+        var h = c.height * 0.5;
+        var len = 200;
+        var num = 720;
+        
+        circle(w, h, len, num);
+        
+        window.addEventListener('touchstart', function() {
+            ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            circle(w, h, len, num);
+        });
+    }
+    
+    var i = 0;
+    function circle(w, h, len, num){
+        i += 0.7;
+
+        var ang = 1 * i;
+        var curLen = len * (i / num) + Math.sin(i * 0.17) * (i * 0.2);
+        var x2 = w + Math.cos(ang/ 360 * 2 * Math.PI) * curLen;
+        var y2 = h - Math.sin(ang/ 360 * 2 * Math.PI) * curLen;
+        var color = curColor + ((Math.sin(i * 0.11) + 1) / 4) + ')';
+        var color = "rgba(" + 255 + "," + 145 + "," + 202 + ", " + i * 0.2 + ")";
+        ctx.beginPath();
+        ctx.lineWidth = 1.5;
+        ctx.strokeStyle = color;
+        ctx.moveTo(w, h);
+        ctx.lineTo(x2, y2);
+        ctx.stroke();
+        ctx.closePath();
+        
+        window.requestAnimationFrame(function() {
+            circle(w, h, len, num);
+        });
+    }
+    
+     
+    
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block; width: 100%}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
