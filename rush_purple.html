@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;    
+    
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+        var w = 0;
+        var h = 0;
+        var size = 50;
+        var num = Math.ceil(c.width / size);
+        update(w, h, size, num);
+    }
+
+    function update(w, h, size, num) {
+        
+        for(var y = 0; y < num; y++){
+            for(var x = 0; x < num; x++){
+                var ox = (w + size) * x + size * 0.5;
+                var oy = (h + size) * y + size * 0.5;
+
+                // 1. 현재 상태를 저장
+                ctx.save();
+
+                // 2. 캔버스 원점을 사각형 중심으로 이동
+                ctx.translate(ox, oy);
+
+                // 3. 캔버스를 랜덤하게 회전
+                ctx.rotate((Math.random() * 0.1 - 0.05) * y);
+
+                // 4. 사각형 그리기
+                ctx.beginPath();
+//                ctx.strokeStyle = "rgba(142, 225, 255, 0.5)";
+                ctx.lineWidth = "0.5";
+                ctx.fillStyle = "rgba(142, " + Math.floor(Math.random() * 255) + ", 255, 0.5)";
+
+                var dx = (Math.random() - 0.7) * y;
+                var dy = (Math.random() - 0.7) * y;
+                ctx.rect(-size * 0.5 + dx, -size * 0.5 + dy, size, size);
+//                ctx.stroke();
+                ctx.fill();
+                ctx.closePath();
+
+                // 5. 캔버스를 원래 상태로 되돌리기
+                ctx.restore();
+            }
+        }   
+            window.requestAnimationFrame(function() {
+                update(w, h, size, num);
+                });
+
+    }
+      
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block; width: 100%}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
