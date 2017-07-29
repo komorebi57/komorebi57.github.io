@@ -3,7 +3,8 @@
 <head>
 <script>
     var ctx;    
-    
+    var seed = 'Hello' + Math.random();
+
     function main() {
         var c = document.getElementById('c');
         ctx = c.getContext('2d');
@@ -17,6 +18,7 @@
     }
 
     function update(w, h, size, num) {
+        
         
         for(var y = 0; y < num; y++){
             for(var x = 0; x < num; x++){
