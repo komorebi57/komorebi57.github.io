@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;
+    var bgstampCtx;
+    var bgStamp;
+    var fgStamp;
+    var mousex = 0;
+    var mousey = 0;
+    var isMouseOn;
+
+    function main() {
+        var c = document.getElementById('c');
+        c.addEventListener('mousemove', mousemove);
+        c.addEventListener('mouseenter', function() {
+            isMouseOn = true;
+        });
+        c.addEventListener('mouseleave', function() {
+            isMouseOn = false;
+        });
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+
+        bgStamp = document.createElement('canvas');
+        bgStamp.width = innerWidth * 5;
+        bgStamp.height = innerHeight * 4;
+        bgstampCtx = bgStamp.getContext('2d');
+        var size = 40;
+        for(var i = 0; i < 200; i++){
+            for(var l = 0; l < 200; l++){
+                bgstampCtx.beginPath();
+                bgstampCtx.fillStyle = "rgb(185, 230, 240)"
+                bgstampCtx.strokeStyle = "rgb(185, 230, 240)"
+                bgstampCtx.rect(i * size * 2, l * size * 2, size, size);
+                bgstampCtx.stroke();
+                bgstampCtx.lineWidth = 5;                     
+                bgstampCtx.rect(i * size * 2, l * size * 2, size, size);
+                bgstampCtx.closePath();
+            }       
+        }
+        
+        fgStamp = document.createElement('canvas');
+        fgStamp.width = innerWidth * 5;
+        fgStamp.height = innerHeight * 4;
+        fgStampCtx = fgStamp.getContext('2d');
+        var size = 40;
+        for(var i = 0; i < 200; i++){
+            for(var l = 0; l < 200; l++){
+                fgStampCtx.beginPath();
+                fgStampCtx.fillStyle = "rgb(185, 230, 240)"
+                fgStampCtx.strokeStyle = "rgb(185, 230, 240)"
+                fgStampCtx.rect(i * size * 2, l * size * 2, size, size);
+                fgStampCtx.stroke();
+                fgStampCtx.lineWidth = 5;            
+                fgStampCtx.closePath();
+            }       
+        }
+
+        mousemove({clientX: 0});
+    }
+   
+    function mousemove(e) {
+        ctx.fillStyle = "#000f2b";
+        ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        ctx.save();
+        ctx.translate(innerWidth * 1.5, innerHeight * 2);
+        ctx.rotate(0.25 * Math.PI);
+        ctx.drawImage(bgStamp, -innerWidth * 3, -innerHeight * 2);
+        ctx.restore();
+        
+        var angle = e.clientX / innerWidth * 2 * Math.PI;
+        var y = e.clientY / innerHeight * 2 * 100 - 50;
+
+        ctx.save();
+        ctx.translate(innerWidth * 1 + y, innerHeight * 1);
+        ctx.rotate(angle);
+        ctx.drawImage(fgStamp, -innerWidth * 3, -innerHeight * 2);
+        ctx.restore();
+    }
+
+    
+    window.addEventListener('load', main);
+</script>    
+<style>
+    body{
+        margin: 0;
+        overflow: hidden;
+    }
+    canvas {
+        width: 100%;
+        display: block;
+    }
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
