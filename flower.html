@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;    
+
+    function main() {
+        var c = document.getElementById('c');
+        window.addEventListener('mousemove', function(e) {
+//            ctx.clearRect(0, 0, innerWidth * 2, innerHeight * 2);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.08)";
+            ctx.fillRect(0, 0, innerWidth * 2, innerHeight * 2);
+            var size = 50;
+            for(var l = 0; l < 18; l++){
+                for(var k = 0; k < 20; k++){
+                    var w = l * size * 3;
+                    var h = k * Math.sin(60/ 360 * 2 * Math.PI) * size * 2;
+
+                    update(e.clientX * 2, e.clientY * 2, w, h, size);
+                }
+            }
+        });
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+    }
+
+    function update(ox, oy, w, h, size) {
+        var maxDistance = 600;
+        for(var i = 0; i < 4; i++){
+            var len = size;
+            var ang = 60 * i;
+            var x = w + Math.cos(ang/ 360 * 2 * Math.PI) * len;
+            var y = h - Math.sin(ang/ 360 * 2 * Math.PI) * len;
+            
+            var distance = Math.min(maxDistance, Math.sqrt(Math.pow(x - ox, 2) + Math.pow(y - oy, 2)));
+            var r = 1 - (distance / maxDistance);
+            
+            ctx.beginPath();
+            ctx.fillStyle = "rgba(185, 230, 240, 1)"
+            ctx.arc(x, y, r * size / 2, 0, 2.0 * Math.PI);
+            ctx.fill();
+            ctx.closePath();   
+        }
+    }
+      
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block; width: 100%}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
