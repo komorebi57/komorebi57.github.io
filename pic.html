@@ -41,7 +41,7 @@
         var w = window.innerHeight;
         var h = window.innerHeight;
         var c = 4;
-        for(var n = 0.1; n < 8000; n++) {
+        for(var n = 0.1; n < 7000; n++) {
             var r = c * Math.sqrt(n);
             var t = n * 2 * Math.PI * 0.381966;
             var x = w / 2 + Math.cos(t) * r;
@@ -53,7 +53,7 @@
             var cr = Math.min(255, Math.floor(cols[0]));
             var cg = Math.min(255, Math.floor(cols[1]));
             var cb = Math.min(255, Math.floor(cols[2]));
-            var bright = Math.floor((cr + cg + cb) / 3);
+            var bright = Math.floor((cr + cg + cb) / 2.7);
             var size = Math.floor(Math.log(256 - bright));
 
             ctx.beginPath();
