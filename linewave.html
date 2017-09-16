@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;    
+
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+        var w = 10;
+        var h = 10;
+        update(w, h);
+    }
+
+    function update(w, h) {
+        var lines = 40;
+        var frags = 80;
+        var distort = 0.8;
+
+        for(var x = 0; x < lines; x++){
+            ctx.beginPath();
+            ctx.lineWidth = "3";
+            ctx.strokeStyle = "pink";
+
+            var p = project(w + x * 10, h, distort);
+            ctx.moveTo(p[0], p[1]);
+            for(var y = 0; y < frags; y++){
+                p = project(w + x * 10, h + y * 10, distort);
+                ctx.lineTo(p[0], p[1]);
+            } 
+            ctx.stroke();
+            ctx.closePath();
+        }
+    }
+    
+    function project(x, y, distort) {
+        var dx = Math.sin(x * 0.04 + y * 0.01) * 10;
+        var dy = Math.sin(x * 0.02) * 10;
+        return [x + dx * distort, y + dy * distort];
+    }
+      
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+    body{margin: 0;}
+    canvas {display: block; width: 100%}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
