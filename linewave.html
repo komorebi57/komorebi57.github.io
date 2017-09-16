@@ -3,31 +3,46 @@
 <head>
 <script>
     var ctx;    
+    var w = 280;
+    var h = 180;
+    var mousex = 0;
+    var mousey = 0;
 
     function main() {
         var c = document.getElementById('c');
         ctx = c.getContext('2d');
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
-        var w = 10;
-        var h = 10;
-        update(w, h);
+        window.addEventListener('mousemove', mousemove);
+        update();
+    }
+    
+    
+    function mousemove(e) {
+        mousex = e.clientX * 2;
+        mousey = e.clientY * 2;
+        update();
     }
 
-    function update(w, h) {
-        var lines = 40;
-        var frags = 80;
+    function update() {
+        ctx.clearRect(0, 0, c.width, c.height);
+        
+        var lines = 200;
+        var frags = 120;
         var distort = 0.8;
 
         for(var x = 0; x < lines; x++){
             ctx.beginPath();
-            ctx.lineWidth = "3";
-            ctx.strokeStyle = "pink";
-
-            var p = project(w + x * 10, h, distort);
+            ctx.lineWidth = "2";
+            ctx.strokeStyle = "#AA0086";
+            var ox = w + x * 10;            
+            var d1 = Math.sqrt(Math.pow(ox - mousex, 2) + Math.pow(h - mousey, 2));
+            var p = project(ox, h, Math.min(1, d1 / 400));
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
-                p = project(w + x * 10, h + y * 10, distort);
+                var oy = h + y * 10;
+                var d2 = Math.sqrt(Math.pow(ox - mousex, 2) + Math.pow(oy - mousey, 2));
+                p = project(ox, oy, Math.min(1, d2 / 400));
                 ctx.lineTo(p[0], p[1]);
             } 
             ctx.stroke();
@@ -36,8 +51,8 @@
     }
     
     function project(x, y, distort) {
-        var dx = Math.sin(x * 0.04 + y * 0.01) * 10;
-        var dy = Math.sin(x * 0.02) * 10;
+        var dx = Math.sin(x * 0.04 + y * 0.01) * 10 + Math.sin(x * 0.018 + y * 0.011) * 7 + Math.sin(x * 0.011 + y * 0.013) * 9;
+        var dy = Math.sin(x * 0.02) * 10 + Math.sin(x * 0.019) * 15;
         return [x + dx * distort, y + dy * distort];
     }
       
@@ -45,12 +60,28 @@
 
 </script>    
 <style>
-    body{margin: 0;}
-    canvas {display: block; width: 100%}
+    body{
+        margin: 0;
+        cursor: url(iron.png) 16 16, auto;
+    }
+    canvas {
+        display: block;
+        width: 100%
+    }
+    .logo{
+        width:100px;
+        position:absolute;
+        bottom: 5%;
+        right: 45%;
+        }
+    }
 </style>
 </head>
 
 <body>
+    <div class="logo">
+        <img src="tefal.png" width="80"/>
+    </div>
     <canvas id="c"></canvas>
 </body>
 </html>
