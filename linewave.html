@@ -29,7 +29,7 @@
         
         var lines = 200;
         var frags = 120;
-        var distort = 0.8;
+        var distort = 0.9;
 
         for(var x = 0; x < lines; x++){
             ctx.beginPath();
@@ -37,12 +37,12 @@
             ctx.strokeStyle = "#AA0086";
             var ox = w + x * 10;            
             var d1 = Math.sqrt(Math.pow(ox - mousex, 2) + Math.pow(h - mousey, 2));
-            var p = project(ox, h, Math.min(1, d1 / 400));
+            var p = project(ox, h, Math.min(1, d1 / 300));
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
                 var oy = h + y * 10;
                 var d2 = Math.sqrt(Math.pow(ox - mousex, 2) + Math.pow(oy - mousey, 2));
-                p = project(ox, oy, Math.min(1, d2 / 400));
+                p = project(ox, oy, Math.min(1, d2 / 300));
                 ctx.lineTo(p[0], p[1]);
             } 
             ctx.stroke();
