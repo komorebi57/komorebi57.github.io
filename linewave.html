@@ -4,7 +4,7 @@
 <script>
     var ctx;    
     var w = 270;
-    var h = 100;
+    var h = 90;
     var mousex = 0;
     var mousey = 0;
 
@@ -51,8 +51,8 @@
     }
     
     function project(x, y, distort) {
-        var dx = Math.sin(x * 0.04 + y * 0.01) * 10 + Math.sin(x * 0.018 + y * 0.011) * 7 + Math.sin(x * 0.011 + y * 0.013) * 9;
-        var dy = Math.sin(x * 0.02) * 10 + Math.sin(x * 0.019) * 15;
+        var dx = Math.sin(x * 0.04 + y * 0.01) * 10 + Math.sin(x * 0.018 + y * 0.017) * 8 + Math.sin(x * 0.011 + y * 0.013) * 9;
+        var dy = Math.sin(x * 0.02) * 10 + Math.sin(x * 0.019) * 15 + Math.sin(x * 0.04) * 9;
         return [x + dx * distort, y + dy * distort];
     }
       
