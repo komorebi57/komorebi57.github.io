@@ -7,24 +7,63 @@
     var h = 90;
     var mousex = 0;
     var mousey = 0;
+    var path = [];
+    var iron;
 
     function main() {
         var c = document.getElementById('c');
         ctx = c.getContext('2d');
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
+        
+        iron = document.querySelector('#iron');
+
         window.addEventListener('mousemove', mousemove);
         update();
+        wrinkle();
     }
     
+    var latest = Date.now();
+    function wrinkle() {
+        requestAnimationFrame(wrinkle);
+        var now = Date.now();
+        if(now - latest < 500) return;
+        latest = now;
+        path.splice(Math.floor(Math.random() * path.length), 1);
+        update();
+    }
     
     function mousemove(e) {
         mousex = e.clientX * 2;
         mousey = e.clientY * 2;
+        if(path.length === 0) {
+            path.push([mousex, mousey]);
+        } else {
+            var last = path[path.length - 1];
+            var d = Math.sqrt(Math.pow(last[0] - mousex, 2) + Math.pow(last[1] - mousey, 2));
+            if(d > 100) {
+                path.push([mousex, mousey]);
+            }
+            if(path.length > 50) {
+                var nearestIndex = -1;
+                var nearestDistance = 100000;
+
+                for(var i = 0; i < path.length - 1; i++) {
+                    var d = Math.sqrt(Math.pow(path[i][0] - mousex, 2) + Math.pow(path[i][1] - mousey, 2));
+                    if(d < nearestDistance) {
+                        nearestDistance = d;
+                        nearestIndex = i;
+                    }
+                }
+                path.splice(nearestIndex, 1);
+            }
+        }
         update();
     }
 
     function update() {
+        iron.setAttribute('style', 'left: ' + (mousex / 2 - 100) + 'px; top: ' + (mousey / 2 - 100) + 'px;');
+        
         ctx.clearRect(0, 0, c.width, c.height);
         
         var lines = 200;
@@ -33,16 +72,16 @@
 
         for(var x = 0; x < lines; x++){
             ctx.beginPath();
-            ctx.lineWidth = "2";
-            ctx.strokeStyle = "#AA0086";
-            var ox = w + x * 10;            
-            var d1 = Math.sqrt(Math.pow(ox - mousex, 2) + Math.pow(h - mousey, 2));
-            var p = project(ox, h, Math.min(1, d1 / 300));
+            ctx.lineWidth = "4";
+            ctx.strokeStyle = "#E870C9";
+            var ox = w + x * 10;
+
+            var p = project(ox, h, getDistortion(ox, h));
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
                 var oy = h + y * 10;
-                var d2 = Math.sqrt(Math.pow(ox - mousex, 2) + Math.pow(oy - mousey, 2));
-                p = project(ox, oy, Math.min(1, d2 / 300));
+                
+                p = project(ox, oy, getDistortion(ox, oy));
                 ctx.lineTo(p[0], p[1]);
             } 
             ctx.stroke();
@@ -50,9 +89,30 @@
         }
     }
     
+    function getDistortion(x, y) {
+        var d = Math.sqrt(Math.pow(x - mousex, 2) + Math.pow(y - mousey, 2));
+        for(var i = 0; i < path.length; i++) {
+            var d2 = Math.sqrt(Math.pow(x - path[i][0], 2) + Math.pow(y - path[i][1], 2));
+            if(d2 < d) d = d2;
+        }
+        return Math.max(0, Math.min(1, d / 500) - 0.3);
+    }
+    
     function project(x, y, distort) {
-        var dx = Math.sin(x * 0.04 + y * 0.01) * 10 + Math.sin(x * 0.018 + y * 0.017) * 8 + Math.sin(x * 0.011 + y * 0.013) * 9;
-        var dy = Math.sin(x * 0.02) * 10 + Math.sin(x * 0.019) * 15 + Math.sin(x * 0.04) * 9;
+        var dx = (
+            Math.sin(y * 0.009) * 40 + 
+            Math.sin(y * 0.002) * 30 + 
+            Math.sin(x * 0.04 + y * 0.01) * 10 +
+            Math.sin(x * 0.02 + y * 0.017) * 8 +
+            Math.sin(x * 0.011 + y * 0.013) * 9
+        );
+        var dy = (
+            Math.sin(x * 0.005) * 50 + 
+            Math.sin(x * 0.02) * 5 +
+            Math.sin(x * 0.019) * 10 +
+            Math.sin(x * 0.04) * 5
+        );
+
         return [x + dx * distort, y + dy * distort];
     }
       
@@ -62,26 +122,29 @@
 <style>
     body{
         margin: 0;
-        cursor: url(iron.png) 16 16, auto;
+        cursor: none;
     }
     canvas {
         display: block;
-        width: 100%
+        width: 100%;
     }
     .logo{
         width:100px;
         position:absolute;
         bottom: 4%;
         right: 45%;
-        }
+    }
+    #iron{
+        position: absolute;
     }
 </style>
 </head>
 
 <body>
     <div class="logo">
-        <img src="tefal.png" width="80"/>
+        <img src="tefal.png" width="80">
     </div>
+    <img id="iron" src="100.png">
     <canvas id="c"></canvas>
 </body>
 </html>
