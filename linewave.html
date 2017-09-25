@@ -4,7 +4,7 @@
 <script>
     var ctx;    
     var w = 270;
-    var h = 90;
+    var h = 190;
     var mousex = 0;
     var mousey = 0;
     var path = [];
@@ -132,10 +132,19 @@
         width:100px;
         position:absolute;
         bottom: 4%;
-        right: 45%;
+        right: 4%;
     }
     #iron{
         position: absolute;
+    }
+    .main{
+        font-size: 17px;
+        font-family: 'Nanum Gothic';
+        font-weight: 700;
+        position: absolute;
+        bottom: 2%;
+        right: 13%;
+        
     }
 </style>
 </head>
@@ -144,7 +153,8 @@
     <div class="logo">
         <img src="tefal.png" width="80">
     </div>
-    <img id="iron" src="100.png">
+    <p class = "main">당신의 기분도 펴세요.</p>
+    <img id="iron" src="200.png">
     <canvas id="c"></canvas>
 </body>
 </html>
