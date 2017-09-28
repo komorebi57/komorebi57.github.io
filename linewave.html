@@ -66,15 +66,15 @@
         
         ctx.clearRect(0, 0, c.width, c.height);
         
-        var lines = 200;
+        var lines = 140;
         var frags = 120;
         var distort = 0.9;
 
         for(var x = 0; x < lines; x++){
             ctx.beginPath();
-            ctx.lineWidth = "4";
-            ctx.strokeStyle = "#E870C9";
-            var ox = w + x * 10;
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "gray";
+            var ox = w + x * 14;
 
             var p = project(ox, h, getDistortion(ox, h));
             ctx.moveTo(p[0], p[1]);
@@ -87,6 +87,20 @@
             ctx.stroke();
             ctx.closePath();
         }
+        for(var i = 0; i < 140; i++){
+            var nx = (w - 5) + i * 14;
+            ctx.beginPath();
+            ctx.lineWidth = "5";
+            ctx.strokeStyle = "gray";
+            ctx.moveTo(nx, 190)
+            for(var l = 0; l < 120; l++){
+                var ny = h + l * 10;
+                ctx.lineTo(nx, ny)
+            }
+            ctx.stroke();
+            ctx.closePath();
+        }
+        
     }
     
     function getDistortion(x, y) {
@@ -95,7 +109,7 @@
             var d2 = Math.sqrt(Math.pow(x - path[i][0], 2) + Math.pow(y - path[i][1], 2));
             if(d2 < d) d = d2;
         }
-        return Math.max(0, Math.min(1, d / 500) - 0.3);
+        return Math.max(0, Math.min(1, d / 600) - 0.3);
     }
     
     function project(x, y, distort) {
@@ -140,9 +154,9 @@
     .main{
         font-size: 17px;
         font-family: 'Nanum Gothic';
-        font-weight: 700;
+        font-weight: 600;
         position: absolute;
-        bottom: 2%;
+        bottom: 2.3%;
         right: 13%;
         
     }
