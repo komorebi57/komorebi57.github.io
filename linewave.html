@@ -3,7 +3,7 @@
 <head>
 <script>
     var ctx;    
-    var w = 270;
+    var w = 300;
     var h = 190;
     var mousex = 0;
     var mousey = 0;
@@ -19,15 +19,17 @@
         iron = document.querySelector('#iron');
 
         window.addEventListener('mousemove', mousemove);
+         
         update();
         wrinkle();
     }
     
     var latest = Date.now();
     function wrinkle() {
+    
         requestAnimationFrame(wrinkle);
         var now = Date.now();
-        if(now - latest < 500) return;
+        if(now - latest < 1000) return;
         latest = now;
         path.splice(Math.floor(Math.random() * path.length), 1);
         update();
@@ -66,17 +68,17 @@
         
         ctx.clearRect(0, 0, c.width, c.height);
         
-        var lines = 140;
-        var frags = 120;
+        var lines = 141;
+        var frags = 121;
         var distort = 0.9;
 
         for(var x = 0; x < lines; x++){
-            ctx.beginPath();
-            ctx.lineWidth = "5";
-            ctx.strokeStyle = "gray";
             var ox = w + x * 14;
-
             var p = project(ox, h, getDistortion(ox, h));
+
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "white";
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
                 var oy = h + y * 10;
@@ -87,13 +89,13 @@
             ctx.stroke();
             ctx.closePath();
         }
-        for(var i = 0; i < 140; i++){
-            var nx = (w - 5) + i * 14;
+        for(var i = 0; i < 141; i++){
+            var nx = (w) + i * 14;
             ctx.beginPath();
             ctx.lineWidth = "5";
-            ctx.strokeStyle = "gray";
+            ctx.strokeStyle = "white";
             ctx.moveTo(nx, 190)
-            for(var l = 0; l < 120; l++){
+            for(var l = 0; l < 121; l++){
                 var ny = h + l * 10;
                 ctx.lineTo(nx, ny)
             }
@@ -134,11 +136,20 @@
 
 </script>    
 <style>
-    body{
+    html {
+        position: relative;
+        width: 100%;
+        height: 100%;
+    }
+    body {
+        position: relative;
+        width: 100%;
+        height: 100%;
         margin: 0;
         cursor: none;
     }
     canvas {
+        position: absolute;
         display: block;
         width: 100%;
     }
@@ -150,6 +161,17 @@
     }
     #iron{
         position: absolute;
+    }
+    #bg {
+        position: absolute;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+    }
+    #bg img {
+        display: block;
+        margin: 95px auto 0;
+        width: 980px;
     }
     .main{
         font-size: 17px;
@@ -164,11 +186,14 @@
 </head>
 
 <body>
+    <div id="bg">
+        <img src="oneday.png">
+    </div>
     <div class="logo">
         <img src="tefal.png" width="80">
     </div>
-    <p class = "main">당신의 기분도 펴세요.</p>
-    <img id="iron" src="200.png">
+    <p class="main">당신의 기분도 펴세요.</p>
     <canvas id="c"></canvas>
+    <img id="iron" src="200.png">
 </body>
 </html>
