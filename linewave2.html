@@ -81,7 +81,7 @@
             ctx.strokeStyle = "white";
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
-                var oy = h + y * 10;
+                var oy = h + y * 11;
                 
                 p = project(ox, oy, getDistortion(ox, oy));
                 ctx.lineTo(p[0], p[1]);
@@ -92,7 +92,7 @@
         for(var i = 0; i < 141; i++){
             var nx = (w) + i * 14;
             ctx.beginPath();
-            ctx.lineWidth = "5";
+            ctx.lineWidth = "4";
             ctx.strokeStyle = "white";
             ctx.moveTo(nx, 190)
             for(var l = 0; l < 121; l++){
