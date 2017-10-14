@@ -18,9 +18,9 @@
     ];
     
     var colors = [
-            'rgba(232, 160, 25, 0.95)',
-            'rgba(222, 139, 33, 0.95)',
-            'rgba(247, 167, 42, 0.95)',
+            'rgba(232, 160, 25, 1)',
+            'rgba(222, 139, 33, 1)',
+            'rgba(247, 167, 42, 1)',
             'rgba(225, 163, 58, 0.95)',
             'rgba(247, 177, 21, 0.95)'
     ];
@@ -38,7 +38,7 @@
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
         
-        var size = 140;
+        var size = 120;
         var xCount = c.width / size;
         var yCount = Math.ceil(c.height / size * 10);
         var recsize = size * 0.7;
@@ -106,9 +106,15 @@
         ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
         for(var i = 0; i < recs.length; i++) {
             var rec = recs[i];
+            var grd=ctx.createRadialGradient(rec.x, rec.y, rec.size * 2.5, rec.x, rec.y, 0);
+            grd.addColorStop(0,'rgba(255, 255, 255, 0.95)');
+            grd.addColorStop(1, rec.color);
+
+
             ctx.beginPath();
-            ctx.strokeStyle = "rgba(255, 255, 255, 1)";
-            ctx.fillStyle = rec.color;
+            ctx.strokeStyle = "rgba(255, 255, 255, 0.5)";
+            //ctx.fillStyle = rec.color;
+            ctx.fillStyle = grd;
             ctx.lineWidth = 1;
             ctx.arc(rec.x, rec.y, rec.size, 0, 2.0 * Math.PI); 
            // ctx.stroke();
