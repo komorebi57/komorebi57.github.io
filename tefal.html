@@ -2,31 +2,31 @@
 <html>
 <head>
 <script>
-    var ctx;    
+    var ctx;   
     var w = innerWidth * 0.23;
     var h = innerHeight * 0.23;
     var mousex = 0;
     var mousey = 0;
     var path = [];
     var iron;
-
+ 
     function main() {
         var c = document.getElementById('c');
         ctx = c.getContext('2d');
         c.width = window.innerWidth * 2;
         c.height = window.innerHeight * 2;
-        
+       
         iron = document.querySelector('#iron');
-
+ 
         window.addEventListener('mousemove', mousemove);
-         
+        
         update();
         wrinkle();
     }
-    
+   
     var latest = Date.now();
     function wrinkle() {
-    
+   
         requestAnimationFrame(wrinkle);
         var now = Date.now();
         if(now - latest < 1000) return;
@@ -34,7 +34,7 @@
         path.splice(Math.floor(Math.random() * path.length), 1);
         update();
     }
-    
+   
     function mousemove(e) {
         mousex = e.clientX * 2;
         mousey = e.clientY * 2;
@@ -49,7 +49,7 @@
             if(path.length > 50) {
                 var nearestIndex = -1;
                 var nearestDistance = 90000;
-
+ 
                 for(var i = 0; i < path.length - 1; i++) {
                     var d = Math.sqrt(Math.pow(path[i][0] - mousex, 2) + Math.pow(path[i][1] - mousey, 2));
                     if(d < nearestDistance) {
@@ -62,30 +62,30 @@
         }
         update();
     }
-
+ 
     function update() {
         iron.setAttribute('style', 'left: ' + (mousex / 2 - 100) + 'px; top: ' + (mousey / 2 - 100) + 'px;');
-        
+       
         ctx.clearRect(0, 0, c.width, c.height);
-        
+       
         var lines = 220;
-        var frags = 121;
+        var frags = 140;
         var distort = 0.9;
-
+ 
         for(var x = 0; x < lines; x++){
             var ox = w + x * 14;
             var p = project(ox, h, getDistortion(ox, h));
-
+ 
             ctx.beginPath();
             ctx.lineWidth = 5;
             ctx.strokeStyle = "white";
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
                 var oy = h + y * 11;
-                
+               
                 p = project(ox, oy, getDistortion(ox, oy));
                 ctx.lineTo(p[0], p[1]);
-            } 
+            }
             ctx.stroke();
             ctx.closePath();
         }
@@ -94,17 +94,17 @@
             ctx.beginPath();
             ctx.lineWidth = "4";
             ctx.strokeStyle = "white";
-            ctx.moveTo(nx, 190)
-            for(var l = 0; l < 121; l++){
+            ctx.moveTo(nx, 110)
+            for(var l = 0; l < 150; l++){
                 var ny = h + l * 10;
                 ctx.lineTo(nx, ny)
             }
             ctx.stroke();
             ctx.closePath();
         }
-        
+       
     }
-    
+   
     function getDistortion(x, y) {
         var d = Math.sqrt(Math.pow(x - mousex, 2) + Math.pow(y - mousey, 2));
         for(var i = 0; i < path.length; i++) {
@@ -113,28 +113,28 @@
         }
         return Math.max(0, Math.min(1, d / 600) - 0.3);
     }
-    
+   
     function project(x, y, distort) {
         var dx = (
-            Math.sin(y * 0.009) * 40 + 
-            Math.sin(y * 0.002) * 30 + 
+            Math.sin(y * 0.009) * 40 +
+            Math.sin(y * 0.002) * 30 +
             Math.sin(x * 0.04 + y * 0.01) * 10 +
             Math.sin(x * 0.02 + y * 0.017) * 8 +
             Math.sin(x * 0.011 + y * 0.013) * 9
         );
         var dy = (
-            Math.sin(x * 0.005) * 50 + 
+            Math.sin(x * 0.005) * 50 +
             Math.sin(x * 0.02) * 5 +
             Math.sin(x * 0.019) * 10 +
             Math.sin(x * 0.04) * 5
         );
-
+ 
         return [x + dx * distort, y + dy * distort];
     }
-      
+     
     window.addEventListener('load', main);
-
-</script>    
+ 
+</script>   
 <style>
     html {
         overflow:hidden;
@@ -182,14 +182,14 @@
         position: absolute;
         bottom: 2.3%;
         right: 10%;
-        
+       
     }
 </style>
 </head>
-
+ 
 <body>
     <div id="bg">
-        <img src="baby.png">
+        <img src="tefal_baby.png">
     </div>
     <div class="logo">
         <img src="tefal.png" width="80">
@@ -198,4 +198,4 @@
     <canvas id="c"></canvas>
     <img id="iron" src="200.png">
 </body>
-</html>
+</html> 
