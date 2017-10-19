@@ -68,7 +68,7 @@
         
         ctx.clearRect(0, 0, c.width, c.height);
         
-        var lines = 200;
+        var lines = 220;
         var frags = 121;
         var distort = 0.9;
 
@@ -89,7 +89,7 @@
             ctx.stroke();
             ctx.closePath();
         }
-        for(var i = 0; i < 141; i++){
+        for(var i = 0; i < 220; i++){
             var nx = (w) + i * 14;
             ctx.beginPath();
             ctx.lineWidth = "4";
@@ -137,11 +137,13 @@
 </script>    
 <style>
     html {
+        overflow:hidden;
         position: relative;
         width: 100%;
         height: 100%;
     }
     body {
+        overflow:hidden;
         position: relative;
         width: 100%;
         height: 100%;
