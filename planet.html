@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;   
+    var w = innerWidth * 0.23;
+    var h = innerHeight * 0.23;
+    var mousex = 0;
+    var mousey = 0;
+    var path = [];
+    var iron;
+ 
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+       
+        iron = document.querySelector('#iron');
+ 
+        window.addEventListener('mousemove', mousemove);
+        
+        update();
+        wrinkle();
+    }
+ 
+    function update() {
+    
+    }
+   
+    window.addEventListener('load', main);
+ 
+</script>   
+<style>
+</style>
+</head>
+ 
+<body>
+  
+    <canvas id="c"></canvas>
+</body>
+</html> 

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+    var ctx;    
+    var w = innerWidth * 2;
+    var h = innerHeight * 2;
+  
+
+    function main() {
+        var c = document.getElementById('c');
+        ctx = c.getContext('2d');
+        c.width = window.innerWidth * 2;
+        c.height = window.innerHeight * 2;
+    
+        update();
+    }
+   
+    function update() {
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.strokeStyle = "white";
+            ctx.moveTo(p[0], p[1]); 
+            ctx.stroke();
+            ctx.closePath();
+        }
+    
+   
+    window.addEventListener('load', main);
+
+</script>    
+<style>
+</style>
+</head>
+
+<body>
+</body>
+</html>

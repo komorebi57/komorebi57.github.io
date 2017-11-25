@@ -68,8 +68,8 @@
         
         ctx.clearRect(0, 0, c.width, c.height);
         
-        var lines = 220;
-        var frags = 121;
+        var lines = 145;
+        var frags = 122;
         var distort = 0.9;
 
         for(var x = 0; x < lines; x++){
@@ -81,7 +81,7 @@
             ctx.strokeStyle = "white";
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
-                var oy = h + y * 11;
+                var oy = h + y * 10;
                 
                 p = project(ox, oy, getDistortion(ox, oy));
                 ctx.lineTo(p[0], p[1]);
@@ -89,12 +89,12 @@
             ctx.stroke();
             ctx.closePath();
         }
-        for(var i = 0; i < 220; i++){
+        for(var i = 0; i < 145; i++){
             var nx = (w) + i * 14;
             ctx.beginPath();
             ctx.lineWidth = "4";
             ctx.strokeStyle = "white";
-            ctx.moveTo(nx, 190)
+            ctx.moveTo(nx, 165)
             for(var l = 0; l < 121; l++){
                 var ny = h + l * 10;
                 ctx.lineTo(nx, ny)
@@ -181,7 +181,7 @@
         font-weight: 600;
         position: absolute;
         bottom: 2.3%;
-        right: 10%;
+        right: 13%;
         
     }
 </style>
@@ -189,7 +189,7 @@
 
 <body>
     <div id="bg">
-        <img src="baby.png">
+        <img src="sky.png">
     </div>
     <div class="logo">
         <img src="tefal.png" width="80">

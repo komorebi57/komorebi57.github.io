@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="utf-8">
 <script>
     var ctx;   
     var w = innerWidth * 0.23;
@@ -9,7 +10,7 @@
     var mousey = 0;
     var path = [];
     var iron;
- 
+
     function main() {
         var c = document.getElementById('c');
         ctx = c.getContext('2d');
@@ -68,8 +69,8 @@
        
         ctx.clearRect(0, 0, c.width, c.height);
        
-        var lines = 220;
-        var frags = 140;
+        var lines = 285;
+        var frags = 270;
         var distort = 0.9;
  
         for(var x = 0; x < lines; x++){
@@ -81,7 +82,7 @@
             ctx.strokeStyle = "white";
             ctx.moveTo(p[0], p[1]);
             for(var y = 0; y < frags; y++){
-                var oy = h + y * 11;
+                var oy = h + y * 8;
                
                 p = project(ox, oy, getDistortion(ox, oy));
                 ctx.lineTo(p[0], p[1]);
@@ -89,13 +90,13 @@
             ctx.stroke();
             ctx.closePath();
         }
-        for(var i = 0; i < 220; i++){
+        for(var i = 0; i < 285; i++){
             var nx = (w) + i * 14;
             ctx.beginPath();
             ctx.lineWidth = "4";
             ctx.strokeStyle = "white";
-            ctx.moveTo(nx, 110)
-            for(var l = 0; l < 150; l++){
+            ctx.moveTo(nx, 310)
+            for(var l = 0; l < 200; l++){
                 var ny = h + l * 10;
                 ctx.lineTo(nx, ny)
             }
@@ -158,7 +159,7 @@
     .logo{
         width:100px;
         position:absolute;
-        bottom: 4%;
+        bottom: 3.8%;
         right: 4%;
     }
     #iron{
@@ -176,12 +177,12 @@
         width: 77%;
     }
     .main{
-        font-size: 17px;
+        font-size: 22px;
         font-family: 'Nanum Gothic';
         font-weight: 600;
         position: absolute;
-        bottom: 2.3%;
-        right: 10%;
+        bottom: 2.6%;
+        right: 9%;
        
     }
 </style>
@@ -192,7 +193,7 @@
         <img src="tefal_sky.png">
     </div>
     <div class="logo">
-        <img src="tefal.png" width="80">
+        <img src="tefal.png" width="100">
     </div>
     <p class="main">당신의 기분도 펴보세요.</p>
     <canvas id="c"></canvas>
