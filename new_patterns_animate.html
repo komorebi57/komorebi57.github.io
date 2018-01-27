@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var ctx;
+var size = 50;
+
+function main() {
+    var c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight; 
+    
+    update();
+}
+
+var getCentroid = function (coord) 
+{
+	var center = coord.reduce(function (x,y) {
+		return [x[0] + y[0]/coord.length, x[1] + y[1]/coord.length] 
+	}, [0,0])
+	return center;
+}    
+
+    // x = Math.cos(300 / 360 * 2 * Math.PI) * size * 2
+    // y = Math.sin(300 / 360 * 2 * Math.PI) * size * 2
+    
+var frame = 0;
+function update() {
+    circle(size);
+    frame++;
+    requestAnimationFrame(update);
+}
+
+function circle(size) {
+    var wN = Math.ceil(innerWidth / size) + 1;
+    var wH = Math.ceil(innerHeight/ size);
+
+    var data = [];
+    //좌표계산
+    for(var i = 0; i < wN; i++){
+        for(var j = 0; j < wH; j++){
+            var xd = Math.cos(300 / 360 * 2 * Math.PI) * size * 2;
+            var yd = -Math.sin(300 / 360 * 2 * Math.PI) * size * 2;
+            var x1 = (i - 1) * size * 2;
+            var y1 = yd * j * 2;
+
+            var x2 = x1 + xd;
+            var y2 = y1 + yd;
+            
+            data[j * wN + i] = {
+                xd: xd, yd: yd, x1: x1, y1: y1, x2: x2, y2: y2
+            };
+        }
+    }
+    
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    
+    // 원
+    for(var i = 0; i < wN; i++){
+        for(var j = 0; j < wH; j++){
+            var datum = data[j * wN + i];
+            var xd = datum.xd;
+            var yd = datum.yd;
+            var x1 = datum.x1;
+            var y1 = datum.y1;
+            var x2 = datum.x2;
+            var y2 = datum.y2;
+
+            ctx.strokeStyle = "pink";
+            ctx.fillStyle = "pink";
+            ctx.lineWidth = 1;
+            ctx.beginPath()
+
+            var offset = ease(frame) % size * 2;
+
+            ctx.arc(x1 + offset, y1, size, 0, 2.0 * Math.PI);                
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath()
+
+            ctx.beginPath()
+            ctx.arc(x2 + offset, y2, size, 0, 2.0 * Math.PI);
+            ctx.stroke();
+            ctx.fill();
+            ctx.closePath()
+        }
+    }
+    
+    //삼각형
+    for(var i = 0; i < wN; i++){
+        for(var j = 0; j < wH; j++){
+            var datum = data[j * wN + i];
+            var xd = datum.xd;
+            var yd = datum.yd;
+            var x1 = datum.x1;
+            var y1 = datum.y1;
+            var x2 = datum.x2;
+            var y2 = datum.y2;
+
+            //똑바로 삼각형
+            ctx.strokeStyle = "purple";
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x1 + xd * 2, y1);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+            ctx.closePath(); 
+            
+            //거꾸로 삼각형
+            ctx.beginPath();
+            ctx.moveTo(x2 - xd * 2, y2);
+            ctx.lineTo(x2, y2);
+            ctx.lineTo(x2 + xd, y2 + yd);
+            ctx.lineTo(x2 + xd * 2, y2);
+            ctx.stroke();
+            ctx.closePath(); 
+            
+            // 첫번째 줄 거꾸로 오렌지 삼각형
+            var center = getCentroid([[x1,y1], [x2,y2], [x1 + xd * 2,y1]]);
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath(); 
+            
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+            ctx.closePath(); 
+
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x1 + xd * 2, y1);
+            ctx.stroke();
+            ctx.closePath(); 
+            
+            
+            // 첫번째 줄 바른 회색 삼각형
+            var center = getCentroid([[x2 - xd * 2, y2], [x2,y2], [x1, y1]]);
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath(); 
+  
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2 - xd * 2, y2);
+            ctx.stroke();
+            ctx.closePath(); 
+            
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x1, y1);
+            ctx.stroke();
+            ctx.closePath(); 
+            
+            
+            // 두번째 줄 거꾸로 검은색 삼각형
+            var center = getCentroid([[x2 - xd * 2, y2], [x2, y2], [x2 - xd, y2 + yd]]);
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2 - xd * 2, y2);
+            ctx.stroke();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2 - xd, y2 + yd);
+            ctx.stroke();
+            ctx.closePath();
+            
+            
+            // 두번째 줄 바른 보라색 삼각형
+            var center = getCentroid([[x2, y2], [x2 + xd, y2 + yd], [x2 - xd, y2 + yd]]);
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2, y2);
+            ctx.stroke();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2 + xd, y2 + yd);
+            ctx.stroke();
+            ctx.closePath();
+            
+            ctx.beginPath();
+            ctx.moveTo(center[0], center[1]);
+            ctx.lineTo(x2 - xd, y2 + yd);
+            ctx.stroke();
+            ctx.closePath();
+         }
+    }
+}
+
+function ease(x) {
+    if(Math.floor(x / size) % 2 === 0) {
+        return Math.floor(x / size) * size;
+    } else {
+        return x;
+    }
+}
+
+
+window.addEventListener('load', main);
+
+</script>   
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>

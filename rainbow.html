@@ -1,29 +1,31 @@
+<! -- ffmpeg -r 12 -i rainbow%02d.png -c:v libx264 -vf fps=24 -pix_fmt yuv420p rainbow.mp4 -->
 <!DOCTYPE html>
 <html>
 <head>
 <script src="https://d3js.org/d3.v4.min.js"></script>
 <script>
+    var c;
     var ctx;
     var color;
     var line;
     var lines = [];
     
     function main() {
-        var c = document.getElementById('c');
-        ctx = c.getContext('2d');
-        c.width = window.innerWidth * 2;
-        c.height = window.innerHeight * 2;
-            
-        var w = 0.2 * c.width;
-        var h = 0.2 * c.height;
-        var width = 0.5 * c.width;
-        var height = 0.6 * c.height;
+        var W = 375;
+        var H = 667;
         
-        for(var i = c.height * 0.2; i < c.height * 0.8; i += 0.5) {
-            var x1 = c.width * 0.3;
+        c = document.getElementById('c');
+        c.style.width = W + 'px';
+        c.style.height = H + 'px';
+        ctx = c.getContext('2d');
+        c.width = W * 2;
+        c.height = H * 2;
+        
+        for(var i = c.height * 0.3; i < c.height * 0.7; i += 0.5) {
+            var x1 = c.width * 0.1;
             var y1 = i;
-            var x4 = c.width * 0.7;
-            var y4 = (Math.random() * 0.6 + 0.2) * c.height;
+            var x4 = c.width * 0.9;
+            var y4 = (Math.random() * 0.4 + 0.3) * c.height;
             
             var x2 = (Math.random() * 0.3 - 0.05) * c.width + x1;
             var y2 = (Math.random() * 0.3 - 0.15) * c.height + y1;
@@ -53,17 +55,20 @@
     }
     
     var frame = 0;
+
     function update() {
         ctx.fillStyle = "black";
         ctx.fillRect(0, 0, window.innerWidth * 2, window.innerHeight * 2);
       
+        var phase = frame / 100 * Math.PI * 2;
+        var amp = 10;
         for(var i = 0; i < lines.length; i++) {
             var x1 = lines[i][0][0];
             var y1 = lines[i][0][1];
-            var x2 = lines[i][1][0] + Math.sin(i * 0.2 + frame * 0.11) * 20 + Math.sin(i * 0.1 + frame * 0.07) * 10;
-            var y2 = lines[i][1][1] + Math.sin(i * 0.2 + frame * 0.05) * 20 + Math.sin(i * 0.1 + frame * 0.07) * 10;
-            var x3 = lines[i][2][0] + Math.sin(i * 0.5 + frame * 0.03) * 30 + Math.sin(i * 0.2 + frame * 0.11) * 10;
-            var y3 = lines[i][2][1] + Math.sin(i * 0.5 + frame * 0.11) * 30 + Math.sin(i * 0.1 + frame * 0.17) * 10;
+            var x2 = lines[i][1][0] + Math.sin(i * 0.2 + phase) * amp + Math.sin(i * 0.2 + phase) * amp;
+            var y2 = lines[i][1][1] + Math.sin(i * 0.2 + phase) * amp + Math.sin(i * 0.2 + phase) * amp;
+            var x3 = lines[i][2][0] + Math.sin(i * 0.2 + phase) * amp + Math.sin(i * 0.2 + phase) * amp;
+            var y3 = lines[i][2][1] + Math.sin(i * 0.2 + phase) * amp + Math.sin(i * 0.2 + phase) * amp;
             var x4 = lines[i][3][0];
             var y4 = lines[i][3][1];
             
@@ -80,7 +85,19 @@
             ctx.stroke();
         }
 
-        frame += 0.3;
+        if(frame < 100 && frame % 5 === 0) {
+            var padded = '' + (frame / 5);
+            if(padded.length === 1) padded = '0' + padded;
+
+            var download = document.createElement('a');
+            download.href = c.toDataURL();
+            download.innerHTML = padded;
+
+            download.download = 'rainbow' + padded + '.png';
+            document.body.appendChild(download);
+        }
+
+        frame += 1;
         requestAnimationFrame(update);
     }
     
@@ -89,11 +106,13 @@
 <style>
     body{
         margin: 0;
-        overflow: hidden;
+        xoverflow: hidden;
     }
     canvas {
-        width: 100%;
         display: block;
+    }
+    a {
+        padding: 0.5rem;
     }
 </style>
 </head>
