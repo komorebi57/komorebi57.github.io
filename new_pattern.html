@@ -3,15 +3,16 @@
 <head>
 <script>
 var ctx;
+var size = 50;
+
 function main() {
     var c = document.getElementById('c');
     ctx = c.getContext('2d');
     c.width = window.innerWidth;
     c.height = window.innerHeight; 
     
-    var size = 50;
-    circle(size);
-    }
+    update();
+}
 
 var getCentroid = function (coord) 
 {
@@ -24,17 +25,24 @@ var getCentroid = function (coord)
     // x = Math.cos(300 / 360 * 2 * Math.PI) * size * 2
     // y = Math.sin(300 / 360 * 2 * Math.PI) * size * 2
     
+var frame = 0;
+function update() {
+    circle(size);
+    frame++;
+    requestAnimationFrame(update);
+}
+
 function circle(size) {
-    var wN = Math.ceil(innerWidth / size);
+    var wN = Math.ceil(innerWidth / size) + 1;
     var wH = Math.ceil(innerHeight/ size);
 
     var data = [];
-    
+    //좌표계산
     for(var i = 0; i < wN; i++){
         for(var j = 0; j < wH; j++){
             var xd = Math.cos(300 / 360 * 2 * Math.PI) * size * 2;
             var yd = -Math.sin(300 / 360 * 2 * Math.PI) * size * 2;
-            var x1 = i * size * 2;
+            var x1 = (i - 1) * size * 2;
             var y1 = yd * j * 2;
 
             var x2 = x1 + xd;
@@ -45,7 +53,10 @@ function circle(size) {
             };
         }
     }
-
+    
+    ctx.clearRect(0, 0, window.innerWidth, window.innerHeight);
+    
+    // 원
     for(var i = 0; i < wN; i++){
         for(var j = 0; j < wH; j++){
             var datum = data[j * wN + i];
@@ -60,19 +71,23 @@ function circle(size) {
             ctx.fillStyle = "pink";
             ctx.lineWidth = 1;
             ctx.beginPath()
-            ctx.arc(x1, y1, size, 0, 2.0 * Math.PI);                
+
+            var offset = ease(frame) % size * 2;
+
+            ctx.arc(x1 + offset, y1, size, 0, 2.0 * Math.PI);                
             ctx.stroke();
             ctx.fill();
             ctx.closePath()
 
             ctx.beginPath()
-            ctx.arc(x2, y2, size, 0, 2.0 * Math.PI);
+            ctx.arc(x2 + offset, y2, size, 0, 2.0 * Math.PI);
             ctx.stroke();
             ctx.fill();
             ctx.closePath()
         }
     }
     
+    //삼각형
     for(var i = 0; i < wN; i++){
         for(var j = 0; j < wH; j++){
             var datum = data[j * wN + i];
@@ -189,6 +204,13 @@ function circle(size) {
     }
 }
 
+function ease(x) {
+    if(Math.floor(x / size) % 2 === 0) {
+        return Math.floor(x / size) * size;
+    } else {
+        return x;
+    }
+}
 
 
 window.addEventListener('load', main);
