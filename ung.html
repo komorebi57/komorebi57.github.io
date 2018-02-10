@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+var ctx;
+var size = 8;
+
+function main() {
+    var c = document.getElementById('c');
+    ctx = c.getContext('2d');
+    c.width = window.innerWidth;
+    c.height = window.innerHeight; 
+    var w = innerWidth * 0.45;
+    var h = innerHeight * 0.6;
+    ctx.fillStyle = "gray";
+    ctx.fillRect(0, 0, c.width, c.height);
+    
+    update(w, h);
+}
+
+function update(w, h) {
+    for(var i = 0; i < 25; i++){ 
+        var x, y;
+
+        if(i < 5) {
+            x = w + i * (size * 1);
+            y = h;
+            
+        } else if(i < 10) {
+            x = w + size * 4;
+            y = h - i * (size * 1) + size * 4;
+            
+        } else if(i < 18) {
+            x = w + i * (size * 0.9) - size * 4;
+            y = h - i * 5 * (size * 0.1); 
+            
+        } else {
+            x = w - (i * 7) + (size * 26);
+            y = h - (i * 4);
+        }
+        
+        ctx.strokeStyle = "pink";
+        ctx.fillStyle = "pink";
+        ctx.lineWidth = 1;
+        ctx.beginPath()
+        ctx.arc(x, y, size * i, 0, 2.0 * Math.PI);
+        ctx.stroke();
+       // ctx.fill();
+        ctx.closePath()  
+    }
+}
+
+//if(Math.floor(x / size) % 2 === 0) {
+//        return Math.floor(x / size) * size;
+//    } else {
+//        return x;
+//    }
+    
+window.addEventListener('load', main);
+
+</script>   
+<style>
+    body{margin: 0;}
+    canvas {display: block;}
+</style>
+</head>
+
+<body>
+    <canvas id="c"></canvas>
+</body>
+</html>
